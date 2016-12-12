@@ -5,10 +5,11 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<link href='./style/style.css' rel='stylesheet' type='text/css'>
-
-	<script src="js/modernizr.js"></script> <!-- Modernizr -->
   	
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
     <link rel='shortcut icon' href='./img/logo5.png'>
+
     <!-- facebook meta data -->
     <meta property="og:title" content="kappisan" />
     <meta property="og:type" content="website" />
@@ -18,112 +19,134 @@
     <script type="text/javascript" src="http://mbostock.github.com/d3/d3.js"></script>
 
 	<title>Kasper Wilkosz</title>
-</head>
-<body>
 
-<div class="title-banner">
-	<a href="#primary-nav"><h2>Kasper Wilkosz</h2></a>
-</div>
+    <style>
+
+    .axis--x path {
+      display: none;
+    }
+
+    .line {
+      fill: none;
+      stroke: steelblue;
+      stroke-width: 1.5px;
+    }
+
+    </style>
+    
+</head>
+<body ng-app="stockApp" ng-controller="mainCtrl">
 
 <h1>Stock Simulator</h1>
+<div class="bar-chart-container"></div>
+
+<table>
+    <tr>
+        <th>Price</th>
+    </tr>
+    <tr ng-repeat="price in company.kappisan">
+        <td>{{ price }}</td>
+    </tr>
+
+</table>
 
 <script>
 
-var margin = {top: 20, right: 20, bottom: 30, left: 40},
-    width = 800 - margin.left - margin.right,
-    height = 300 - margin.top - margin.bottom;
+  var margin = {top: 20, right: 20, bottom: 30, left: 40},
+      width = 800 - margin.left - margin.right,
+      height = 300 - margin.top - margin.bottom;
 
-var x = d3.scale.ordinal().rangeRoundBands([0, width], .1);
-var y = d3.scale.linear().range([height, 0]);
+  var x = d3.scale.ordinal().rangeRoundBands([0, width], .1);
+  var y = d3.scale.linear().range([height, 0]);
 
-var xAxis = d3.svg.axis()
-    .scale(x)
-    .orient("bottom");
+  var xAxis = d3.svg.axis()
+      .scale(x)
+      .orient("bottom");
 
-var yAxis = d3.svg.axis()
-    .scale(y)
-    .orient("left")
-    .ticks(10, "%");
+  var yAxis = d3.svg.axis()
+      .scale(y)
+      .orient("left")
+      .ticks(10, "%");
 
-var svg = d3.select(".d3-bar-chart").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+  var svg = d3.select(".bar-chart-container").append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-svg.append("g")
-    .attr("class", "x axis")
-    .attr("transform", "translate(0," + height + ")")
+  svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
 
-svg.append("g")
-    .attr("class", "y axis")
-  .append("text") // just for the title (ticks are automatic)
-    .attr("transform", "rotate(-90)") // rotate the text!
-    .attr("y", 6)
-    .attr("dy", ".71em")
-    .style("text-anchor", "end")
-    .text("Frequency");
+  svg.append("g")
+      .attr("class", "y axis")
+    .append("text") // just for the title (ticks are automatic)
+      .attr("transform", "rotate(-90)") // rotate the text!
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("Frequency");
 
-var data = [
-	{letter: "A", frequency: 28},
-	{letter: "B", frequency: 38},
-	{letter: "C", frequency: 55},
-	{letter: "D", frequency: 48},
-	{letter: "E", frequency: 23},
-	{letter: "F", frequency: 85},
-	{letter: "G", frequency: 37}
-];
+  var data = [
+  	{letter: "A", frequency: 28},
+  	{letter: "B", frequency: 38},
+  	{letter: "C", frequency: 55},
+  	{letter: "D", frequency: 48},
+  	{letter: "E", frequency: 23},
+  	{letter: "F", frequency: 85},
+  	{letter: "G", frequency: 37}
+  ];
 
-replay(data);
+  replay(data);
 
-function type(d) {
-  d.frequency = +d.frequency;
-  return d;
-}
-
-function replay(data) {
-  var slices = [];
-  for (var i = 0; i < data.length; i++) {
-    slices.push(data.slice(0, i+1));
+  function type(d) {
+    d.frequency = +d.frequency;
+    return d;
   }
-  slices.forEach(function(slice, index){
-    setTimeout(function(){
-      draw(slice);
-    }, index * 300);
-  });
-}
 
-function draw(data) {
+  function replay(data) {
+    var slices = [];
+    for (var i = 0; i < data.length; i++) {
+      slices.push(data.slice(0, i+1));
+    }
+    slices.forEach(function(slice, index){
+      setTimeout(function(){
+        draw(slice);
+      }, index * 300);
+    });
+  }
 
-  x.domain(data.map(function(d) { return d.letter; }));
-  y.domain([0, d3.max(data, function(d) { return d.frequency; })]);
+  function draw(data) {
 
-  svg.select('.x.axis').transition().duration(300).call(xAxis);
+    x.domain(data.map(function(d) { return d.letter; }));
+    y.domain([0, d3.max(data, function(d) { return d.frequency; })]);
 
-  svg.select(".y.axis").transition().duration(300).call(yAxis)
+    svg.select('.x.axis').transition().duration(300).call(xAxis);
 
-  var bars = svg.selectAll(".bar").data(data, function(d) { return d.letter; }) // (data) is an array/iterable thing, second argument is an ID generator function
+    svg.select(".y.axis").transition().duration(300).call(yAxis)
 
-  bars.exit()
-    .transition()
-      .duration(300)
-    .attr("y", y(0))
-    .attr("height", height - y(0))
-    .style('fill-opacity', 1e-6)
-    .remove();
+    var bars = svg.selectAll(".bar").data(data, function(d) { return d.letter; }) // (data) is an array/iterable thing, second argument is an ID generator function
 
-  // data that needs DOM = enter() (a set/selection, not an event!)
-  bars.enter().append("rect")
-    .attr("class", "bar")
-    .attr("y", y(0))
-    .attr("height", height - y(0));
+    bars.exit()
+      .transition()
+        .duration(300)
+      .attr("y", y(0))
+      .attr("height", height - y(0))
+      .style('fill-opacity', 1e-6)
+      .remove();
 
-  // the "UPDATE" set:
-  bars.transition().duration(300).attr("x", function(d) { return x(d.letter); })
-    .attr("width", x.rangeBand())
-    .attr("y", function(d) { return y(d.frequency); })
-    .attr("height", function(d) { return height - y(d.frequency); }); // flip the height, because y's domain is bottom up, but SVG renders top down
-}
+    // data that needs DOM = enter() (a set/selection, not an event!)
+    bars.enter().append("rect")
+      .attr("class", "bar")
+      .attr("y", y(0))
+      .attr("height", height - y(0));
+
+    // the "UPDATE" set:
+    bars.transition().duration(300).attr("x", function(d) { return x(d.letter); })
+      .attr("width", x.rangeBand())
+      .attr("y", function(d) { return y(d.frequency); })
+      .attr("height", function(d) { return height - y(d.frequency); }); // flip the height, because y's domain is bottom up, but SVG renders top down
+  }
 
 </script>
 
@@ -132,6 +155,40 @@ function draw(data) {
 
 
 
+<script>
+
+var app = angular.module('stockApp', []);
+
+app.controller('mainCtrl', function($scope) {
+
+    $scope.company = {};
+
+    $scope.company.kappisan = generateData();
+
+    console.log("angular loaded", $scope.company);
+
+
+    function generateData() {
+        var data = [];
+
+        var price = Math.random() * 10;
+        var multiplier = Math.random() - 0.5;
+
+        for(var i = 0; i < 100; i++) {
+
+            if(i % 4 == 0) { multiplier = Math.random() - 0.5; }
+
+            price += (Math.random() * multiplier);
+
+            data.push(price);        
+        }
+
+        return data;
+    }
+
+});
+
+</script>
 
 </body>
 </html>
