@@ -7,6 +7,7 @@
 	<link href='./style/style.css' rel='stylesheet' type='text/css'>
   	
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
 
     <link rel='shortcut icon' href='./img/logo5.png'>
 
@@ -25,12 +26,12 @@
     .axis--x path {
       display: none;
     }
-
+/*
     .axis {
         stroke: #fff;
         fill: #fff;
     }
-
+*/
     .line {
       fill: none;
       stroke: steelblue;
@@ -51,10 +52,12 @@
 
 <table>
     <tr>
+        <th>Date</th>
         <th>Price</th>
     </tr>
-    <tr ng-repeat="price in company.kappisan">
-        <td>{{ price }}</td>
+    <tr ng-repeat="valuation in company.kappisan">
+        <td>{{ valuation.date }}</td>
+        <td>{{ valuation.price }}</td>
     </tr>
 
 </table>
@@ -176,79 +179,72 @@ app.controller('mainCtrl', function($scope) {
 
     console.log("angular loaded", $scope.company);
 
-
-    drawLineChart();
-
-    function drawLineChart() {
-
-
-
-
-
-// Set the dimensions of the canvas / graph
-var margin = {top: 30, right: 20, bottom: 30, left: 50},
-    width = 600 - margin.left - margin.right,
-    height = 270 - margin.top - margin.bottom;
-
-// Parse the date / time
-var parseDate = d3.time.format("%d-%b-%y").parse;
-
-// Set the ranges
-var x = d3.time.scale().range([0, width]);
-var y = d3.scale.linear().range([height, 0]);
-
-// Define the axes
-var xAxis = d3.svg.axis().scale(x)
-    .orient("bottom").ticks(5);
-
-var yAxis = d3.svg.axis().scale(y)
-    .orient("left").ticks(5);
-
-// Define the line
-var valueline = d3.svg.line()
-    .x(function(d) { return x(d.date); })
-    .y(function(d) { return y(d.close); });
-    
-// Adds the svg canvas
-var svg = d3.select(".line-svg")
-    .append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-        .attr("transform", 
-              "translate(" + margin.left + "," + margin.top + ")");
-
-
     var data = [{date: "11-Jan-15", close: 222},
     {date: "12-Jan-15", close: 232},
     {date: "13-Jan-15", close: 212}];
 
-    data.forEach(function(d) {
-        d.date = parseDate(d.date);
-        d.close = +d.close;
-    });
+    drawLineChart(data);
 
-    // Scale the range of the data
-    x.domain(d3.extent(data, function(d) { return d.date; }));
-    y.domain([0, d3.max(data, function(d) { return d.close; })]);
+    function drawLineChart(data) {
 
-    // Add the valueline path.
-    svg.append("path")
-        .attr("class", "line")
-        .attr("d", valueline(data));
+      // Set the dimensions of the canvas / graph
+      var margin = {top: 30, right: 20, bottom: 30, left: 50},
+          width = 600 - margin.left - margin.right,
+          height = 270 - margin.top - margin.bottom;
 
-    // Add the X Axis
-    svg.append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
-        .call(xAxis);
+      // Parse the date / time
+      var parseDate = d3.time.format("%d-%b-%y").parse;
 
-    // Add the Y Axis
-    svg.append("g")
-        .attr("class", "y axis")
-        .call(yAxis);
+      // Set the ranges
+      var x = d3.time.scale().range([0, width]);
+      var y = d3.scale.linear().range([height, 0]);
+
+      // Define the axes
+      var xAxis = d3.svg.axis().scale(x)
+          .orient("bottom").ticks(5);
+
+      var yAxis = d3.svg.axis().scale(y)
+          .orient("left").ticks(5);
+
+      // Define the line
+      var valueline = d3.svg.line()
+          .x(function(d) { return x(d.date); })
+          .y(function(d) { return y(d.close); });
+          
+      // Adds the svg canvas
+      var svg = d3.select(".line-svg")
+          .append("svg")
+              .attr("width", width + margin.left + margin.right)
+              .attr("height", height + margin.top + margin.bottom)
+          .append("g")
+              .attr("transform", 
+                    "translate(" + margin.left + "," + margin.top + ")");
 
 
+          data.forEach(function(d) {
+              d.date = parseDate(d.date);
+              d.close = +d.close;
+          });
+
+          // Scale the range of the data
+          x.domain(d3.extent(data, function(d) { return d.date; }));
+          y.domain([0, d3.max(data, function(d) { return d.close; })]);
+
+          // Add the valueline path.
+          svg.append("path")
+              .attr("class", "line")
+              .attr("d", valueline(data));
+
+          // Add the X Axis
+          svg.append("g")
+              .attr("class", "x axis")
+              .attr("transform", "translate(0," + height + ")")
+              .call(xAxis);
+
+          // Add the Y Axis
+          svg.append("g")
+              .attr("class", "y axis")
+              .call(yAxis);
     }
 
     function generateData() {
@@ -256,14 +252,16 @@ var svg = d3.select(".line-svg")
 
         var price = Math.random() * 10;
         var multiplier = Math.random() - 0.5;
+        var startDate = moment("01-Jan-14", "DD-MMM-YY");
 
         for(var i = 0; i < 100; i++) {
 
             if(i % 4 == 0) { multiplier = Math.random() - 0.5; }
 
             price += (Math.random() * multiplier);
+            var date = startDate.add(i, "days").format("DD-MMM-YY")
 
-            data.push(price);        
+            data.push({date: date, price: price});        
         }
 
         return data;
