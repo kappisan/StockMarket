@@ -6,8 +6,7 @@
 
   	<link href='./style/style.css' rel='stylesheet' type='text/css'>
 
-    <link href='./libs/juno.css' rel='stylesheet' type='text/css'>
-
+    <link href='./style/hamburger.css' rel='stylesheet' type='text/css'>
 
     <link rel='shortcut icon' href='./img/logo5.png'>
 
@@ -43,11 +42,26 @@
     }
 
     .page-heading {
-      font-size: 32pt;
+    font-size: 32pt;
+    color: #fff;
+    margin-top: 12px;
     }
 
+    .wrapper {
+      width: 100%;
+      height: 90px;
+      position: fixed;
+      background-color: #666;
+    }
 
-
+.user-info {
+    float: right;
+    margin-right: 10px;
+    color: #fff;
+    position: fixed;
+    top: 60px;
+    right: 10px;
+}
 
 
 
@@ -63,69 +77,43 @@
 
 <div class="wrapper">
 
+    <center>
+      <h1 class="typewriter page-heading">Stock Simulator</h1>
+    </center>
+
     <input type="checkbox" id="navigation" />
     <label for="navigation">
 
-        <!-- Hamburger -->
-
-<div id="nav-icon3">
-  <span></span>
-  <span></span>
-  <span></span>
-  <span></span>
-</div>
+    <!-- Hamburger -->
+    <div id="nav-icon3">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
 
     </label>
-<br><br><br><br><br><br><br><br>
     <nav>
         <ul>
-            <li><p>
-                <a class="tabs" href="cam.html"> &nbsp; &nbsp;Add Memory</a>
-            </li>
-            <li><p>
-                <a class="tabs" href="timeline.html"> &nbsp; &nbsp;Memory Bank</a>
-            </li>
-            <li><p>
-                <a class="tabs" href="./gmaps/index.html"> &nbsp; &nbsp;Memory Map</a>
-            </li>
-            <li><p>
-                <a class="tabs" href="profile.html"> &nbsp; &nbsp;Profile</a>
-
-            </li>
-
-             <li><p>
-                <a class="tabs" href="orb.html"> &nbsp; &nbsp;The Orb Relm</a>
-            </li>
-            <li><p>
-                <a class="tabs" href="index.html"> &nbsp; &nbsp;Logout</a>
-            </li>
+            <li><p>Home</p></li>
+            <li><p>Holdings</p></li>
+            <li><p>Market</p></li>
+            <li><p>Profile</p></li>
+            <li><p>Statements</p></li>
+            <li><p>Logout</p></li>
         </ul>
     </nav>
 
-        <section>
-            <article>
-                
+    <div class="user-info">
+        {{ user.username }}
+        £{{ user.balance }}
+    </div>
+        
 </div>
     
 
 
-
-
-
-
-
-
-
-
-<center>
-<h1 class="typewriter page-heading">Stock Simulator</h1>
-<hr>
-</center>
-
-<div>
-    {{ user.username }}
-    £{{ user.balance }}
-</div>
+<center style="padding-top:90px;">
 
 <div class="line-svg"></div>
 
@@ -140,6 +128,7 @@
     </tr>
 
 </table>
+</center>
 
 <script>
 
