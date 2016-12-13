@@ -4,10 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<link href='./style/style.css' rel='stylesheet' type='text/css'>
-  	
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
+  	<link href='./style/style.css' rel='stylesheet' type='text/css'>
 
     <link rel='shortcut icon' href='./img/logo5.png'>
 
@@ -17,9 +14,12 @@
     <meta property="og:url" content="http://www.kappisan.com" />
     <meta property="og:image" content="http://www.kappisan.com/img/logo_rectangle.png" />
     
-    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
 
-	<title>Kasper Wilkosz</title>
+    <script src="./libs/d3.v3.min.js"></script>
+    
+    <title>Stock Simulator</title>
 
     <style>
 
@@ -45,6 +45,7 @@
 
 <center>
 <h1 class="typewriter">Stock Simulator</h1>
+<hr>
 </center>
 <div class="bar-chart-container"></div>
 
@@ -57,114 +58,10 @@
     </tr>
     <tr ng-repeat="valuation in company.kappisan">
         <td>{{ valuation.date }}</td>
-        <td>{{ valuation.price }}</td>
+        <td>{{ valuation.close }}</td>
     </tr>
 
 </table>
-<!-- 
-<script>
-
-  var margin = {top: 20, right: 20, bottom: 30, left: 40},
-      width = 800 - margin.left - margin.right,
-      height = 300 - margin.top - margin.bottom;
-
-  var x = d3.scale.ordinal().rangeRoundBands([0, width], .1);
-  var y = d3.scale.linear().range([height, 0]);
-
-  var xAxis = d3.svg.axis()
-      .scale(x)
-      .orient("bottom");
-
-  var yAxis = d3.svg.axis()
-      .scale(y)
-      .orient("left")
-      .ticks(10, "%");
-
-  var svg = d3.select(".bar-chart-container").append("svg")
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-  svg.append("g")
-      .attr("class", "x axis")
-      .attr("transform", "translate(0," + height + ")")
-
-  svg.append("g")
-      .attr("class", "y axis")
-    .append("text") // just for the title (ticks are automatic)
-      .attr("transform", "rotate(-90)") // rotate the text!
-      .attr("y", 6)
-      .attr("dy", ".71em")
-      .style("text-anchor", "end")
-      .text("Frequency");
-
-  var data = [
-  	{letter: "A", frequency: 28},
-  	{letter: "B", frequency: 38},
-  	{letter: "C", frequency: 55},
-  	{letter: "D", frequency: 48},
-  	{letter: "E", frequency: 23},
-  	{letter: "F", frequency: 85},
-  	{letter: "G", frequency: 37}
-  ];
-
-  replay(data);
-
-  function type(d) {
-    d.frequency = +d.frequency;
-    return d;
-  }
-
-  function replay(data) {
-    var slices = [];
-    for (var i = 0; i < data.length; i++) {
-      slices.push(data.slice(0, i+1));
-    }
-    slices.forEach(function(slice, index){
-      setTimeout(function(){
-        draw(slice);
-      }, index * 300);
-    });
-  }
-
-  function draw(data) {
-
-    x.domain(data.map(function(d) { return d.letter; }));
-    y.domain([0, d3.max(data, function(d) { return d.frequency; })]);
-
-    svg.select('.x.axis').transition().duration(300).call(xAxis);
-
-    svg.select(".y.axis").transition().duration(300).call(yAxis)
-
-    var bars = svg.selectAll(".bar").data(data, function(d) { return d.letter; }) // (data) is an array/iterable thing, second argument is an ID generator function
-
-    bars.exit()
-      .transition()
-        .duration(300)
-      .attr("y", y(0))
-      .attr("height", height - y(0))
-      .style('fill-opacity', 1e-6)
-      .remove();
-
-    // data that needs DOM = enter() (a set/selection, not an event!)
-    bars.enter().append("rect")
-      .attr("class", "bar")
-      .attr("y", y(0))
-      .attr("height", height - y(0));
-
-    // the "UPDATE" set:
-    bars.transition().duration(300).attr("x", function(d) { return x(d.letter); })
-      .attr("width", x.rangeBand())
-      .attr("y", function(d) { return y(d.frequency); })
-      .attr("height", function(d) { return height - y(d.frequency); }); // flip the height, because y's domain is bottom up, but SVG renders top down
-  }
-
-</script> -->
-
-
-
-
 
 
 <script>
@@ -173,17 +70,21 @@ var app = angular.module('stockApp', []);
 
 app.controller('mainCtrl', function($scope) {
 
+    $scope.info = {
+      name: "kappisan",
+      shares: 2000000,
+      volumeAverage: 3000,
+      pe: 50.8,
+      divYield: 1.2
+    }
+
     $scope.company = {};
 
     $scope.company.kappisan = generateData();
 
     console.log("angular loaded", $scope.company);
 
-    var data = [{date: "11-Jan-15", close: 222},
-    {date: "12-Jan-15", close: 232},
-    {date: "13-Jan-15", close: 212}];
-
-    drawLineChart(data);
+    drawLineChart($scope.company.kappisan);
 
     function drawLineChart(data) {
 
@@ -221,36 +122,35 @@ app.controller('mainCtrl', function($scope) {
                     "translate(" + margin.left + "," + margin.top + ")");
 
 
-          data.forEach(function(d) {
-              d.date = parseDate(d.date);
-              d.close = +d.close;
-          });
+      data.forEach(function(d) {
+          d.date = parseDate(d.date);
+      });
 
-          // Scale the range of the data
-          x.domain(d3.extent(data, function(d) { return d.date; }));
-          y.domain([0, d3.max(data, function(d) { return d.close; })]);
+      // Scale the range of the data
+      x.domain(d3.extent(data, function(d) { return d.date; }));
+      y.domain([d3.min(data, function(d) { return d.close; }), d3.max(data, function(d) { return d.close; })]);
 
-          // Add the valueline path.
-          svg.append("path")
-              .attr("class", "line")
-              .attr("d", valueline(data));
+      // Add the valueline path.
+      svg.append("path")
+          .attr("class", "line")
+          .attr("d", valueline(data));
 
-          // Add the X Axis
-          svg.append("g")
-              .attr("class", "x axis")
-              .attr("transform", "translate(0," + height + ")")
-              .call(xAxis);
+      // Add the X Axis
+      svg.append("g")
+          .attr("class", "x axis")
+          .attr("transform", "translate(0," + height + ")")
+          .call(xAxis);
 
-          // Add the Y Axis
-          svg.append("g")
-              .attr("class", "y axis")
-              .call(yAxis);
+      // Add the Y Axis
+      svg.append("g")
+          .attr("class", "y axis")
+          .call(yAxis);
     }
 
     function generateData() {
         var data = [];
 
-        var price = Math.random() * 10;
+        var price = (Math.random() * 10) + 4;
         var multiplier = Math.random() - 0.5;
         var startDate = moment("01-Jan-14", "DD-MMM-YY");
 
@@ -259,9 +159,9 @@ app.controller('mainCtrl', function($scope) {
             if(i % 4 == 0) { multiplier = Math.random() - 0.5; }
 
             price += (Math.random() * multiplier);
-            var date = startDate.add(i, "days").format("DD-MMM-YY")
+            var date = startDate.add(1, "days")
 
-            data.push({date: date, price: price});        
+            data.push({date: date.format("DD-MMM-YY"), close: price});        
         }
 
         return data;
