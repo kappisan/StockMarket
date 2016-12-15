@@ -16,9 +16,10 @@
     <meta property="og:url" content="http://www.kappisan.com" />
     <meta property="og:image" content="http://www.kappisan.com/img/logo_rectangle.png" />
     
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
+    <script src="./libs/numeral.min.js"></script>
+    <script src="./libs/moment.js"></script>
 
     <script src="./libs/d3.v3.min.js"></script>
     
@@ -26,46 +27,42 @@
 
     <style>
 
-    .axis--x path {
-      display: none;
-    }
-/*
-    .axis {
-        stroke: #fff;
-        fill: #fff;
-    }
-*/
-    .line {
-      fill: none;
-      stroke: steelblue;
-      stroke-width: 1.5px;
-    }
+        .axis--x path {
+          display: none;
+        }
+        /*
+            .axis {
+                stroke: #fff;
+                fill: #fff;
+            }
+        */
+        .line {
+          fill: none;
+          stroke: steelblue;
+          stroke-width: 1.5px;
+        }
 
-    .page-heading {
-    font-size: 32pt;
-    color: #fff;
-    margin-top: 12px;
-    }
+        .page-heading {
+        font-size: 32pt;
+        color: #fff;
+        margin-top: 12px;
+        }
 
-    .wrapper {
-      width: 100%;
-      height: 90px;
-      position: fixed;
-      background-color: #666;
-    }
+        .wrapper {
+          width: 100%;
+          height: 90px;
+          position: fixed;
+          background-color: #666;
+        }
 
-.user-info {
-    float: right;
-    margin-right: 10px;
-    color: #fff;
-    position: fixed;
-    top: 60px;
-    right: 10px;
-}
-
-
-
-
+        .user-info {
+            float: right;
+            margin-right: 10px;
+            color: #fff;
+            position: fixed;
+            top: 60px;
+            right: 10px;
+        }
 
     </style>
 
@@ -105,7 +102,7 @@
     </nav>
 
     <div class="user-info">
-        {{ user.username }}
+        <span class="cool">{{ user.username }}</span>
         £{{ user.balance }}
     </div>
         
@@ -153,7 +150,7 @@ app.controller('mainCtrl', function($scope) {
 
     $scope.user = {
       username: "Kasper Wilkosz",
-      balance: 59342,
+      balance: numeral(59342).format('0,0.00'),
       holdings: []
     }
 
