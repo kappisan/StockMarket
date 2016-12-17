@@ -1,0 +1,22 @@
+
+
+<center style="padding-top:90px;">
+
+<div>
+    {{ stockPrice }}
+</div>
+
+<div class="line-svg"></div>
+
+<table>
+    <tr>
+        <th>Date</th>
+        <th>Price</th>
+    </tr>
+    <tr ng-repeat="valuation in company.kappisan">
+        <td>{{ valuation.date }}</td>
+        <td>{{ valuation.close }}</td>
+    </tr>
+
+</table>
+</center>

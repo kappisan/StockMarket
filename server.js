@@ -25,6 +25,7 @@ var kappisan = {
 
 var price = (Math.random() * 10) + 4100;
 var multiplier = Math.random() - 0.5;
+var intensifier = Math.random() * 2;
 var startDate = moment("01-Jan-14", "DD-MMM-YY");
 var i = 0;
 var data = [];
@@ -33,8 +34,9 @@ var data = [];
 setInterval(function() {
 
     if(i % 4 == 0) { multiplier = Math.random() - 0.5; }
+    if(i % 7 == 0) { intensifier = Math.random() * 2; }
 
-    price += (Math.random() * multiplier);
+    price += (Math.random() * multiplier) * intensifier;
     var date = startDate.add(1, "days")
 
     //data.push({date: date.format("DD-MMM-YY"), close: price});    
