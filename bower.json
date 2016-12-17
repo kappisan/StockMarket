@@ -1,0 +1,21 @@
+{
+  "name": "StockMarket",
+  "homepage": "https://github.com/kappisan/StockMarket",
+  "authors": [
+    "kappisan <wilkosz.ian@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.1.1",
+    "numeral": "^2.0.0"
+  }
+}
