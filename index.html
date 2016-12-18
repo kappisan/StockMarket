@@ -67,6 +67,19 @@
             right: 10px;
         }
 
+        .transactionForm {
+            position: fixed;
+            margin: auto;
+            left: 0;
+            right: 0;
+            z-index: 999999999999999999;
+            top: 10px;
+            bottom: 0;
+            background-color: #00aa6b;
+            width: 600px;
+            height: 400px;
+        }
+
     </style>
 
 </head>
@@ -100,7 +113,6 @@
             <li><a href="#/market"><p>Market</p></a></li>
             <li><a href="#/profile"><p>Profile</p></a></li>
             <li><a href="#/statements"><p>Statements</p></a></li>
-            <li><p>Logout</p></li>
         </ul>
     </nav>
 
@@ -114,6 +126,17 @@
 
 <div id="container" ng-view></div>
 
+
+<div ng-if="showTransactionForm" class="transactionForm">
+    <center>
+        <h1>EXECUTE TRANSACTION</h1>
+        <div><h2>{{ selectedStock.name }}</h2></div><br>
+        <input type="number" ng-model="transaction.volume"><br><br><br><br>
+        <button ng-click="confirmBuyStock()">Execute</button>
+        <button ng-click="cancelBuyStock()">Cancel</button>
+    </center>
+</div>
+
 <script>
 
     $(document).ready(function(){
@@ -125,7 +148,10 @@
 </script>
 
 
+
 <script src="./main.js"></script>
+
+
 
 </body>
 </html>

@@ -1,9 +1,12 @@
+const PORT=7777; 
+
 // app.js
 var express = require('express');  
 var app = express();  
 var server = require('http').createServer(app);  
 var io = require('socket.io')(server);
 var moment = require('moment');
+//var _ = require('underscore');
 
 app.use(express.static(__dirname + '/'));  
 
@@ -75,50 +78,120 @@ io.on('connection', function(client) {
 
 
 
+var stocks = [{
+        name: "kappisan",
+        price: 1999,
+        sedol: "123456",
+        ticker: "KA",
+        sharesIssued: 4000,
+        marketCap: 99999999,
+        currency: "GBP",
+        volume: 10000
+      },{
+        name: "Big Belly Burger",
+        price: 210,
+        sedol: "123456",
+        ticker: "BBB",
+        sharesIssued: 4000,
+        marketCap: 99999999,
+        currency: "GBP",
+        volume: 10000
+      },{
+        name: "Maverick Media",
+        price: 999,
+        sedol: "123456",
+        ticker: "MM",
+        sharesIssued: 4000,
+        marketCap: 99999999,
+        currency: "GBP",
+        volume: 10000
+      },{
+        name: "BC Rich",
+        price: 999,
+        sedol: "123456",
+        ticker: "BCR",
+        sharesIssued: 4000,
+        marketCap: 99999999,
+        currency: "GBP",
+        volume: 10000
+      },{
+        name: "Amiris Cannabis",
+        price: 999,
+        sedol: "123456",
+        ticker: "ACB",
+        sharesIssued: 4000,
+        marketCap: 99999999,
+        currency: "GBP",
+        volume: 10000
+    },{
+        name: "Orange Soda",
+        price: 123,
+        sedol: "123456",
+        ticker: "OGS",
+        sharesIssued: 4000,
+        marketCap: 200000,
+        currency: "GBP",
+        volume: 10000
+    },{
+        name: "Casablanca",
+        price: 123,
+        sedol: "123456",
+        ticker: "CSB",
+        sharesIssued: 4000,
+        marketCap: 200000,
+        currency: "GBP",
+        volume: 10000
+    },{
+        name: "Relax & Revive",
+        price: 123,
+        sedol: "123456",
+        ticker: "RRV",
+        sharesIssued: 4000,
+        marketCap: 200000,
+        currency: "GBP",
+        volume: 10000
+    }];
+
+// returns a list of all stocks on the exchange
+app.get('/api/stocks', function (req, res) {
+
+	res.send(stocks);
+
+})
+
+
+var transactions = [{
+		date: "11-Sept-2001", 
+		quantity: 200,
+		bookCost: 23333,
+		pricePaid: 100,
+		stock: {
+	        name: "Casablanca",
+	        price: 123,
+	        sedol: "123456",
+	        ticker: "CSB",
+	        sharesIssued: 4000,
+	        marketCap: 200000,
+	        currency: "GBP",
+	        volume: 10000
+	    }
+	}]
+// returns a list of all stocks on the exchange
+app.post('/api/transactions', function (req, res) {
+
+	res.send(transactions);
+	
+})
 
 
 
-
-
-
-
-server.listen(7777);  
-
-// const PORT=7777; 
-
-
-
-// /* socket io */
-
-// io.on('connection', function(client) {  
-//     console.log('Client connected...');
-
-//     client.on('join', function(data) {
-//         console.log(data);
-//     });
-
-// });
-
-
-
-
-
-
-
-
-// var users = [];
-
-// app.get('/api/users', function (req, res) {
-
-// 	res.send(users);
-// });
 
 
 // /* start server */
 
-// server = app.listen(PORT);
+server.listen(PORT);  
 
-// var host = server.address().address
-// var port = server.address().port
+var host = server.address().address
+var port = server.address().port
 
-// console.log("stock simulator server listening on port %s", port);
+console.log("stock simulator server listening on port %s", port);

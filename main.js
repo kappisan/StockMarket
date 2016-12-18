@@ -3,14 +3,19 @@ var socket = io.connect('http://localhost:7777');
 var app = angular.module('stockApp', ['ngRoute'])
     .config( ['$routeProvider', function($routeProvider) {
         $routeProvider
-            .when('/', { templateUrl: 'templates/chart.html', controller: "lineCtrl" })  
-            .when('/holdings', { templateUrl: 'templates/holdings.html', controller: "holdingsCtrl" })    
+            .when('/', { templateUrl: 'templates/home.html', controller: "homeCtrl" })  
+            .when('/holdings', { templateUrl: 'templates/holdings.html', controller: "holdingsCtrl" })
+            .when('/stock', { templateUrl: 'templates/stock.html', controller: "stockCtrl" })  
             .when('/profile', { templateUrl: 'templates/profile.html', controller: "profileCtrl" })
             .when('/market', { templateUrl: 'templates/market.html', controller: "marketCtrl" })
             .when('/statements', { templateUrl: 'templates/statements.html', controller: "statementsCtrl" })
             .otherwise({ redirectTo: '/' });
     }]);
 
+
+app.controller('homeCtrl', function($scope) {
+
+});
 
 
 app.controller('holdingsCtrl', function($scope) {
@@ -63,15 +68,40 @@ app.controller('holdingsCtrl', function($scope) {
 
 });
 
-app.controller('marketCtrl', function($scope) {
+
+app.controller('marketCtrl', function($scope, $http) {
 
     console.log("market controller");
 
+    $http({
+      method: 'GET',
+      url: '/api/stocks'
+    }).then(function successCallback(response) {
+        console.log("got stocks", response);
+
+        $scope.stocks = response.data;
+
+      }, function errorCallback(response) {
+        console.log("error", response);
+      });
+
 });
 
-app.controller('statementsCtrl', function($scope) {
+app.controller('statementsCtrl', function($scope, $http) {
 
     console.log("statementsCtrl");
+
+    $http({
+      method: 'POST',
+      url: '/api/transactions'
+    }).then(function successCallback(response) {
+        console.log("got transactions", response);
+
+        $scope.stocks = response.data;
+
+      }, function errorCallback(response) {
+        console.log("error", response);
+      });
 
 });
 
@@ -81,7 +111,7 @@ app.controller('profileCtrl', function($scope) {
 
 });
 
-app.controller('lineCtrl', function($scope) {
+app.controller('stockCtrl', function($scope) {
     $scope.company = {};
 
     $scope.company.kappisan = generateData();
@@ -174,7 +204,37 @@ app.controller('lineCtrl', function($scope) {
 
 
 
-app.controller('mainCtrl', function($scope) {
+app.controller('mainCtrl', function($scope, $location) {
+
+    $scope.transaction = {
+      volume: 0
+    }
+
+    $scope.selectedStock = {name: ""}
+
+    $scope.goToStock = function(sedol) {
+      console.log("goToStock", sedol);
+      $location.url('stock?sedol=' + sedol);
+    }
+
+    $scope.showTransactionForm = false;
+    $(".transactionForm").css("visibility", "visible");
+    $scope.buyStock = function(stock) {
+        console.log("buy stock", stock);
+        $scope.selectedStock = stock;
+        $scope.showTransactionForm = true;
+    }
+
+    $scope.confirmBuyStock = function(stock) {
+        console.log("confirm buy stock", stock);
+    }
+
+    $scope.cancelBuyStock = function() {
+        console.log("confirm buy stock");
+
+        $scope.showTransactionForm = false;
+    }
+
 
     socket.on('connect', function(data) {
         socket.emit('join', 'Hello World from client');

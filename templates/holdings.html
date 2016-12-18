@@ -11,7 +11,7 @@
 			<th>Book Value</th>
 			<th>Quantity</th>
 		</tr>
-		<tr ng-repeat="holding in holdings">
+		<tr ng-repeat="holding in holdings" ng-click="goToStock(holding.sedol)">
 			<td>{{ holding.ticker }}</td>
 			<td>{{ holding.name }}</td>
 			<td>{{ holding.price }}</td>
