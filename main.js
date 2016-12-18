@@ -22,49 +22,14 @@ app.controller('holdingsCtrl', function($scope) {
 
     console.log("holdings controller");
 
-    $scope.holdings = [{
-      name: "kappisan",
-      price: 999,
-      sedol: "123456",
-      ticker: "KA",
-      quantity: 4000,
-      bookCost: 99999999,
-      bookValue: 33333
-    },{
-      name: "Big Belly Burger",
-      price: 210,
-      sedol: "123456",
-      ticker: "BBB",
-      quantity: 4000,
-      bookCost: 99999999,
-      bookValue: 33333
-    },{
-      name: "Maverick Media",
-      price: 999,
-      sedol: "123456",
-      ticker: "MM",
-      quantity: 4000,
-      bookCost: 99999999,
-      bookValue: 33333
-    },{
-      name: "BC Rich",
-      price: 999,
-      sedol: "123456",
-      ticker: "BCR",
-      quantity: 4000,
-      bookCost: 99999999,
-      bookValue: 33333
-    },{
-      name: "Amiris Cannabis",
-      price: 999,
-      sedol: "123456",
-      ticker: "ACB",
-      quantity: 4000,
-      bookCost: 99999999,
-      bookValue: 33333
-    }];
+    socket.emit("get holdings", true);
 
-    console.log("stocks", $scope.stocks);
+    socket.on('holdings', function(data) {
+        console.log("socket io holdings update", data);
+
+        $scope.holdings = data;
+        $scope.$apply();
+    });
 
 });
 

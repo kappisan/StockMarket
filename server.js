@@ -6,22 +6,13 @@ var app = express();
 var server = require('http').createServer(app);  
 var io = require('socket.io')(server);
 var moment = require('moment');
-//var _ = require('underscore');
+var _ = require('underscore');
 
 app.use(express.static(__dirname + '/'));  
 
 app.get('/', function(req, res,next) {  
     res.sendFile(__dirname + '/index.html');
 });
-
-
-/* stocks */
-var kappisan = {
-	price: 240,
-	currency: "GBX",
-	valuations: []
-};
-
 
 
 /* api */
@@ -51,6 +42,39 @@ setInterval(function() {
 }, 3000)
 
 
+var holdings = [{
+      name: "kappisan",
+      price: 200,
+      sedol: "123456",
+      ticker: "KA",
+      quantity: 4000,
+      bookCost: 300,
+      bookValue: 33333
+    },{
+      name: "Maverick Media",
+      price: 345,
+      sedol: "123456",
+      ticker: "MM",
+      quantity: 250,
+      bookCost: 4000,
+      bookValue: 4200
+    },{
+      name: "BC Rich",
+      price: 233,
+      sedol: "123456",
+      ticker: "BCR",
+      quantity: 10000,
+      bookCost: 600,
+      bookValue: 562
+    },{
+      name: "Amiris Cannabis",
+      price: 77,
+      sedol: "123456",
+      ticker: "ACB",
+      quantity: 4000,
+      bookCost: 850,
+      bookValue: 849
+    }];
 
 
 
@@ -67,9 +91,17 @@ io.on('connection', function(client) {
         console.log(data);
     });
 
+    client.on('get holdings', function(data) {
+        client.emit("holdings", holdings);
+    });
+
 	setInterval(function() {
 		client.emit("price", price);
 	}, 3000);
+
+	setInterval(function() {
+		client.emit("holdings", holdings);
+	}, 10000);
 
 });
 
@@ -90,7 +122,7 @@ var stocks = [{
       },{
         name: "Big Belly Burger",
         price: 210,
-        sedol: "123456",
+        sedol: "222222",
         ticker: "BBB",
         sharesIssued: 4000,
         marketCap: 99999999,
@@ -99,7 +131,7 @@ var stocks = [{
       },{
         name: "Maverick Media",
         price: 999,
-        sedol: "123456",
+        sedol: "333333",
         ticker: "MM",
         sharesIssued: 4000,
         marketCap: 99999999,
@@ -108,7 +140,7 @@ var stocks = [{
       },{
         name: "BC Rich",
         price: 999,
-        sedol: "123456",
+        sedol: "444444",
         ticker: "BCR",
         sharesIssued: 4000,
         marketCap: 99999999,
@@ -117,7 +149,7 @@ var stocks = [{
       },{
         name: "Amiris Cannabis",
         price: 999,
-        sedol: "123456",
+        sedol: "555555",
         ticker: "ACB",
         sharesIssued: 4000,
         marketCap: 99999999,
@@ -126,7 +158,7 @@ var stocks = [{
     },{
         name: "Orange Soda",
         price: 123,
-        sedol: "123456",
+        sedol: "66666",
         ticker: "OGS",
         sharesIssued: 4000,
         marketCap: 200000,
@@ -135,7 +167,7 @@ var stocks = [{
     },{
         name: "Casablanca",
         price: 123,
-        sedol: "123456",
+        sedol: "777777",
         ticker: "CSB",
         sharesIssued: 4000,
         marketCap: 200000,
@@ -144,7 +176,7 @@ var stocks = [{
     },{
         name: "Relax & Revive",
         price: 123,
-        sedol: "123456",
+        sedol: "888888",
         ticker: "RRV",
         sharesIssued: 4000,
         marketCap: 200000,
@@ -159,8 +191,31 @@ app.get('/api/stocks', function (req, res) {
 
 })
 
+// returns a list of all stocks on the exchange
+app.get('/api/stock', function (req, res) {
+
+	console.log('get stock by sedol', req.query);
+
+	var match;
+
+	if(req.query.sedol) {
+		match = _.findWhere(stocks, {sedol: req.query.sedol});
+	} else if (req.query.name) {
+		match = _.findWhere(stocks, {name: req.query.name});
+	} else if (req.query.ticker) {
+		match = _.findWhere(stocks, {ticker: req.query.ticker});
+	}
+
+	if(match) {
+		res.send(match);
+	} else {
+		res.send({ name: "no stock found" })
+	}
+})
+
 
 var transactions = [{
+		id: "abcdef12345678",
 		date: "11-Sept-2001", 
 		quantity: 200,
 		bookCost: 23333,
