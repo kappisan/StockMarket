@@ -112,11 +112,20 @@ io.on('connection', function(client) {
 
 var stocks = [{
         name: "kappisan",
-        price: 1999,
+        price: 3929,
         sedol: "123456",
         ticker: "KA",
+        sharesIssued: 5000000,
+        marketCap: 22700000,
+        currency: "GBP",
+        volume: 10000
+      },{
+        name: "Maverick Media",
+        price: 2546,
+        sedol: "333333",
+        ticker: "MM",
         sharesIssued: 4000,
-        marketCap: 99999999,
+        marketCap: 31000000,
         currency: "GBP",
         volume: 10000
       },{
@@ -125,21 +134,12 @@ var stocks = [{
         sedol: "222222",
         ticker: "BBB",
         sharesIssued: 4000,
-        marketCap: 99999999,
-        currency: "GBP",
-        volume: 10000
-      },{
-        name: "Maverick Media",
-        price: 999,
-        sedol: "333333",
-        ticker: "MM",
-        sharesIssued: 4000,
-        marketCap: 99999999,
+        marketCap: 230000,
         currency: "GBP",
         volume: 10000
       },{
         name: "BC Rich",
-        price: 999,
+        price: 22,
         sedol: "444444",
         ticker: "BCR",
         sharesIssued: 4000,
@@ -148,7 +148,7 @@ var stocks = [{
         volume: 10000
       },{
         name: "Amiris Cannabis",
-        price: 999,
+        price: 520,
         sedol: "555555",
         ticker: "ACB",
         sharesIssued: 4000,
@@ -157,11 +157,11 @@ var stocks = [{
         volume: 10000
     },{
         name: "Orange Soda",
-        price: 123,
+        price: 167,
         sedol: "66666",
         ticker: "OGS",
-        sharesIssued: 4000,
-        marketCap: 200000,
+        sharesIssued: 80000,
+        marketCap: 400000,
         currency: "GBP",
         volume: 10000
     },{
@@ -169,8 +169,8 @@ var stocks = [{
         price: 123,
         sedol: "777777",
         ticker: "CSB",
-        sharesIssued: 4000,
-        marketCap: 200000,
+        sharesIssued: 80000,
+        marketCap: 300000,
         currency: "GBP",
         volume: 10000
     },{

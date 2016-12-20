@@ -13,15 +13,15 @@ var app = angular.module('stockApp', ['ngRoute'])
     }]);
 
 
-app.controller('homeCtrl', function($scope) {
-
+app.controller('homeCtrl', function($scope, $rootScope) {
+    $rootScope.currentPage = "Home";
 });
 
 
-app.controller('holdingsCtrl', function($scope) {
+app.controller('holdingsCtrl', function($scope, $rootScope) {
 
     console.log("holdings controller");
-
+    $rootScope.currentPage = "Holdings";
     socket.emit("get holdings", true);
 
     socket.on('holdings', function(data) {
@@ -34,9 +34,12 @@ app.controller('holdingsCtrl', function($scope) {
 });
 
 
-app.controller('marketCtrl', function($scope, $http) {
+app.controller('marketCtrl', function($scope, $rootScope, $http) {
 
     console.log("market controller");
+
+
+    $rootScope.currentPage = "Market";
 
     $http({
       method: 'GET',
@@ -52,9 +55,11 @@ app.controller('marketCtrl', function($scope, $http) {
 
 });
 
-app.controller('statementsCtrl', function($scope, $http) {
+app.controller('statementsCtrl', function($scope, $rootScope, $http) {
 
     console.log("statementsCtrl");
+
+    $rootScope.currentPage = "Statements";
 
     $http({
       method: 'POST',
@@ -70,9 +75,11 @@ app.controller('statementsCtrl', function($scope, $http) {
 
 });
 
-app.controller('profileCtrl', function($scope) {
+app.controller('profileCtrl', function($scope, $rootScope) {
 
     console.log("profile controller");
+
+    $rootScope.currentPage = "Profile";
 
 });
 
@@ -84,6 +91,8 @@ app.controller('stockCtrl', function($scope) {
     console.log("angular loaded", $scope.company);
 
     drawLineChart($scope.company.kappisan);
+
+    $scope.currentPage = "Stock Name";
 
     function drawLineChart(data) {
 
@@ -117,8 +126,11 @@ app.controller('stockCtrl', function($scope) {
               .attr("width", width + margin.left + margin.right)
               .attr("height", height + margin.top + margin.bottom)
           .append("g")
-              .attr("transform", 
-                    "translate(" + margin.left + "," + margin.top + ")");
+              .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+              .on('mousemove', function () {
+                  var x = d3.mouse(this)[0];  
+                  console.log("mouse position", x);   
+              });
 
       data.forEach(function(d) {
           d.date = parseDate(d.date);
@@ -132,7 +144,7 @@ app.controller('stockCtrl', function($scope) {
       svg.append("path")
           .attr("class", "line")
           .attr("d", valueline(data));
-
+/*
       // Add the X Axis
       svg.append("g")
           .attr("class", "x axis")
@@ -143,7 +155,9 @@ app.controller('stockCtrl', function($scope) {
       svg.append("g")
           .attr("class", "y axis")
           .call(yAxis);
+*/
     }
+
 
     function generateData() {
         var data = [];
@@ -169,17 +183,23 @@ app.controller('stockCtrl', function($scope) {
 
 
 
-app.controller('mainCtrl', function($scope, $location) {
+app.controller('mainCtrl', function($scope, $rootScope, $location) {
 
     $scope.transaction = {
       volume: 0
     }
+
+    $scope.rootScope = "Home";
 
     $scope.selectedStock = {name: ""}
 
     $scope.goToStock = function(sedol) {
       console.log("goToStock", sedol);
       $location.url('stock?sedol=' + sedol);
+    }
+
+    $scope.goToProfilePage = function() {
+            $location.url('profile?username=kasper');
     }
 
     $scope.showTransactionForm = false;

@@ -30,8 +30,17 @@
 
     <style>
 
+        html {
+            color: #fff;
+        }
+
+        line-svg {
+            color: #f2c800;
+        }
+
         .axis--x path {
           display: none;
+
         }
         /*
             .axis {
@@ -41,21 +50,22 @@
         */
         .line {
           fill: none;
-          stroke: steelblue;
+          stroke: #f2c800;
           stroke-width: 1.5px;
         }
 
         .page-heading {
-        font-size: 32pt;
-        color: #fff;
-        margin-top: 12px;
+            font-size: 32pt;
+            color: #f2c800;
+            margin-top: 12px;
+            font-family: coolvetica;
         }
 
         .wrapper {
           width: 100%;
           height: 90px;
           position: fixed;
-          background-color: #666;
+          background-color: #000;
         }
 
         .user-info {
@@ -80,6 +90,40 @@
             height: 400px;
         }
 
+        .td-ticker {
+            color: #f2c800;
+            font-family: coolvetica;
+        }
+
+        .buy-button {
+            background-color: #f2c800;
+            border-color: #f2c800;
+            border-radius: 2px;
+            height: 28px;
+            width: 100px;
+        }
+        .buy-button:hover {
+            cursor: pointer;
+            opacity: 0.85;
+        }
+
+        th {
+            font-family: coolvetica;
+            font-size: 24px;
+            font-weight: normal;
+            padding: 35px 25px;
+            text-align: left;
+        }
+
+        td {
+            text-align:  left;
+            padding: 1px 25px;
+        }
+
+        .sans {
+            font-family: sans-serif;
+        }
+
     </style>
 
 </head>
@@ -91,7 +135,7 @@
 <div class="wrapper">
 
     <center>
-      <h1 class="typewriter page-heading">Stock Simulator</h1>
+      <h1 class="page-heading">{{ currentPage }}</h1>
     </center>
 
     <input type="checkbox" id="navigation" />
@@ -116,7 +160,7 @@
         </ul>
     </nav>
 
-    <div class="user-info">
+    <div class="user-info" ng-click="goToProfilePage()">
         <span class="cool">{{ user.username }}</span>
         £{{ user.balance }}
     </div>
@@ -147,11 +191,7 @@
 
 </script>
 
-
-
 <script src="./main.js"></script>
-
-
 
 </body>
 </html>

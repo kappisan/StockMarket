@@ -9,7 +9,7 @@
 }
 
 body {
-  background-color: #fff1e0;
+  background-color: #1a181d;
 }
 
 svg {
@@ -210,13 +210,18 @@ li {
 .axis path,
 .axis line {
   fill: none;
-  stroke: #000;
+  stroke: #f2c800;
   shape-rendering: crispEdges;
 }
 
 .x.axis path {
   display: none;
 }
+
+.y.axis path {
+  display: none;
+}
+
 
 .work-title {
     font-family: coolvetica;

@@ -1,23 +1,19 @@
 <center style="padding-top:90px;">
 
-	<h1>market</h1>
-
 	<table>
 		<tr>
 			<th>Ticker</th>
 			<th>Name</th>
 			<th>Price</th>
-			<th>Currency</th>
 			<th>Market Cap</th>
 			<th>Buy</th>
 		</tr>
-		<tr ng-repeat="stock in stocks">
-			<td ng-click="goToStock(stock.sedol)">{{ stock.ticker }}</td>
+		<tr ng-repeat="stock in stocks" class="sans">
+			<td ng-click="goToStock(stock.sedol)" class="td-ticker">{{ stock.ticker }}</td>
 			<td ng-click="goToStock(stock.sedol)">{{ stock.name }}</td>
 			<td ng-click="goToStock(stock.sedol)">{{ stock.price }}</td>
-			<td ng-click="goToStock(stock.sedol)">{{ stock.currency }}</td>
 			<td ng-click="goToStock(stock.sedol)">{{ stock.marketCap }}</td>
-			<td ng-click="buyStock(stock)"><button>Buy</button></td>
+			<td ng-click="buyStock(stock)"><button class="buy-button">Invest</button></td>
 		</tr>
 		
 	</table>
