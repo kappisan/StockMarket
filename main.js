@@ -57,13 +57,11 @@ app.controller('marketCtrl', function($scope, $rootScope, $http) {
       method: 'GET',
       url: '/api/funds'
     }).then(function successCallback(response) {
-        console.log("got stocks", response);
+        console.log("got funds", response);
 
         $scope.funds = response.data;
 
-      }, function errorCallback(response) {
-        console.log("error", response);
-      });
+      }, function errorCallback(response) { console.log("error", response); });
 
 });
 
@@ -81,30 +79,60 @@ app.controller('statementsCtrl', function($scope, $rootScope, $http) {
 
         $scope.stocks = response.data;
 
-      }, function errorCallback(response) {
-        console.log("error", response);
-      });
+    }, function errorCallback(response) { console.log("error", response); });
 
 });
 
-app.controller('profileCtrl', function($scope, $rootScope) {
+app.controller('profileCtrl', function($scope, $http, $rootScope) {
 
-    console.log("profile controller");
+    console.log("profile controller", getUrlVars()["username"]);
 
-    $rootScope.currentPage = "Profile";
+    $scope.userDetails = {
+      username: "loading",
+      name: "loading",
+      id: 1,
+      netWorth: 0,
+      image: './img/me.jpg'
+    }
+
+    $http({
+        method: 'GET',
+        url: '/api/user?username=' + getUrlVars()["username"]
+    }).then(function successCallback(response) {
+    
+        console.log("got user details", response);
+        
+        $scope.userDetails = response.data;
+        $rootScope.currentPage = $scope.userDetails.name;
+
+    }, function errorCallback(response) { console.log("error", response); });
 
 });
 
-app.controller('stockCtrl', function($scope) {
+app.controller('stockCtrl', function($scope, $rootScope, $http) {
     $scope.company = {};
 
     $scope.company.kappisan = generateData();
+
+
+    $http({
+      method: 'GET',
+      url: '/api/stock?sedol=' + getUrlVars()["sedol"]
+    }).then(function successCallback(response) {
+        console.log("got stock", response);
+
+        $scope.company = response.data;
+
+        $rootScope.currentPage = $scope.company.name;
+
+        console.log("stock name", $scope.company.name);
+
+      }, function errorCallback(response) { console.log("error", response); });
 
     console.log("angular loaded", $scope.company);
 
     drawLineChart($scope.company.kappisan);
 
-    $scope.currentPage = "Stock Name";
 
     function drawLineChart(data) {
 
@@ -156,7 +184,7 @@ app.controller('stockCtrl', function($scope) {
       svg.append("path")
           .attr("class", "line")
           .attr("d", valueline(data));
-/*
+      /*
       // Add the X Axis
       svg.append("g")
           .attr("class", "x axis")
@@ -167,7 +195,7 @@ app.controller('stockCtrl', function($scope) {
       svg.append("g")
           .attr("class", "y axis")
           .call(yAxis);
-*/
+      */
     }
 
 
@@ -208,27 +236,27 @@ app.controller('mainCtrl', function($scope, $rootScope, $location) {
       console.log("goToStock", stock.sedol);
       $scope.selectedStock = stock;
 
-      $scope.currentPage = stock.ticker + " - " + stock.name;
+      $rootScope.currentPage = stock.ticker + " - " + stock.name;
       $location.url('stock?sedol=' + stock.sedol);
     }
 
-    $scope.goToProfilePage = function() {
-      $scope.currentPage = "Profile";
-            //$location.url('profile?username=kasper');
+    $scope.goToProfilePage = function(username, name) {
+      $rootScope.currentPage = name;
+      $location.url('profile?username='+username);
     }
 
     $scope.goToStatementsPage = function() {
-      $scope.currentPage = "Statements";
+      $rootScope.currentPage = "Statements";
             //$location.url('statements');
     }
 
     $scope.goToMarketPage = function() {
-      $scope.currentPage = "Market";
+      $rootScope.currentPage = "Market";
             //$location.url('market');
     }
 
     $scope.goToHoldingsPage = function() {
-      $scope.currentPage = "Holdings";
+      $rootScope.currentPage = "Holdings";
             //$location.url('holdings');
     }
 
@@ -300,3 +328,13 @@ app.controller('mainCtrl', function($scope, $rootScope, $location) {
     });
 
 });
+
+// gets url parameters
+function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,    
+    function(m,key,value) {
+      vars[key] = value;
+    });
+    return vars;
+}

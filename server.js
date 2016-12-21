@@ -90,7 +90,16 @@ var stocks = [{
         sharesIssued: 5000000,
         marketCap: 22700000,
         volume: 10000,
-        type: "stock"
+        type: "stock",
+        president:   {
+            username: "kasper",
+            name: "Kasper Wilkosz",
+            id: 1,
+            netWorth: 500000,
+            image: './img/me.jpg'
+        },
+        vicePresident: {},
+        directors: []
       },{
         name: "Maverick Media",
         price: 2546,
@@ -99,7 +108,16 @@ var stocks = [{
         sharesIssued: 4000,
         marketCap: 31000000,
         volume: 10000,
-        type: "stock"
+        type: "stock",
+        president: {
+          username: "alex",
+          name: "Alex Richardson",
+          id: 2,
+          netWorth: 200000,
+          image: './img/alex.jpg'
+        },
+        vicePresident: {},
+        directors: []
       },{
         name: "Big Belly Burger",
         price: 210,
@@ -108,7 +126,16 @@ var stocks = [{
         sharesIssued: 4000,
         marketCap: 230000,
         volume: 10000,
-        type: "stock"
+        type: "stock",
+        president:   {
+            username: "kasper",
+            name: "Kasper Wilkosz",
+            id: 1,
+            netWorth: 500000,
+            image: './img/me.jpg'
+        },
+        vicePresident: {},
+        directors: []
       },{
         name: "BC Rich",
         price: 22,
@@ -117,7 +144,16 @@ var stocks = [{
         sharesIssued: 4000,
         marketCap: 99999999,
         volume: 10000,
-        type: "stock"
+        type: "stock",
+        president:   {
+            username: "kasper",
+            name: "Kasper Wilkosz",
+            id: 1,
+            netWorth: 500000,
+            image: './img/me.jpg'
+        },
+        vicePresident: {},
+        directors: []
       },{
         name: "Amiris Cannabis",
         price: 520,
@@ -126,7 +162,16 @@ var stocks = [{
         sharesIssued: 4000,
         marketCap: 99999999,
         volume: 10000,
-        type: "stock"
+        type: "stock",
+        president:   {
+            username: "kasper",
+            name: "Kasper Wilkosz",
+            id: 1,
+            netWorth: 500000,
+            image: './img/me.jpg'
+        },
+        vicePresident: {},
+        directors: []
     },{
         name: "Orange Soda",
         price: 167,
@@ -135,7 +180,16 @@ var stocks = [{
         sharesIssued: 80000,
         marketCap: 400000,
         volume: 10000,
-        type: "stock"
+        type: "stock",
+        president:   {
+            username: "kasper",
+            name: "Kasper Wilkosz",
+            id: 1,
+            netWorth: 500000,
+            image: './img/me.jpg'
+        },
+        vicePresident: {},
+        directors: []
     },{
         name: "Casablanca",
         price: 123,
@@ -144,7 +198,16 @@ var stocks = [{
         sharesIssued: 80000,
         marketCap: 300000,
         volume: 10000,
-        type: "stock"
+        type: "stock",
+        president:   {
+            username: "kasper",
+            name: "Kasper Wilkosz",
+            id: 1,
+            netWorth: 500000,
+            image: './img/me.jpg'
+        },
+        vicePresident: {},
+        directors: []
     },{
         name: "Relax & Revive",
         price: 123,
@@ -153,7 +216,16 @@ var stocks = [{
         sharesIssued: 4000,
         marketCap: 200000,
         volume: 10000,
-        type: "stock"
+        type: "stock",
+        president:   {
+            username: "kasper",
+            name: "Kasper Wilkosz",
+            id: 1,
+            netWorth: 500000,
+            image: './img/me.jpg'
+        },
+        vicePresident: {},
+        directors: []
     }];
 
 // returns a list of all stocks on the exchange
@@ -250,10 +322,57 @@ var funds = [{
 
 // returns a list of all stocks on the exchange
 app.get('/api/funds', function (req, res) {
-
   res.send(funds);
+})
+
+var users = [
+  {
+    username: "kasper",
+    name: "Kasper Wilkosz",
+    id: 1,
+    netWorth: 500000,
+    image: './img/me.jpg'
+  },
+  {
+    username: "alex",
+    name: "Alex Richardson",
+    id: 2,
+    netWorth: 200000,
+    image: './img/alex.jpg'
+  },
+  {
+    username: "gordon",
+    name: "Gordon Gekko",
+    id: 3,
+    netWorth: 850000,
+    image: './img/gordon.jpg'
+  },
+  {
+    username: "budfox",
+    name: "Bud Fox",
+    id: 4,
+    netWorth: 850000,
+    image: './img/budfox.jpg'
+  }
+];
+
+
+app.get('/api/users', function (req, res) {
+
+  res.send(users);
 
 })
+
+app.get('/api/user', function (req, res) {
+
+  console.log("get user", req.query.username);
+
+  var user = _.findWhere(users, { username: req.query.username })
+
+  res.send(user);
+
+})
+
 
 
 

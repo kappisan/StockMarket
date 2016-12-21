@@ -24,6 +24,29 @@
 
 	}
 
+	.staff-profile {
+		width: 600px;
+		height: 100px;
+	}
+
+	.staff-profile:hover {
+		background-color: black;
+		cursor: pointer;
+	}
+
+	.staff-photo {
+		width: 50px;
+	    display: inline-block;
+	    position: relative;
+	    top: 18px;
+	}
+
+	.staff-name {
+		width: 400px;
+	    display: inline-block;
+	    text-align: left;
+	    margin-left: 20px;
+	}
 	
 
 </style>
@@ -37,18 +60,21 @@
 		<tr>
 			<th>Range</th>
 			<td>632 - 655</td>
+
 			<th>Div / Yield</th>
 			<td>17.32</td>
 		</tr>
 		<tr>
 			<th>Volume</th>
 			<td>632 - 655</td>
+
 			<th>Market Cap</th>
-			<td>320000</td>
+			<td>{{ company.marketCap }}</td>
 		</tr>
 		<tr>
 			<th>P/E</th>
 			<td>11.3</td>
+
 			<th>Vol / Avg</th>
 			<td>320000</td>
 		</tr>
@@ -61,8 +87,18 @@
 <h1 class="cool">Officers and Directors</h1>
 
 <div>
-	<h4 class="sans">President - CEO - Kasper Wilkosz</h4>
-	<h4 class="sans">Vice President - Director - Alex Richardson</h4>
+	<div class="staff-profile" 
+		ng-click="goToProfilePage('kasper', 'Kasper Wilkosz')">
+		<img class="staff-photo" ng-src="{{ company.president.image }}">
+		<h4 class="sans staff-name">President - CEO - {{ company.president.name }}</h4>
+	</div>
+
+	<div ng-show="company.vicePresident != {}" 
+		class="staff-profile" 
+		ng-click="goToProfilePage('alex', 'Alex Richardson')">
+		<img class="staff-photo" ng-src="{{ company.vicePresident.image }}">
+		<h4 class="sans staff-name">Vice President - Director - {{ company.vicePresident.name }}</h4>
+	</div>
 </div>
 
 <table>
