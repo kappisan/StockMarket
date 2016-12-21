@@ -430,9 +430,13 @@ app.get('/api/user', function (req, res) {
 })
 
 
-var startDate = moment("01-Jan-14", "DD-MMM-YY");
+var now = moment();
 
-function generateData(startPrice) {
+console.log("now", now);
+
+var startDate = now.subtract(100 * 3, "seconds");
+
+function generateData(startPrice, interval) {
     var data = [];
 
     var price = startPrice;
@@ -443,9 +447,13 @@ function generateData(startPrice) {
         if(i % 4 == 0) { multiplier = Math.random() - 0.5; }
 
         price += (Math.random() * multiplier);
-        var date = startDate.add(1, "days")
+        var date = startDate.add(3, "seconds")
 
-        data.push({date: date.format("DD-MMM-YY"), close: price});        
+        data.push({
+          time: date.format('hh:mm:ss'), 
+          date: date.format("DD-MMM-YY"), 
+          close: price
+        });        
     }
 
     return data;
@@ -473,20 +481,19 @@ setInterval(function() {
         prices[pr]++;
     }
 
-
-    var date = startDate.add(1, "days")
+    var date = startDate.add(3, "seconds")
 
     var lastVal = valuations[valuations.length - 1].close;
 
     var multiplier = Math.random() - 0.5;
     lastVal += (Math.random() * multiplier);
 
-
-
-
     valuations.shift();
-    valuations.push({date: date.format("DD-MMM-YY"), close: lastVal });
-
+    valuations.push({
+      date: date.format("DD-MMM-YY"), 
+      time: date.format("hh:mm:ss"), 
+      close: lastVal 
+    });
 
 }, 3000);
 
@@ -501,6 +508,10 @@ io.on('connection', function(client) {
 
     client.on('get valuations', function(data) {
         client.emit("valuations", valuations);
+    });
+
+    client.on('get price', function(data) {
+        client.emit("price", valuations[valuations.length - 1].close);
     });
 
     setInterval(function() {

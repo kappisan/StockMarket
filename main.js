@@ -113,10 +113,11 @@ app.controller('stockCtrl', function($scope, $rootScope, $http) {
     
 
     console.log("angular loaded", $scope.company);
-    
+
     $scope.company = {};
 
     socket.emit('get valuations', 'get');
+    socket.emit('get price', 'get');
 
     $http({
       method: 'GET',
@@ -153,7 +154,7 @@ app.controller('stockCtrl', function($scope, $rootScope, $http) {
           height = 270 - margin.top - margin.bottom;
 
       // Parse the date / time
-      var parseDate = d3.time.format("%d-%b-%y").parse;
+      var parseDate = d3.time.format("%X").parse;
 
       // Set the ranges
       var x = d3.time.scale().range([0, width]);
@@ -168,7 +169,7 @@ app.controller('stockCtrl', function($scope, $rootScope, $http) {
 
       // Define the line
       var valueline = d3.svg.line()
-          .x(function(d) { return x(d.date); })
+          .x(function(d) { return x(d.time); })
           .y(function(d) { return y(d.close); });
           
       // Adds the svg canvas
@@ -186,24 +187,24 @@ app.controller('stockCtrl', function($scope, $rootScope, $http) {
         if(!data) { return; }
 
       data.forEach(function(d) {
-          d.date = parseDate(d.date);
+          d.time = parseDate(d.time);
       });
 
       // Scale the range of the data
-      x.domain(d3.extent(data, function(d) { return d.date; }));
+      x.domain(d3.extent(data, function(d) { return d.time; }));
       y.domain(d3.extent(data, function(d) { return d.close; }));
 
       // Add the valueline path.
       svg.append("path")
           .attr("class", "line")
           .attr("d", valueline(data));
-      /*
+     
       // Add the X Axis
       svg.append("g")
-          .attr("class", "x axis")
+          .attr("class", "x axis yellow-graph-key")
           .attr("transform", "translate(0," + height + ")")
           .call(xAxis);
-
+ /*
       // Add the Y Axis
       svg.append("g")
           .attr("class", "y axis")

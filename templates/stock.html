@@ -48,6 +48,12 @@
 	    margin-left: 20px;
 	}
 	
+	.tick text {
+	    stroke: #f2c800;
+	    stroke-width: 0.7px;
+	    font-size: 12px;
+	}
+
 
 </style>
 
@@ -66,7 +72,7 @@
 		</tr>
 		<tr>
 			<th>Volume</th>
-			<td>632 - 655</td>
+			<td>500</td>
 
 			<th>Market Cap</th>
 			<td>{{ company.marketCap }}</td>
@@ -76,7 +82,7 @@
 			<td>11.3</td>
 
 			<th>Vol / Avg</th>
-			<td>320000</td>
+			<td>3000</td>
 		</tr>
 	</table>
 
@@ -104,10 +110,12 @@
 <table>
     <tr>
         <th>Date</th>
+        <th>Time</th>
         <th>Price</th>
     </tr>
     <tr ng-repeat="valuation in valuations">
         <td>{{ valuation.date }}</td>
+        <td>{{ valuation.time }}</td>
         <td>{{ valuation.close }}</td>
     </tr>
 
