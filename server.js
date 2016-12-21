@@ -441,136 +441,102 @@ console.log("now", now);
 
 function generateData(startPrice, interval) {
 
+	var startDate = now.subtract(100 * interval, "seconds");
 
-		var startDate = now.subtract(100 * interval, "seconds");
+	var data = [];
 
-		var data = [];
+	var price = startPrice;
+	var multiplier = Math.random() - 0.5;
 
-		var price = startPrice;
-		var multiplier = Math.random() - 0.5;
+	for(var i = 0; i < 100; i++) {
 
-		for(var i = 0; i < 100; i++) {
+		if(i % 4 == 0) { multiplier = Math.random() - 0.5; }
 
-				if(i % 4 == 0) { multiplier = Math.random() - 0.5; }
+		price += (Math.random() * multiplier);
+		var date = startDate.add(interval, "seconds")
 
-				price += (Math.random() * multiplier);
-				var date = startDate.add(interval, "seconds")
+		data.push({
+			time: date.format('hh:mm:ss'), 
+			date: date.format("DD-MMM-YY"), 
+			close: price
+		});        
+	}
 
-				data.push({
-					time: date.format('hh:mm:ss'), 
-					date: date.format("DD-MMM-YY"), 
-					close: price
-				});        
-		}
-
-		return data;
+	return data;
 }
-
-
-var prices = {
-	KA: 3929,
-	MM: 2546,
-	BBB: 210,
-	BCR: 22,
-	ACB: 520,
-	OGS: 167,
-	CSB: 123,
-	RRV: 123
-}
-
-var valuations = generateData(420, GAME_SPEED);
 
 setInterval(function() {
 
-		for (var pr in prices) {
-				if(!prices.hasOwnProperty(pr)) continue; // skip loop if the property is from prototype
+	// go over each stock and calculate the new price
+	stocks.forEach(function(stock) {
 
-				prices[pr]++;
+		if(stock.valuations.length < 1) { // if no data generate some
+			stock.valuations = generateData(stock.price, GAME_SPEED);
+		} else {
+
+			var lastVal = stock.valuations[stock.valuations.length - 1].close;
+
+			var multiplier = Math.random() - 0.5;
+			lastVal += (Math.random() * multiplier);
+
+			stock.valuations.shift();
+			stock.valuations.push({
+				date: moment().format("DD-MMM-YY"), 
+				time: moment().format("hh:mm:ss"), 
+				close: lastVal 
+			});
+
+			stock.price = numeral(lastVal).format('0,0.00');
 		}
 
-		// go over each stock and calculate the new price
-		stocks.forEach(function(stock) {
-			console.log("update valuations", stock.name);
-
-			if(stock.valuations.length < 1) {
-				stock.valuations = generateData(stock.price, GAME_SPEED);
-			} else {
-
-				var date = moment();
-
-				var lastVal = stock.valuations[stock.valuations.length - 1].close;
-
-				var multiplier = Math.random() - 0.5;
-				lastVal += (Math.random() * multiplier);
-
-				stock.valuations.shift();
-				stock.valuations.push({
-					date: date.format("DD-MMM-YY"), 
-					time: date.format("hh:mm:ss"), 
-					close: lastVal 
-				});
-
-				stock.price = lastVal;
-			}
-
-		});
-
-
-		var date = moment();
-
-		var lastVal = valuations[valuations.length - 1].close;
-
-		var multiplier = Math.random() - 0.5;
-		lastVal += (Math.random() * multiplier);
-
-		valuations.shift();
-		valuations.push({
-			date: date.format("DD-MMM-YY"), 
-			time: date.format("hh:mm:ss"), 
-			close: lastVal 
-		});
+	});
 
 }, 3000);
 
 /* socket.io */
 
 io.on('connection', function(client) {  
-		console.log('Client connected...');
+	console.log('Client connected...');
 
-		client.on('get holdings', function(data) {
-				client.emit("holdings", holdings);
-		});
+	client.on('get holdings', function(data) {
+		client.emit("holdings", holdings);
+	});
 
-		client.on('get funds', function(data) {
-				client.emit("funds", funds);
-		});
+	client.on('get funds', function(data) {
+		client.emit("funds", funds);
+	});
 
-		client.on('get stocks', function(data) {
-				client.emit("stocks", stocks);
-		});
+	client.on('get stocks', function(data) {
+		client.emit("stocks", stocks);
+	});
 
-		client.on('get valuations', function(data) {
-				client.emit("valuations", valuations);
-		});
+	client.on('get stock', function(sedol) {
+		console.log("get stock by sedol");
+		var sedolStock = _.findWhere(stocks, { sedol: sedol }) 
+		client.emit("stock", sedolStock);
+	});
 
-		client.on('get price', function(data) {
-				client.emit("price", valuations[valuations.length - 1].close);
-		});
 
-		setInterval(function() {
+	client.on('get valuation', function(sedol) {
+		console.log("get valuations by sedol");
+		var sedolValuations = _.findWhere(stocks, { sedol: sedol }) 
 
-			client.emit("valuations", valuations);
+		if(!sedolValuations) return;
 
-			//client.emit("prices", prices);
-			client.emit("price", valuations[valuations.length - 1].close);
-			client.emit("holdings", holdings);
+		client.emit("valuations", sedolValuations.valuations);
+	});
 
-			client.emit("stocks", stocks);
+	setInterval(function() {
 
-		}, 3000);
+		//client.emit("valuations", valuations);
+
+		client.emit("holdings", holdings);
+
+		client.emit("stocks", stocks);
+
+	}, 3000);
 
 });
-
 
 
 

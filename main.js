@@ -125,17 +125,14 @@ app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
 
     $scope.goToStatementsPage = function() {
       $rootScope.currentPage = "Statements";
-            //$location.url('statements');
     }
 
     $scope.goToMarketPage = function() {
       $rootScope.currentPage = "Market";
-            //$location.url('market');
     }
 
     $scope.goToHoldingsPage = function() {
       $rootScope.currentPage = "Holdings";
-            //$location.url('holdings');
     }
 
     $scope.showTransactionForm = false;
@@ -163,7 +160,7 @@ app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
         $scope.showTransactionForm = false;
     }
 
-
+    socket.emit('get valuation', getUrlVars()["sedol"]);
 
     socket.on('stocks', function(data) {
         console.log("socket io stocks update", data);
@@ -176,19 +173,6 @@ app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
     });
 
     $scope.stockPrice = "loading...";
-
-    socket.on('prices', function(data) {
-        console.log("socket io pricesssss update", data);
-        $rootScope.stocks = data;
-    });
-
-
-
-    socket.on('price', function(data) {
-        console.log("socket io price update", data);
-        $scope.stockPrice = numeral(data).format('0.00');
-        $scope.$apply();
-    });
 
     $scope.user = {
       username: "Kasper Wilkosz",
@@ -203,6 +187,13 @@ app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
       pe: 50.8,
       divYield: 1.2
     }
+
+    socket.on('stock', function(data) {
+        console.log("socket io stock stock stock update", data);
+        if(!data || !data.name) return;
+        $rootScope.currentPage = data.name;
+        $scope.stockPrice = numeral(data.price).format('0.00');
+    });
 
 
 

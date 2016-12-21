@@ -13,7 +13,7 @@
 		<tr ng-repeat="stock in stocks" class="sans market-tr">
 			<td ng-click="goToStock(stock)" class="td-ticker">{{ stock.ticker }}</td>
 			<td ng-click="goToStock(stock)">{{ stock.name }}</td>
-			<td ng-click="goToStock(stock)">{{ stock.price }}</td>
+			<td ng-click="goToStock(stock)">£{{ stock.price }}</td>
 			<td ng-click="goToStock(stock)">{{ stock.marketCap }}</td>
 			<td ng-click="buyStock(stock)"><button class="buy-button">Invest</button></td>
 		</tr>

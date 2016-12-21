@@ -3,25 +3,21 @@ app.controller('stockCtrl', function($scope, $rootScope, $http) {
 
     console.log("angular loaded", $scope.company);
 
+    socket.emit('get valuation', getUrlVars()["sedol"]);
+	socket.emit('get stock', getUrlVars()["sedol"]);
+
     $scope.company = {};
 
-    socket.emit('get valuations', 'get');
-    socket.emit('get price', 'get');
-/*
-    $http({
-      method: 'GET',
-      url: '/api/stock?sedol=' + getUrlVars()["sedol"]
-    }).then(function successCallback(response) {
-        console.log("got stock", response);
+    socket.on('stock', function(data) {
+        if(!data || !data.name) return;
+        $scope.company = data;
+    });
 
-        $scope.company = response.data;
 
-        $rootScope.currentPage = $scope.company.name;
-
-        console.log("stock name", $scope.company.name);
-
-      }, function errorCallback(response) { console.log("error", response); });
-*/
+    setInterval(function() {
+    	socket.emit('get valuation', getUrlVars()["sedol"]);
+    	socket.emit('get stock', getUrlVars()["sedol"]);
+    }, 3000)
 
     socket.on('valuations', function(data) {
 
@@ -58,7 +54,7 @@ app.controller('stockCtrl', function($scope, $rootScope, $http) {
 
       // Define the line
       var valueline = d3.svg.line()
-          .x(function(d) { return x(d.time); })
+          .x(function(d) { return x(parseDate(d.time)); })
           .y(function(d) { return y(d.close); });
           
       // Adds the svg canvas
@@ -75,13 +71,8 @@ app.controller('stockCtrl', function($scope, $rootScope, $http) {
 
         if(!data) { return; }
 
-      data.forEach(function(d) {
-          //console.log("parsedate", d);
-          d.time = parseDate(d.time);
-      });
-
       // Scale the range of the data
-      x.domain(d3.extent(data, function(d) { return d.time; }));
+      x.domain(d3.extent(data, function(d) { return parseDate(d.time); }));
       y.domain(d3.extent(data, function(d) { return d.close; }));
 
       // Add the valueline path.
