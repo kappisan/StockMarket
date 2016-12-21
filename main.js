@@ -251,4 +251,16 @@ app.controller('mainCtrl', function($scope, $rootScope, $location) {
       divYield: 1.2
     }
 
+
+
+    $scope.$watch("transaction.volume", function(n, o) {
+        console.log("transaction change", n);
+        $scope.transaction.value = n * (+$scope.stockPrice);
+    });
+
+    $scope.$watch("stockPrice", function(n, o) {
+        console.log("transaction change", n);
+        $scope.transaction.value = $scope.transaction.volume * (+$scope.stockPrice);
+    });
+
 });

@@ -82,34 +82,6 @@ var holdings = [{
 
 
 
-/* socket.io */
-
-io.on('connection', function(client) {  
-    console.log('Client connected...');
-
-    client.on('join', function(data) {
-        console.log(data);
-    });
-
-    client.on('get holdings', function(data) {
-        client.emit("holdings", holdings);
-    });
-
-	setInterval(function() {
-		client.emit("price", price);
-	}, 3000);
-
-	setInterval(function() {
-		client.emit("holdings", holdings);
-	}, 10000);
-
-});
-
-
-
-
-
-
 var stocks = [{
         name: "kappisan",
         price: 3929,
@@ -237,6 +209,35 @@ app.post('/api/transactions', function (req, res) {
 	res.send(transactions);
 	
 })
+
+
+
+
+
+
+
+/* socket.io */
+
+io.on('connection', function(client) {  
+    console.log('Client connected...');
+
+    client.on('join', function(data) {
+        console.log(data);
+    });
+
+    client.on('get holdings', function(data) {
+        client.emit("holdings", holdings);
+    });
+
+  setInterval(function() {
+    client.emit("price", price);
+  }, 3000);
+
+  setInterval(function() {
+    client.emit("holdings", holdings);
+  }, 10000);
+
+});
 
 
 
