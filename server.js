@@ -17,7 +17,7 @@ app.get('/', function(req, res,next) {
 
 /* api */
 
-var price = (Math.random() * 10) + 4100;
+var price = 0;
 var multiplier = Math.random() - 0.5;
 var intensifier = Math.random() * 2;
 var startDate = moment("01-Jan-14", "DD-MMM-YY");
@@ -31,9 +31,7 @@ setInterval(function() {
     if(i % 7 == 0) { intensifier = Math.random() * 2; }
 
     price += (Math.random() * multiplier) * intensifier;
-    var date = startDate.add(1, "days")
-
-    //data.push({date: date.format("DD-MMM-YY"), close: price});    
+    var date = startDate.add(1, "days") 
 
 	console.log("price update ---  £", price);
 
@@ -42,7 +40,8 @@ setInterval(function() {
 }, 3000)
 
 
-var holdings = [{
+var holdings = [
+    {
       name: "kappisan",
       price: 200,
       sedol: "123456",
@@ -50,7 +49,8 @@ var holdings = [{
       quantity: 4000,
       bookCost: 300,
       bookValue: 33333
-    },{
+    },
+    {
       name: "Maverick Media",
       price: 345,
       sedol: "333333",
@@ -58,7 +58,8 @@ var holdings = [{
       quantity: 250,
       bookCost: 4000,
       bookValue: 4200
-    },{
+    },
+    {
       name: "Amiris Cannabis",
       price: 77,
       sedol: "555555",
@@ -70,7 +71,8 @@ var holdings = [{
 
 
 
-var stocks = [{
+var stocks = [
+      {
         name: "kappisan",
         price: 3929,
         sedol: "123456",
@@ -94,7 +96,8 @@ var stocks = [{
           image: './img/alex.jpg'
         },
         directors: []
-      },{
+      },
+      {
         name: "Maverick Media",
         price: 2546,
         sedol: "333333",
@@ -118,7 +121,8 @@ var stocks = [{
             image: './img/me.jpg'
         },
         directors: []
-      },{
+      },
+      {
         name: "Big Belly Burger",
         price: 210,
         sedol: "222222",
@@ -142,7 +146,8 @@ var stocks = [{
           image: './img/budfox.jpg'
         },
         directors: []
-      },{
+      },
+      {
         name: "BC Rich",
         price: 22,
         sedol: "444444",
@@ -166,7 +171,8 @@ var stocks = [{
           image: './img/belfort.jpg'
         },
         directors: []
-      },{
+      },
+      {
         name: "Amiris Cannabis",
         price: 520,
         sedol: "555555",
@@ -190,7 +196,8 @@ var stocks = [{
           image: './img/alex.jpg'
         },
         directors: []
-    },{
+    },
+    {
         name: "Orange Soda",
         price: 167,
         sedol: "66666",
@@ -214,7 +221,8 @@ var stocks = [{
           image: './img/alex.jpg'
         },
         directors: []
-    },{
+    },
+    {
         name: "Casablanca",
         price: 123,
         sedol: "777777",
@@ -238,7 +246,8 @@ var stocks = [{
           image: './img/gordon.jpg'
         },
         directors: []
-    },{
+    },
+    {
         name: "Relax & Revive",
         price: 123,
         sedol: "888888",
@@ -367,28 +376,32 @@ var users = [
     name: "Kasper Wilkosz",
     id: 1,
     netWorth: 500000,
-    image: './img/me.jpg'
+    image: './img/me.jpg',
+    holdings: []
   },
   {
     username: "alex",
     name: "Alex Richardson",
     id: 2,
     netWorth: 200000,
-    image: './img/alex.jpg'
+    image: './img/alex.jpg',
+    holdings: []
   },
   {
     username: "gordon",
     name: "Gordon Gekko",
     id: 3,
     netWorth: 850000,
-    image: './img/gordon.jpg'
+    image: './img/gordon.jpg',
+    holdings: []
   },
   {
     username: "budfox",
     name: "Bud Fox",
     id: 4,
     netWorth: 850000,
-    image: './img/budfox.jpg'
+    image: './img/budfox.jpg',
+    holdings: []
   },
   {
     username: "belfort",
@@ -417,6 +430,26 @@ app.get('/api/user', function (req, res) {
 })
 
 
+var startDate = moment("01-Jan-14", "DD-MMM-YY");
+
+function generateData(startPrice) {
+    var data = [];
+
+    var price = startPrice;
+    var multiplier = Math.random() - 0.5;
+
+    for(var i = 0; i < 100; i++) {
+
+        if(i % 4 == 0) { multiplier = Math.random() - 0.5; }
+
+        price += (Math.random() * multiplier);
+        var date = startDate.add(1, "days")
+
+        data.push({date: date.format("DD-MMM-YY"), close: price});        
+    }
+
+    return data;
+}
 
 
 var prices = {
@@ -430,15 +463,31 @@ var prices = {
   RRV: 123
 }
 
+var valuations = generateData(420);
+
 setInterval(function() {
 
     for (var pr in prices) {
-        // skip loop if the property is from prototype
-        if(!prices.hasOwnProperty(pr)) continue;
+        if(!prices.hasOwnProperty(pr)) continue; // skip loop if the property is from prototype
 
-        
         prices[pr]++;
     }
+
+
+    var date = startDate.add(1, "days")
+
+    var lastVal = valuations[valuations.length - 1].close;
+
+    var multiplier = Math.random() - 0.5;
+    lastVal += (Math.random() * multiplier);
+
+
+
+
+    valuations.shift();
+    valuations.push({date: date.format("DD-MMM-YY"), close: lastVal });
+
+
 }, 3000);
 
 /* socket.io */
@@ -446,18 +495,20 @@ setInterval(function() {
 io.on('connection', function(client) {  
     console.log('Client connected...');
 
-    client.on('join', function(data) {
-        console.log(data);
-    });
-
     client.on('get holdings', function(data) {
         client.emit("holdings", holdings);
     });
 
+    client.on('get valuations', function(data) {
+        client.emit("valuations", valuations);
+    });
+
     setInterval(function() {
 
+      client.emit("valuations", valuations);
+
       client.emit("prices", prices);
-      client.emit("price", price);
+      client.emit("price", valuations[valuations.length - 1].close);
       client.emit("funds", funds);
       client.emit("holdings", holdings);
 

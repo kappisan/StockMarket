@@ -110,10 +110,13 @@ app.controller('profileCtrl', function($scope, $http, $rootScope) {
 });
 
 app.controller('stockCtrl', function($scope, $rootScope, $http) {
+    
+
+    console.log("angular loaded", $scope.company);
+    
     $scope.company = {};
 
-    $scope.company.kappisan = generateData();
-
+    socket.emit('get valuations', 'get');
 
     $http({
       method: 'GET',
@@ -129,9 +132,17 @@ app.controller('stockCtrl', function($scope, $rootScope, $http) {
 
       }, function errorCallback(response) { console.log("error", response); });
 
-    console.log("angular loaded", $scope.company);
 
-    drawLineChart($scope.company.kappisan);
+    socket.on('valuations', function(data) {
+
+        console.log("socket io valuations update", data);
+
+        $scope.valuations = data;
+
+        $(".line-svg").html('');
+
+        drawLineChart($scope.valuations);
+    });
 
 
     function drawLineChart(data) {
@@ -172,6 +183,8 @@ app.controller('stockCtrl', function($scope, $rootScope, $http) {
                   console.log("mouse position", x);   
               });
 
+        if(!data) { return; }
+
       data.forEach(function(d) {
           d.date = parseDate(d.date);
       });
@@ -198,27 +211,6 @@ app.controller('stockCtrl', function($scope, $rootScope, $http) {
       */
     }
 
-
-    function generateData() {
-        var data = [];
-
-        var price = (Math.random() * 10) + 4;
-        var multiplier = Math.random() - 0.5;
-        var startDate = moment("01-Jan-14", "DD-MMM-YY");
-
-        for(var i = 0; i < 40; i++) {
-
-            if(i % 4 == 0) { multiplier = Math.random() - 0.5; }
-
-            price += (Math.random() * multiplier);
-            var date = startDate.add(1, "days")
-
-            data.push({date: date.format("DD-MMM-YY"), close: price});        
-        }
-
-        return data;
-    }
-
 });
 
 
@@ -237,7 +229,7 @@ app.controller('mainCtrl', function($scope, $rootScope, $location) {
       $scope.selectedStock = stock;
 
       $rootScope.currentPage = stock.ticker + " - " + stock.name;
-      $location.url('stock?sedol=' + stock.sedol);
+      $location.url('stock?sedol=' + stock.sedol); 
     }
 
     $scope.goToProfilePage = function(username, name) {
