@@ -85,7 +85,7 @@
             z-index: 999999999999999999;
             top: 10px;
             bottom: 0;
-            background-color: #00aa6b;
+            background-color: #f2c800;
             width: 600px;
             height: 400px;
         }
@@ -124,6 +124,20 @@
             font-family: sans-serif;
         }
 
+        .grey-out-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.92);
+            top: 0;
+            z-index: 9999999;
+        }
+
+        .market-tr:hover {
+            cursor: pointer;
+            background-color: #000;
+        }
+
     </style>
 
 </head>
@@ -135,6 +149,7 @@
 <div class="wrapper">
 
     <center>
+
       <h1 class="page-heading">{{ currentPage }}</h1>
     </center>
 
@@ -171,14 +186,16 @@
 <div id="container" ng-view></div>
 
 
-<div ng-if="showTransactionForm" class="transactionForm">
-    <center>
-        <h1>EXECUTE TRANSACTION</h1>
-        <div><h2>{{ selectedStock.name }}</h2></div><br>
-        <input type="number" ng-model="transaction.volume"><br><br><br><br>
-        <button ng-click="confirmBuyStock()">Execute</button>
-        <button ng-click="cancelBuyStock()">Cancel</button>
-    </center>
+<div ng-if="showTransactionForm" class="grey-out-bg">
+    <div class="transactionForm">
+        <center>
+            <h1>EXECUTE TRANSACTION</h1>
+            <div><h2>{{ selectedStock.name }}</h2></div><br>
+            <input type="number" ng-model="transaction.volume"><br><br><br><br>
+            <button ng-click="confirmBuyStock()">Execute</button>
+            <button ng-click="cancelBuyStock()">Cancel</button>
+        </center>
+    </div>
 </div>
 
 <script>

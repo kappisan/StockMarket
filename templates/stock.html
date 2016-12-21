@@ -1,9 +1,57 @@
+<style>
+	.stock-name {
+		font-size: 32px;
+	}
 
+	.stock-price {
+		font-size: 72px;
+	    width: 300px;
+	    float: left;
+	    margin: 0;
+	}
+
+	.stock-info-box {
+	    width: 680px;
+	}
+
+	.line-svg svg {
+		    margin: 50px 0 0 0;
+	}
+
+	.info-table th {
+		padding: 0 !important;
+	    font-size: 16px;
+
+	}
+
+</style>
 
 <center style="padding-top:90px;">
 
-<div>
-    {{ stockPrice }}
+<div class="stock-info-box">
+	<h2 class="stock-price">{{ stockPrice }}</h2>
+
+	<table class="info-table">
+		<tr>
+			<th>Range</th>
+			<td>632 - 655</td>
+			<th>Div / Yield</th>
+			<td>17.32</td>
+		</tr>
+		<tr>
+			<th>Volume</th>
+			<td>632 - 655</td>
+			<th>Market Cap</th>
+			<td>320000</td>
+		</tr>
+		<tr>
+			<th>Volume</th>
+			<td>632 - 655</td>
+			<th>Market Cap</th>
+			<td>320000</td>
+		</tr>
+	</table>
+
 </div>
 
 <div class="line-svg"></div>

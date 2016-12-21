@@ -189,13 +189,15 @@ app.controller('mainCtrl', function($scope, $rootScope, $location) {
       volume: 0
     }
 
-    $scope.rootScope = "Home";
 
     $scope.selectedStock = {name: ""}
 
-    $scope.goToStock = function(sedol) {
-      console.log("goToStock", sedol);
-      $location.url('stock?sedol=' + sedol);
+    $scope.goToStock = function(stock) {
+      console.log("goToStock", stock.sedol);
+      $scope.selectedStock = stock;
+
+      $scope.currentPage = stock.ticker + " - " + stock.name;
+      $location.url('stock?sedol=' + stock.sedol);
     }
 
     $scope.goToProfilePage = function() {
