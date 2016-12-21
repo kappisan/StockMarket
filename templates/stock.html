@@ -88,14 +88,14 @@
 
 <div>
 	<div class="staff-profile" 
-		ng-click="goToProfilePage('kasper', 'Kasper Wilkosz')">
+		ng-click="goToProfilePage(company.president.username, company.president.name)">
 		<img class="staff-photo" ng-src="{{ company.president.image }}">
 		<h4 class="sans staff-name">President - CEO - {{ company.president.name }}</h4>
 	</div>
 
-	<div ng-show="company.vicePresident != {}" 
+	<div ng-show="company.vicePresident" 
 		class="staff-profile" 
-		ng-click="goToProfilePage('alex', 'Alex Richardson')">
+		ng-click="goToProfilePage(company.vicePresident.username, company.vicePresident.name)">
 		<img class="staff-photo" ng-src="{{ company.vicePresident.image }}">
 		<h4 class="sans staff-name">Vice President - Director - {{ company.vicePresident.name }}</h4>
 	</div>

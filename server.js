@@ -98,7 +98,13 @@ var stocks = [{
             netWorth: 500000,
             image: './img/me.jpg'
         },
-        vicePresident: {},
+        vicePresident: {
+          username: "alex",
+          name: "Alex Richardson",
+          id: 2,
+          netWorth: 200000,
+          image: './img/alex.jpg'
+        },
         directors: []
       },{
         name: "Maverick Media",
@@ -116,7 +122,13 @@ var stocks = [{
           netWorth: 200000,
           image: './img/alex.jpg'
         },
-        vicePresident: {},
+        vicePresident: {
+            username: "kasper",
+            name: "Kasper Wilkosz",
+            id: 1,
+            netWorth: 500000,
+            image: './img/me.jpg'
+        },
         directors: []
       },{
         name: "Big Belly Burger",
@@ -127,14 +139,20 @@ var stocks = [{
         marketCap: 230000,
         volume: 10000,
         type: "stock",
-        president:   {
-            username: "kasper",
-            name: "Kasper Wilkosz",
-            id: 1,
-            netWorth: 500000,
-            image: './img/me.jpg'
+        president: {
+          username: "gordon",
+          name: "Gordon Gekko",
+          id: 3,
+          netWorth: 850000,
+          image: './img/gordon.jpg'
         },
-        vicePresident: {},
+        vicePresident: {
+          username: "budfox",
+          name: "Bud Fox",
+          id: 4,
+          netWorth: 850000,
+          image: './img/budfox.jpg'
+        },
         directors: []
       },{
         name: "BC Rich",
@@ -145,14 +163,20 @@ var stocks = [{
         marketCap: 99999999,
         volume: 10000,
         type: "stock",
-        president:   {
-            username: "kasper",
-            name: "Kasper Wilkosz",
-            id: 1,
-            netWorth: 500000,
-            image: './img/me.jpg'
+        president: {
+          username: "gordon",
+          name: "Gordon Gekko",
+          id: 3,
+          netWorth: 850000,
+          image: './img/gordon.jpg'
         },
-        vicePresident: {},
+        vicePresident: {
+          username: "alex",
+          name: "Alex Richardson",
+          id: 2,
+          netWorth: 200000,
+          image: './img/alex.jpg'
+        },
         directors: []
       },{
         name: "Amiris Cannabis",
@@ -170,7 +194,13 @@ var stocks = [{
             netWorth: 500000,
             image: './img/me.jpg'
         },
-        vicePresident: {},
+        vicePresident: {
+          username: "alex",
+          name: "Alex Richardson",
+          id: 2,
+          netWorth: 200000,
+          image: './img/alex.jpg'
+        },
         directors: []
     },{
         name: "Orange Soda",
@@ -181,14 +211,20 @@ var stocks = [{
         marketCap: 400000,
         volume: 10000,
         type: "stock",
-        president:   {
-            username: "kasper",
-            name: "Kasper Wilkosz",
-            id: 1,
-            netWorth: 500000,
-            image: './img/me.jpg'
+        president: {
+          username: "gordon",
+          name: "Gordon Gekko",
+          id: 3,
+          netWorth: 850000,
+          image: './img/gordon.jpg'
         },
-        vicePresident: {},
+        vicePresident: {
+          username: "alex",
+          name: "Alex Richardson",
+          id: 2,
+          netWorth: 200000,
+          image: './img/alex.jpg'
+        },
         directors: []
     },{
         name: "Casablanca",
@@ -206,7 +242,13 @@ var stocks = [{
             netWorth: 500000,
             image: './img/me.jpg'
         },
-        vicePresident: {},
+        vicePresident: {
+          username: "gordon",
+          name: "Gordon Gekko",
+          id: 3,
+          netWorth: 850000,
+          image: './img/gordon.jpg'
+        },
         directors: []
     },{
         name: "Relax & Revive",
@@ -217,14 +259,20 @@ var stocks = [{
         marketCap: 200000,
         volume: 10000,
         type: "stock",
-        president:   {
-            username: "kasper",
-            name: "Kasper Wilkosz",
-            id: 1,
-            netWorth: 500000,
-            image: './img/me.jpg'
+        president: {
+          username: "gordon",
+          name: "Gordon Gekko",
+          id: 3,
+          netWorth: 850000,
+          image: './img/gordon.jpg'
         },
-        vicePresident: {},
+        vicePresident: {
+          username: "alex",
+          name: "Alex Richardson",
+          id: 2,
+          netWorth: 200000,
+          image: './img/alex.jpg'
+        },
         directors: []
     }];
 
