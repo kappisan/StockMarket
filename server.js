@@ -212,9 +212,27 @@ app.post('/api/transactions', function (req, res) {
 
 
 
+var prices = {
+  KA: 3929,
+  MM: 2546,
+  BBB: 210,
+  BCR: 22,
+  ACB: 520,
+  OGS: 167,
+  CSB: 123,
+  RRV: 123
+}
 
+setInterval(function() {
 
+    for (var pr in prices) {
+        // skip loop if the property is from prototype
+        if(!prices.hasOwnProperty(pr)) continue;
 
+        
+        prices[pr]++;
+    }
+}, 3000);
 
 /* socket.io */
 
@@ -229,13 +247,14 @@ io.on('connection', function(client) {
         client.emit("holdings", holdings);
     });
 
-  setInterval(function() {
-    client.emit("price", price);
-  }, 3000);
+    setInterval(function() {
 
-  setInterval(function() {
-    client.emit("holdings", holdings);
-  }, 10000);
+      client.emit("prices", prices);
+
+      client.emit("price", price);
+
+      client.emit("holdings", holdings);
+    }, 3000);
 
 });
 

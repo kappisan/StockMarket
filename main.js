@@ -229,13 +229,15 @@ app.controller('mainCtrl', function($scope, $rootScope, $location) {
 
     $scope.stockPrice = "loading...";
 
+    socket.on('prices', function(data) {
+        console.log("socket io pricesssss update", data);
+    });
+
     socket.on('price', function(data) {
         console.log("socket io price update", data);
         $scope.stockPrice = numeral(data).format('0.00');
         $scope.$apply();
-
     });
-
 
     $scope.user = {
       username: "Kasper Wilkosz",
