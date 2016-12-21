@@ -18,6 +18,7 @@
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    
     <script src="./libs/numeral.min.js"></script>
     <script src="./libs/moment.js"></script>
     <script src="./libs/angular-route.min.js"></script>
@@ -55,11 +56,11 @@
     </label>
     <nav>
         <ul>
-            <li><a href="#/"><p>Home</p></a></li>
-            <li><a href="#/holdings"><p>Holdings</p></a></li>
-            <li><a href="#/market"><p>Market</p></a></li>
-            <li><a href="#/profile"><p>Profile</p></a></li>
-            <li><a href="#/statements"><p>Statements</p></a></li>
+            <li><a href="#/" ng-click="goToHomePage()"><p>Home</p></a></li>
+            <li><a href="#/holdings" ng-click="goToHoldingsPage()"><p>Holdings</p></a></li>
+            <li><a href="#/market" ng-click="goToMarketPage()"><p>Market</p></a></li>
+            <li><a href="#/profile" ng-click="goToProfilePage()"><p>Profile</p></a></li>
+            <li><a href="#/statements" ng-click="goToStatementsPage()"><p>Statements</p></a></li>
         </ul>
     </nav>
 

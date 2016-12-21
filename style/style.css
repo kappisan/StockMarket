@@ -335,6 +335,10 @@ li {
             font-family: sans-serif;
         }
 
+        .yellow {
+          color: #f2c800;
+        }
+
         .grey-out-bg {
             position: absolute;
             width: 100%;

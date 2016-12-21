@@ -89,8 +89,8 @@ var stocks = [{
         ticker: "KA",
         sharesIssued: 5000000,
         marketCap: 22700000,
-        currency: "GBP",
-        volume: 10000
+        volume: 10000,
+        type: "stock"
       },{
         name: "Maverick Media",
         price: 2546,
@@ -98,8 +98,8 @@ var stocks = [{
         ticker: "MM",
         sharesIssued: 4000,
         marketCap: 31000000,
-        currency: "GBP",
-        volume: 10000
+        volume: 10000,
+        type: "stock"
       },{
         name: "Big Belly Burger",
         price: 210,
@@ -107,8 +107,8 @@ var stocks = [{
         ticker: "BBB",
         sharesIssued: 4000,
         marketCap: 230000,
-        currency: "GBP",
-        volume: 10000
+        volume: 10000,
+        type: "stock"
       },{
         name: "BC Rich",
         price: 22,
@@ -116,8 +116,8 @@ var stocks = [{
         ticker: "BCR",
         sharesIssued: 4000,
         marketCap: 99999999,
-        currency: "GBP",
-        volume: 10000
+        volume: 10000,
+        type: "stock"
       },{
         name: "Amiris Cannabis",
         price: 520,
@@ -125,8 +125,8 @@ var stocks = [{
         ticker: "ACB",
         sharesIssued: 4000,
         marketCap: 99999999,
-        currency: "GBP",
-        volume: 10000
+        volume: 10000,
+        type: "stock"
     },{
         name: "Orange Soda",
         price: 167,
@@ -134,8 +134,8 @@ var stocks = [{
         ticker: "OGS",
         sharesIssued: 80000,
         marketCap: 400000,
-        currency: "GBP",
-        volume: 10000
+        volume: 10000,
+        type: "stock"
     },{
         name: "Casablanca",
         price: 123,
@@ -143,8 +143,8 @@ var stocks = [{
         ticker: "CSB",
         sharesIssued: 80000,
         marketCap: 300000,
-        currency: "GBP",
-        volume: 10000
+        volume: 10000,
+        type: "stock"
     },{
         name: "Relax & Revive",
         price: 123,
@@ -152,8 +152,8 @@ var stocks = [{
         ticker: "RRV",
         sharesIssued: 4000,
         marketCap: 200000,
-        currency: "GBP",
-        volume: 10000
+        volume: 10000,
+        type: "stock"
     }];
 
 // returns a list of all stocks on the exchange
@@ -210,6 +210,51 @@ app.post('/api/transactions', function (req, res) {
 	
 })
 
+var funds = [{
+        name: "kappisan fund",
+        price: 3929,
+        sedol: "123456",
+        ticker: "KAF",
+        sharesIssued: 5000000,
+        marketCap: 22700000,
+        volume: 10000,
+        type: "fund"
+      },{
+        name: "Maverick Media finance",
+        price: 2546,
+        sedol: "333333",
+        ticker: "MMF",
+        sharesIssued: 4000,
+        marketCap: 31000000,
+        volume: 10000,
+        type: "fund"
+      },{
+        name: "Kaspers Piggy Bank",
+        price: 210,
+        sedol: "222222",
+        ticker: "KPB",
+        sharesIssued: 4000,
+        marketCap: 230000,
+        volume: 10000,
+        type: "fund"
+      },{
+        name: "Get Rich or Die Tying",
+        price: 22,
+        sedol: "444444",
+        ticker: "GRDT",
+        sharesIssued: 4000,
+        marketCap: 99999999,
+        volume: 10000,
+        type: "fund"
+      }];
+
+// returns a list of all stocks on the exchange
+app.get('/api/funds', function (req, res) {
+
+  res.send(funds);
+
+})
+
 
 
 var prices = {
@@ -252,6 +297,8 @@ io.on('connection', function(client) {
       client.emit("prices", prices);
 
       client.emit("price", price);
+
+      client.emit("funds", funds);
 
       client.emit("holdings", holdings);
     }, 3000);

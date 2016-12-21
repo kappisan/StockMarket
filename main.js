@@ -53,6 +53,18 @@ app.controller('marketCtrl', function($scope, $rootScope, $http) {
         console.log("error", response);
       });
 
+    $http({
+      method: 'GET',
+      url: '/api/funds'
+    }).then(function successCallback(response) {
+        console.log("got stocks", response);
+
+        $scope.funds = response.data;
+
+      }, function errorCallback(response) {
+        console.log("error", response);
+      });
+
 });
 
 app.controller('statementsCtrl', function($scope, $rootScope, $http) {
@@ -166,7 +178,7 @@ app.controller('stockCtrl', function($scope) {
         var multiplier = Math.random() - 0.5;
         var startDate = moment("01-Jan-14", "DD-MMM-YY");
 
-        for(var i = 0; i < 100; i++) {
+        for(var i = 0; i < 40; i++) {
 
             if(i % 4 == 0) { multiplier = Math.random() - 0.5; }
 
@@ -201,13 +213,36 @@ app.controller('mainCtrl', function($scope, $rootScope, $location) {
     }
 
     $scope.goToProfilePage = function() {
-            $location.url('profile?username=kasper');
+      $scope.currentPage = "Profile";
+            //$location.url('profile?username=kasper');
+    }
+
+    $scope.goToStatementsPage = function() {
+      $scope.currentPage = "Statements";
+            //$location.url('statements');
+    }
+
+    $scope.goToMarketPage = function() {
+      $scope.currentPage = "Market";
+            //$location.url('market');
+    }
+
+    $scope.goToHoldingsPage = function() {
+      $scope.currentPage = "Holdings";
+            //$location.url('holdings');
     }
 
     $scope.showTransactionForm = false;
     $(".transactionForm").css("visibility", "visible");
+
     $scope.buyStock = function(stock) {
         console.log("buy stock", stock);
+        $scope.selectedStock = stock;
+        $scope.showTransactionForm = true;
+    }
+
+    $scope.sellStock = function(stock) {
+        console.log("sell stock", stock);
         $scope.selectedStock = stock;
         $scope.showTransactionForm = true;
     }
@@ -221,7 +256,6 @@ app.controller('mainCtrl', function($scope, $rootScope, $location) {
 
         $scope.showTransactionForm = false;
     }
-
 
     socket.on('connect', function(data) {
         socket.emit('join', 'Hello World from client');

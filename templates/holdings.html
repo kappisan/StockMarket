@@ -8,14 +8,16 @@
 			<th>Book Cost</th>
 			<th>Book Value</th>
 			<th>Quantity</th>
+			<th>Sell</th>
 		</tr>
-		<tr ng-repeat="holding in holdings" ng-click="goToStock(holding.sedol)"  class="sans">
+		<tr ng-repeat="holding in holdings" ng-click="goToStock(holding)" class="sans market-tr">
 			<td  class="td-ticker">{{ holding.ticker }}</td>
 			<td>{{ holding.name }}</td>
 			<td>{{ holding.price }}</td>
 			<td>{{ holding.bookCost }}</td>
 			<td>{{ holding.bookValue }}</td>
 			<td>{{ holding.quantity }}</td>
+			<td ng-click="sellStock(stock)"><button class="buy-button">Sell</button></td>
 		</tr>
 		
 	</table>
