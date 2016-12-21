@@ -1,4 +1,5 @@
 const PORT=7777; 
+const GAME_SPEED = 3;
 
 // app.js
 var express = require('express');  
@@ -6,12 +7,13 @@ var app = express();
 var server = require('http').createServer(app);  
 var io = require('socket.io')(server);
 var moment = require('moment');
+var numeral = require('numeral');
 var _ = require('underscore');
 
 app.use(express.static(__dirname + '/'));  
 
 app.get('/', function(req, res,next) {  
-    res.sendFile(__dirname + '/index.html');
+		res.sendFile(__dirname + '/index.html');
 });
 
 
@@ -27,11 +29,11 @@ var data = [];
 // price changes every 3s
 setInterval(function() {
 
-    if(i % 4 == 0) { multiplier = Math.random() - 0.5; }
-    if(i % 7 == 0) { intensifier = Math.random() * 2; }
+		if(i % 4 == 0) { multiplier = Math.random() - 0.5; }
+		if(i % 7 == 0) { intensifier = Math.random() * 2; }
 
-    price += (Math.random() * multiplier) * intensifier;
-    var date = startDate.add(1, "days") 
+		price += (Math.random() * multiplier) * intensifier;
+		var date = startDate.add(1, "days") 
 
 	console.log("price update ---  £", price);
 
@@ -41,244 +43,246 @@ setInterval(function() {
 
 
 var holdings = [
-    {
-      name: "kappisan",
-      price: 200,
-      sedol: "123456",
-      ticker: "KA",
-      quantity: 4000,
-      bookCost: 300,
-      bookValue: 33333
-    },
-    {
-      name: "Maverick Media",
-      price: 345,
-      sedol: "333333",
-      ticker: "MM",
-      quantity: 250,
-      bookCost: 4000,
-      bookValue: 4200
-    },
-    {
-      name: "Amiris Cannabis",
-      price: 77,
-      sedol: "555555",
-      ticker: "ACB",
-      quantity: 4000,
-      bookCost: 850,
-      bookValue: 849
-    }];
+		{
+			name: "kappisan",
+			price: 200,
+			sedol: "123456",
+			ticker: "KA",
+			quantity: 4000,
+			bookCost: 300,
+			bookValue: 33333
+		},
+		{
+			name: "Maverick Media",
+			price: 345,
+			sedol: "333333",
+			ticker: "MM",
+			quantity: 250,
+			bookCost: 4000,
+			bookValue: 4200
+		},
+		{
+			name: "Amiris Cannabis",
+			price: 77,
+			sedol: "555555",
+			ticker: "ACB",
+			quantity: 4000,
+			bookCost: 850,
+			bookValue: 849
+		}];
 
 
 
 var stocks = [
-      {
-        name: "kappisan",
-        price: 3929,
-        sedol: "123456",
-        ticker: "KA",
-        sharesIssued: 5000000,
-        marketCap: 22700000,
-        volume: 10000,
-        type: "stock",
-        president:   {
-            username: "kasper",
-            name: "Kasper Wilkosz",
-            id: 1,
-            netWorth: 500000,
-            image: './img/me.jpg'
-        },
-        vicePresident: {
-          username: "alex",
-          name: "Alex Richardson",
-          id: 2,
-          netWorth: 200000,
-          image: './img/alex.jpg'
-        },
-        directors: []
-      },
-      {
-        name: "Maverick Media",
-        price: 2546,
-        sedol: "333333",
-        ticker: "MM",
-        sharesIssued: 4000,
-        marketCap: 31000000,
-        volume: 10000,
-        type: "stock",
-        president: {
-          username: "alex",
-          name: "Alex Richardson",
-          id: 2,
-          netWorth: 200000,
-          image: './img/alex.jpg'
-        },
-        vicePresident: {
-            username: "kasper",
-            name: "Kasper Wilkosz",
-            id: 1,
-            netWorth: 500000,
-            image: './img/me.jpg'
-        },
-        directors: []
-      },
-      {
-        name: "Big Belly Burger",
-        price: 210,
-        sedol: "222222",
-        ticker: "BBB",
-        sharesIssued: 4000,
-        marketCap: 230000,
-        volume: 10000,
-        type: "stock",
-        president: {
-          username: "gordon",
-          name: "Gordon Gekko",
-          id: 3,
-          netWorth: 850000,
-          image: './img/gordon.jpg'
-        },
-        vicePresident: {
-          username: "budfox",
-          name: "Bud Fox",
-          id: 4,
-          netWorth: 850000,
-          image: './img/budfox.jpg'
-        },
-        directors: []
-      },
-      {
-        name: "BC Rich",
-        price: 22,
-        sedol: "444444",
-        ticker: "BCR",
-        sharesIssued: 4000,
-        marketCap: 99999999,
-        volume: 10000,
-        type: "stock",
-        president: {
-          username: "gordon",
-          name: "Gordon Gekko",
-          id: 3,
-          netWorth: 850000,
-          image: './img/gordon.jpg'
-        },
-        vicePresident: {
-          username: "belfort",
-          name: "Jordan Belfort",
-          id: 5,
-          netWorth: 1850000,
-          image: './img/belfort.jpg'
-        },
-        directors: []
-      },
-      {
-        name: "Amiris Cannabis",
-        price: 520,
-        sedol: "555555",
-        ticker: "ACB",
-        sharesIssued: 4000,
-        marketCap: 99999999,
-        volume: 10000,
-        type: "stock",
-        president:   {
-            username: "kasper",
-            name: "Kasper Wilkosz",
-            id: 1,
-            netWorth: 500000,
-            image: './img/me.jpg'
-        },
-        vicePresident: {
-          username: "alex",
-          name: "Alex Richardson",
-          id: 2,
-          netWorth: 200000,
-          image: './img/alex.jpg'
-        },
-        directors: []
-    },
-    {
-        name: "Orange Soda",
-        price: 167,
-        sedol: "66666",
-        ticker: "OGS",
-        sharesIssued: 80000,
-        marketCap: 400000,
-        volume: 10000,
-        type: "stock",
-        president: {
-          username: "gordon",
-          name: "Gordon Gekko",
-          id: 3,
-          netWorth: 850000,
-          image: './img/gordon.jpg'
-        },
-        vicePresident: {
-          username: "alex",
-          name: "Alex Richardson",
-          id: 2,
-          netWorth: 200000,
-          image: './img/alex.jpg'
-        },
-        directors: []
-    },
-    {
-        name: "Casablanca",
-        price: 123,
-        sedol: "777777",
-        ticker: "CSB",
-        sharesIssued: 80000,
-        marketCap: 300000,
-        volume: 10000,
-        type: "stock",
-        president:   {
-          username: "belfort",
-          name: "Jordan Belfort",
-          id: 5,
-          netWorth: 1850000,
-          image: './img/belfort.jpg'
-        },
-        vicePresident: {
-          username: "gordon",
-          name: "Gordon Gekko",
-          id: 3,
-          netWorth: 850000,
-          image: './img/gordon.jpg'
-        },
-        directors: []
-    },
-    {
-        name: "Relax & Revive",
-        price: 123,
-        sedol: "888888",
-        ticker: "RRV",
-        sharesIssued: 4000,
-        marketCap: 200000,
-        volume: 10000,
-        type: "stock",
-        president: {
-          username: "gordon",
-          name: "Gordon Gekko",
-          id: 3,
-          netWorth: 850000,
-          image: './img/gordon.jpg'
-        },
-        vicePresident: {
-          username: "alex",
-          name: "Alex Richardson",
-          id: 2,
-          netWorth: 200000,
-          image: './img/alex.jpg'
-        },
-        directors: []
-    }];
+			{
+				name: "kappisan",
+				price: 3929,
+				sedol: "123456",
+				ticker: "KA",
+				sharesIssued: 5000000,
+				marketCap: 22700000,
+				volume: 10000,
+				valuations: [],
+				type: "stock",
+				president:   {
+						username: "kasper",
+						name: "Kasper Wilkosz",
+						id: 1,
+						netWorth: 500000,
+						image: './img/me.jpg'
+				},
+				vicePresident: {
+					username: "alex",
+					name: "Alex Richardson",
+					id: 2,
+					netWorth: 200000,
+					image: './img/alex.jpg'
+				},
+				directors: []
+			},
+			{
+				name: "Maverick Media",
+				price: 2546,
+				sedol: "333333",
+				ticker: "MM",
+				sharesIssued: 4000,
+				marketCap: 31000000,
+				volume: 10000,
+				valuations: [],
+				type: "stock",
+				president: {
+					username: "alex",
+					name: "Alex Richardson",
+					id: 2,
+					netWorth: 200000,
+					image: './img/alex.jpg'
+				},
+				vicePresident: {
+						username: "kasper",
+						name: "Kasper Wilkosz",
+						id: 1,
+						netWorth: 500000,
+						image: './img/me.jpg'
+				},
+				directors: []
+			},
+			{
+				name: "Big Belly Burger",
+				price: 210,
+				sedol: "222222",
+				ticker: "BBB",
+				sharesIssued: 4000,
+				marketCap: 230000,
+				volume: 10000,
+				valuations: [],
+				type: "stock",
+				president: {
+					username: "gordon",
+					name: "Gordon Gekko",
+					id: 3,
+					netWorth: 850000,
+					image: './img/gordon.jpg'
+				},
+				vicePresident: {
+					username: "budfox",
+					name: "Bud Fox",
+					id: 4,
+					netWorth: 850000,
+					image: './img/budfox.jpg'
+				},
+				directors: []
+			},
+			{
+				name: "BC Rich",
+				price: 22,
+				sedol: "444444",
+				ticker: "BCR",
+				sharesIssued: 4000,
+				marketCap: 99999999,
+				volume: 10000,
+				valuations: [],
+				type: "stock",
+				president: {
+					username: "gordon",
+					name: "Gordon Gekko",
+					id: 3,
+					netWorth: 850000,
+					image: './img/gordon.jpg'
+				},
+				vicePresident: {
+					username: "belfort",
+					name: "Jordan Belfort",
+					id: 5,
+					netWorth: 1850000,
+					image: './img/belfort.jpg'
+				},
+				directors: []
+			},
+			{
+				name: "Amiris Cannabis",
+				price: 520,
+				sedol: "555555",
+				ticker: "ACB",
+				sharesIssued: 4000,
+				marketCap: 99999999,
+				volume: 10000,
+				valuations: [],
+				type: "stock",
+				president:   {
+						username: "kasper",
+						name: "Kasper Wilkosz",
+						id: 1,
+						netWorth: 500000,
+						image: './img/me.jpg'
+				},
+				vicePresident: {
+					username: "alex",
+					name: "Alex Richardson",
+					id: 2,
+					netWorth: 200000,
+					image: './img/alex.jpg'
+				},
+				directors: []
+		},
+		{
+				name: "Orange Soda",
+				price: 167,
+				sedol: "66666",
+				ticker: "OGS",
+				sharesIssued: 80000,
+				marketCap: 400000,
+				volume: 10000,
+				valuations: [],
+				type: "stock",
+				president: {
+					username: "gordon",
+					name: "Gordon Gekko",
+					id: 3,
+					netWorth: 850000,
+					image: './img/gordon.jpg'
+				},
+				vicePresident: {
+					username: "alex",
+					name: "Alex Richardson",
+					id: 2,
+					netWorth: 200000,
+					image: './img/alex.jpg'
+				},
+				directors: []
+		},
+		{
+				name: "Casablanca",
+				price: 123,
+				sedol: "777777",
+				ticker: "CSB",
+				sharesIssued: 80000,
+				marketCap: 300000,
+				volume: 10000,
+				valuations: [],
+				type: "stock",
+				president:   {
+					username: "belfort",
+					name: "Jordan Belfort",
+					id: 5,
+					netWorth: 1850000,
+					image: './img/belfort.jpg'
+				},
+				vicePresident: {
+					username: "gordon",
+					name: "Gordon Gekko",
+					id: 3,
+					netWorth: 850000,
+					image: './img/gordon.jpg'
+				},
+				directors: []
+		},
+		{
+				name: "Relax & Revive",
+				price: 123,
+				sedol: "888888",
+				ticker: "RRV",
+				sharesIssued: 4000,
+				marketCap: 200000,
+				volume: 10000,
+				valuations: [],
+				type: "stock",
+				president: {
+					username: "gordon",
+					name: "Gordon Gekko",
+					id: 3,
+					netWorth: 850000,
+					image: './img/gordon.jpg'
+				},
+				vicePresident: {
+					username: "alex",
+					name: "Alex Richardson",
+					id: 2,
+					netWorth: 200000,
+					image: './img/alex.jpg'
+				},
+				directors: []
+		}];
 
-// returns a list of all stocks on the exchange
-app.get('/api/stocks', function (req, res) {
-
-	res.send(stocks);
-
-})
 
 // returns a list of all stocks on the exchange
 app.get('/api/stock', function (req, res) {
@@ -310,15 +314,15 @@ var transactions = [{
 		bookCost: 23333,
 		pricePaid: 100,
 		stock: {
-	        name: "Casablanca",
-	        price: 123,
-	        sedol: "123456",
-	        ticker: "CSB",
-	        sharesIssued: 4000,
-	        marketCap: 200000,
-	        currency: "GBP",
-	        volume: 10000
-	    }
+					name: "Casablanca",
+					price: 123,
+					sedol: "123456",
+					ticker: "CSB",
+					sharesIssued: 4000,
+					marketCap: 200000,
+					currency: "GBP",
+					volume: 10000
+			}
 	}]
 // returns a list of all stocks on the exchange
 app.post('/api/transactions', function (req, res) {
@@ -328,104 +332,104 @@ app.post('/api/transactions', function (req, res) {
 })
 
 var funds = [{
-        name: "kappisan fund",
-        price: 3929,
-        sedol: "123456",
-        ticker: "KAF",
-        sharesIssued: 5000000,
-        marketCap: 22700000,
-        volume: 10000,
-        type: "fund"
-      },{
-        name: "Maverick Media finance",
-        price: 2546,
-        sedol: "333333",
-        ticker: "MMF",
-        sharesIssued: 4000,
-        marketCap: 31000000,
-        volume: 10000,
-        type: "fund"
-      },{
-        name: "Kaspers Piggy Bank",
-        price: 210,
-        sedol: "222222",
-        ticker: "KPB",
-        sharesIssued: 4000,
-        marketCap: 230000,
-        volume: 10000,
-        type: "fund"
-      },{
-        name: "Get Rich or Die Tying",
-        price: 22,
-        sedol: "444444",
-        ticker: "GRDT",
-        sharesIssued: 4000,
-        marketCap: 99999999,
-        volume: 10000,
-        type: "fund"
-      }];
+				name: "kappisan fund",
+				price: 3929,
+				sedol: "123456",
+				ticker: "KAF",
+				sharesIssued: 5000000,
+				marketCap: 22700000,
+				volume: 10000,
+				type: "fund"
+			},{
+				name: "Maverick Media finance",
+				price: 2546,
+				sedol: "333333",
+				ticker: "MMF",
+				sharesIssued: 4000,
+				marketCap: 31000000,
+				volume: 10000,
+				type: "fund"
+			},{
+				name: "Kaspers Piggy Bank",
+				price: 210,
+				sedol: "222222",
+				ticker: "KPB",
+				sharesIssued: 4000,
+				marketCap: 230000,
+				volume: 10000,
+				type: "fund"
+			},{
+				name: "Get Rich or Die Tying",
+				price: 22,
+				sedol: "444444",
+				ticker: "GRDT",
+				sharesIssued: 4000,
+				marketCap: 99999999,
+				volume: 10000,
+				type: "fund"
+			}];
 
 // returns a list of all stocks on the exchange
 app.get('/api/funds', function (req, res) {
-  res.send(funds);
+	res.send(funds);
 })
 
 var users = [
-  {
-    username: "kasper",
-    name: "Kasper Wilkosz",
-    id: 1,
-    netWorth: 500000,
-    image: './img/me.jpg',
-    holdings: []
-  },
-  {
-    username: "alex",
-    name: "Alex Richardson",
-    id: 2,
-    netWorth: 200000,
-    image: './img/alex.jpg',
-    holdings: []
-  },
-  {
-    username: "gordon",
-    name: "Gordon Gekko",
-    id: 3,
-    netWorth: 850000,
-    image: './img/gordon.jpg',
-    holdings: []
-  },
-  {
-    username: "budfox",
-    name: "Bud Fox",
-    id: 4,
-    netWorth: 850000,
-    image: './img/budfox.jpg',
-    holdings: []
-  },
-  {
-    username: "belfort",
-    name: "Jordan Belfort",
-    id: 5,
-    netWorth: 1850000,
-    image: './img/belfort.jpg'
-  }
+	{
+		username: "kasper",
+		name: "Kasper Wilkosz",
+		id: 1,
+		netWorth: 500000,
+		image: './img/me.jpg',
+		holdings: []
+	},
+	{
+		username: "alex",
+		name: "Alex Richardson",
+		id: 2,
+		netWorth: 200000,
+		image: './img/alex.jpg',
+		holdings: []
+	},
+	{
+		username: "gordon",
+		name: "Gordon Gekko",
+		id: 3,
+		netWorth: 850000,
+		image: './img/gordon.jpg',
+		holdings: []
+	},
+	{
+		username: "budfox",
+		name: "Bud Fox",
+		id: 4,
+		netWorth: 850000,
+		image: './img/budfox.jpg',
+		holdings: []
+	},
+	{
+		username: "belfort",
+		name: "Jordan Belfort",
+		id: 5,
+		netWorth: 1850000,
+		image: './img/belfort.jpg'
+	}
 ];
 
 
 app.get('/api/users', function (req, res) {
 
-  res.send(users);
+	res.send(users);
 
 })
 
 app.get('/api/user', function (req, res) {
 
-  console.log("get user", req.query.username);
+	console.log("get user", req.query.username);
 
-  var user = _.findWhere(users, { username: req.query.username })
+	var user = _.findWhere(users, { username: req.query.username })
 
-  res.send(user);
+	res.send(user);
 
 })
 
@@ -434,96 +438,136 @@ var now = moment();
 
 console.log("now", now);
 
-var startDate = now.subtract(100 * 3, "seconds");
 
 function generateData(startPrice, interval) {
-    var data = [];
 
-    var price = startPrice;
-    var multiplier = Math.random() - 0.5;
 
-    for(var i = 0; i < 100; i++) {
+		var startDate = now.subtract(100 * interval, "seconds");
 
-        if(i % 4 == 0) { multiplier = Math.random() - 0.5; }
+		var data = [];
 
-        price += (Math.random() * multiplier);
-        var date = startDate.add(3, "seconds")
+		var price = startPrice;
+		var multiplier = Math.random() - 0.5;
 
-        data.push({
-          time: date.format('hh:mm:ss'), 
-          date: date.format("DD-MMM-YY"), 
-          close: price
-        });        
-    }
+		for(var i = 0; i < 100; i++) {
 
-    return data;
+				if(i % 4 == 0) { multiplier = Math.random() - 0.5; }
+
+				price += (Math.random() * multiplier);
+				var date = startDate.add(interval, "seconds")
+
+				data.push({
+					time: date.format('hh:mm:ss'), 
+					date: date.format("DD-MMM-YY"), 
+					close: price
+				});        
+		}
+
+		return data;
 }
 
 
 var prices = {
-  KA: 3929,
-  MM: 2546,
-  BBB: 210,
-  BCR: 22,
-  ACB: 520,
-  OGS: 167,
-  CSB: 123,
-  RRV: 123
+	KA: 3929,
+	MM: 2546,
+	BBB: 210,
+	BCR: 22,
+	ACB: 520,
+	OGS: 167,
+	CSB: 123,
+	RRV: 123
 }
 
-var valuations = generateData(420);
+var valuations = generateData(420, GAME_SPEED);
 
 setInterval(function() {
 
-    for (var pr in prices) {
-        if(!prices.hasOwnProperty(pr)) continue; // skip loop if the property is from prototype
+		for (var pr in prices) {
+				if(!prices.hasOwnProperty(pr)) continue; // skip loop if the property is from prototype
 
-        prices[pr]++;
-    }
+				prices[pr]++;
+		}
 
-    var date = startDate.add(3, "seconds")
+		// go over each stock and calculate the new price
+		stocks.forEach(function(stock) {
+			console.log("update valuations", stock.name);
 
-    var lastVal = valuations[valuations.length - 1].close;
+			if(stock.valuations.length < 1) {
+				stock.valuations = generateData(stock.price, GAME_SPEED);
+			} else {
 
-    var multiplier = Math.random() - 0.5;
-    lastVal += (Math.random() * multiplier);
+				var date = moment();
 
-    valuations.shift();
-    valuations.push({
-      date: date.format("DD-MMM-YY"), 
-      time: date.format("hh:mm:ss"), 
-      close: lastVal 
-    });
+				var lastVal = stock.valuations[stock.valuations.length - 1].close;
+
+				var multiplier = Math.random() - 0.5;
+				lastVal += (Math.random() * multiplier);
+
+				stock.valuations.shift();
+				stock.valuations.push({
+					date: date.format("DD-MMM-YY"), 
+					time: date.format("hh:mm:ss"), 
+					close: lastVal 
+				});
+
+				stock.price = lastVal;
+			}
+
+		});
+
+
+		var date = moment();
+
+		var lastVal = valuations[valuations.length - 1].close;
+
+		var multiplier = Math.random() - 0.5;
+		lastVal += (Math.random() * multiplier);
+
+		valuations.shift();
+		valuations.push({
+			date: date.format("DD-MMM-YY"), 
+			time: date.format("hh:mm:ss"), 
+			close: lastVal 
+		});
 
 }, 3000);
 
 /* socket.io */
 
 io.on('connection', function(client) {  
-    console.log('Client connected...');
+		console.log('Client connected...');
 
-    client.on('get holdings', function(data) {
-        client.emit("holdings", holdings);
-    });
+		client.on('get holdings', function(data) {
+				client.emit("holdings", holdings);
+		});
 
-    client.on('get valuations', function(data) {
-        client.emit("valuations", valuations);
-    });
+		client.on('get funds', function(data) {
+				client.emit("funds", funds);
+		});
 
-    client.on('get price', function(data) {
-        client.emit("price", valuations[valuations.length - 1].close);
-    });
+		client.on('get stocks', function(data) {
+				client.emit("stocks", stocks);
+		});
 
-    setInterval(function() {
+		client.on('get valuations', function(data) {
+				client.emit("valuations", valuations);
+		});
 
-      client.emit("valuations", valuations);
+		client.on('get price', function(data) {
+				client.emit("price", valuations[valuations.length - 1].close);
+		});
 
-      client.emit("prices", prices);
-      client.emit("price", valuations[valuations.length - 1].close);
-      client.emit("funds", funds);
-      client.emit("holdings", holdings);
+		setInterval(function() {
 
-    }, 3000);
+			client.emit("valuations", valuations);
+
+			//client.emit("prices", prices);
+			client.emit("price", valuations[valuations.length - 1].close);
+			client.emit("holdings", holdings);
+
+			client.emit("stocks", stocks);
+
+		}, 3000);
 
 });
 
