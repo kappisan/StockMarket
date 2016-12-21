@@ -53,32 +53,20 @@ var holdings = [{
     },{
       name: "Maverick Media",
       price: 345,
-      sedol: "123456",
+      sedol: "333333",
       ticker: "MM",
       quantity: 250,
       bookCost: 4000,
       bookValue: 4200
     },{
-      name: "BC Rich",
-      price: 233,
-      sedol: "123456",
-      ticker: "BCR",
-      quantity: 10000,
-      bookCost: 600,
-      bookValue: 562
-    },{
       name: "Amiris Cannabis",
       price: 77,
-      sedol: "123456",
+      sedol: "555555",
       ticker: "ACB",
       quantity: 4000,
       bookCost: 850,
       bookValue: 849
     }];
-
-
-
-
 
 
 
@@ -171,11 +159,11 @@ var stocks = [{
           image: './img/gordon.jpg'
         },
         vicePresident: {
-          username: "alex",
-          name: "Alex Richardson",
-          id: 2,
-          netWorth: 200000,
-          image: './img/alex.jpg'
+          username: "belfort",
+          name: "Jordan Belfort",
+          id: 5,
+          netWorth: 1850000,
+          image: './img/belfort.jpg'
         },
         directors: []
       },{
@@ -236,11 +224,11 @@ var stocks = [{
         volume: 10000,
         type: "stock",
         president:   {
-            username: "kasper",
-            name: "Kasper Wilkosz",
-            id: 1,
-            netWorth: 500000,
-            image: './img/me.jpg'
+          username: "belfort",
+          name: "Jordan Belfort",
+          id: 5,
+          netWorth: 1850000,
+          image: './img/belfort.jpg'
         },
         vicePresident: {
           username: "gordon",
@@ -401,6 +389,13 @@ var users = [
     id: 4,
     netWorth: 850000,
     image: './img/budfox.jpg'
+  },
+  {
+    username: "belfort",
+    name: "Jordan Belfort",
+    id: 5,
+    netWorth: 1850000,
+    image: './img/belfort.jpg'
   }
 ];
 
@@ -462,12 +457,10 @@ io.on('connection', function(client) {
     setInterval(function() {
 
       client.emit("prices", prices);
-
       client.emit("price", price);
-
       client.emit("funds", funds);
-
       client.emit("holdings", holdings);
+
     }, 3000);
 
 });
