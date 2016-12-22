@@ -237,137 +237,137 @@ li {
 
 
 
-        html {
-            color: #fff;
-        }
+html {
+    color: #fff;
+}
 
-        line-svg {
-            color: #f2c800;
-        }
+line-svg {
+    color: #f2c800;
+}
 
-        .axis--x path {
-          display: none;
+.axis--x path {
+  display: none;
 
-        }
-        /*
-            .axis {
-                stroke: #fff;
-                fill: #fff;
-            }
-        */
-        .line {
-          fill: none;
-          stroke: #f2c800;
-          stroke-width: 1.5px;
-        }
+}
+/*
+    .axis {
+        stroke: #fff;
+        fill: #fff;
+    }
+*/
+.line {
+  fill: none;
+  stroke: #f2c800;
+  stroke-width: 1.5px;
+}
 
-        .page-heading {
-            font-size: 32pt;
-            color: #f2c800;
-            margin-top: 12px;
-            font-family: coolvetica;
-        }
+.page-heading {
+    font-size: 32pt;
+    color: #f2c800;
+    margin-top: 12px;
+    font-family: coolvetica;
+}
 
-        .wrapper {
-          width: 100%;
-          height: 90px;
-          position: fixed;
-          background-color: #000;
-        }
+.wrapper {
+  width: 100%;
+  height: 90px;
+  position: fixed;
+  background-color: #000;
+}
 
-        .user-info {
-            float: right;
-            margin-right: 10px;
-            color: #fff;
-            position: fixed;
-            top: 60px;
-            right: 10px;
-        }
+.user-info {
+    float: right;
+    margin-right: 10px;
+    color: #fff;
+    position: fixed;
+    top: 60px;
+    right: 10px;
+}
 
-        .transactionForm {
-            position: fixed;
-            margin: auto;
-            left: 0;
-            right: 0;
-            z-index: 999999999999999999;
-            top: 10px;
-            bottom: 0;
-            background-color: #1b1b1b;
-            width: 600px;
-            height: 400px;
-        }
+.transactionForm {
+    position: fixed;
+    margin: auto;
+    left: 0;
+    right: 0;
+    z-index: 999999999999999999;
+    top: 10px;
+    bottom: 0;
+    background-color: #1b1b1b;
+    width: 600px;
+    height: 400px;
+}
 
-        .transactionForm h1 {
-            color: #f2c800;
-        }
+.transactionForm h1 {
+    color: #f2c800;
+}
 
-        .td-ticker {
-            color: #f2c800;
-            font-family: coolvetica;
-        }
+.td-ticker {
+    color: #f2c800;
+    font-family: coolvetica;
+}
 
-        .buy-button {
-            background-color: #f2c800;
-            border-color: #f2c800;
-            border-radius: 2px;
-            height: 28px;
-            width: 100px;
-            font-family: coolvetica;
-        }
-        .buy-button:hover {
-            cursor: pointer;
-            opacity: 0.85;
-        }
+.buy-button {
+    background-color: #f2c800;
+    border-color: #f2c800;
+    border-radius: 2px;
+    height: 28px;
+    width: 100px;
+    font-family: coolvetica;
+}
+.buy-button:hover {
+    cursor: pointer;
+    opacity: 0.85;
+}
 
-        th {
-            font-family: coolvetica;
-            font-size: 24px;
-            font-weight: normal;
-            padding: 35px 25px;
-            text-align: left;
-        }
+th {
+    font-family: coolvetica;
+    font-size: 24px;
+    font-weight: normal;
+    padding: 35px 25px;
+    text-align: left;
+}
 
-        td {
-            text-align:  left;
-            padding: 1px 25px;
-        }
+td {
+    text-align:  left;
+    padding: 1px 25px;
+}
 
-        .sans {
-            font-family: sans-serif;
-        }
+.sans {
+    font-family: sans-serif;
+}
 
-        .yellow {
-          color: #f2c800;
-        }
+.yellow {
+  color: #f2c800;
+}
 
-        .grey-out-bg {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.92);
-            top: 0;
-            z-index: 9999999;
-        }
+.grey-out-bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.92);
+    top: 0;
+    z-index: 9999999;
+}
 
-        .market-tr:hover {
-            cursor: pointer;
-            background-color: #000;
-        }
+.market-tr:hover {
+    cursor: pointer;
+    background-color: #000;
+}
 
-        .transaction-input {
-            width: 234px;
-            height: 24px;
-            float: right;
-            right: 130px;
-            position: relative;
-        }
+.transaction-input {
+    width: 234px;
+    height: 24px;
+    float: right;
+    right: 130px;
+    position: relative;
+}
 
-        .transaction-button {
-            width: 168px;
-            height: 32px;
-            font-family: coolvetica;
-            font-size: 18px;
-        }
+.transaction-button {
+    width: 168px;
+    height: 32px;
+    font-family: coolvetica;
+    font-size: 18px;
+}
 
 .login-button,
 .cancel-button {

@@ -33,6 +33,23 @@
 <body ng-app="stockApp" ng-controller="mainCtrl">
 
 
+<div ng-if="showTransactionForm" class="grey-out-bg">
+    <div class="transactionForm cool">
+        <center>
+            <h2>EXECUTE TRANSACTION</h2>
+            <div><h1>{{ selectedStock.name }}</h1></div><br>
+
+            <h2>{{ stockPrice }}</h2>
+
+            Amount <input type="number" ng-model="transaction.volume" class="transaction-input"><br><br>
+            Value  <input type="number" ng-model="transaction.value" class="transaction-input"><br><br><br><br>
+            <button ng-click="confirmBuyStock()" class="transaction-button">Execute</button>
+            <button ng-click="cancelBuyStock()" class="transaction-button">Cancel</button>
+        </center>
+    </div>
+</div>
+
+
 
 
 <div class="wrapper">
@@ -73,23 +90,6 @@
 
 
 <div id="container" ng-view></div>
-
-
-<div ng-if="showTransactionForm" class="grey-out-bg">
-    <div class="transactionForm cool">
-        <center>
-            <h2>EXECUTE TRANSACTION</h2>
-            <div><h1>{{ selectedStock.name }}</h1></div><br>
-
-            <h2>{{ stockPrice }}</h2>
-
-            Amount <input type="number" ng-model="transaction.volume" class="transaction-input"><br><br>
-            Value  <input type="number" ng-model="transaction.value" class="transaction-input"><br><br><br><br>
-            <button ng-click="confirmBuyStock()" class="transaction-button">Execute</button>
-            <button ng-click="cancelBuyStock()" class="transaction-button">Cancel</button>
-        </center>
-    </div>
-</div>
 
 <script>
 

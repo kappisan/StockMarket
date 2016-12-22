@@ -165,8 +165,9 @@ app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
 
     $scope.stockPrice = "loading...";
 
-    $scope.user = {
-      username: "Kasper Wilkosz",
+    $rootScope.user = {
+      name: "Kasper Wilkosz",
+      username: "kappisan",
       balance: numeral(59342).format('0,0.00'),
       holdings: []
     }

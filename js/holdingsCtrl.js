@@ -1,7 +1,7 @@
 app.controller('holdingsCtrl', function($scope, $rootScope) {
     $rootScope.currentPage = "Holdings";
 
-    socket.emit("get holdings", true);
+    socket.emit("get holdings", $rootScope.user.username);
 
     var data = [
     	{name: "one", bookValue: 300},
