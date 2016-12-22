@@ -376,3 +376,20 @@ li {
     font-size: 16px;
     font-family: coolvetica
 }
+
+
+.user-balance {
+  font-family: sans-serif;
+  text-decoration: none;
+  color: #fff;
+}
+
+.user-balance:hover {
+  color: #f2c800;
+  cursor: pointer;
+}
+
+.user-username:hover {
+  color: #f2c800;
+  cursor: pointer;
+}

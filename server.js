@@ -18,28 +18,7 @@ app.get('/', function(req, res,next) {
 
 
 /* api */
-
-var price = 0;
-var multiplier = Math.random() - 0.5;
-var intensifier = Math.random() * 2;
 var startDate = moment("01-Jan-14", "DD-MMM-YY");
-var i = 0;
-var data = [];
-
-// price changes every 3s
-setInterval(function() {
-
-		if(i % 4 == 0) { multiplier = Math.random() - 0.5; }
-		if(i % 7 == 0) { intensifier = Math.random() * 2; }
-
-		price += (Math.random() * multiplier) * intensifier;
-		var date = startDate.add(1, "days") 
-
-	console.log("price update ---  £", price);
-
-	i++;
-
-}, 3000)
 
 
 var holdings = [
@@ -48,7 +27,7 @@ var holdings = [
 			price: 200,
 			sedol: "123456",
 			ticker: "KA",
-			quantity: 4000,
+			quantity: 100,
 			bookCost: 300,
 			bookValue: 3333
 		},
@@ -66,7 +45,7 @@ var holdings = [
 			price: 77,
 			sedol: "555555",
 			ticker: "ACB",
-			quantity: 4000,
+			quantity: 2000,
 			bookCost: 850,
 			bookValue: 849
 		}];
@@ -486,11 +465,19 @@ setInterval(function() {
 				close: lastVal 
 			});
 
+			stock.priceRaw = lastVal;
 			stock.price = numeral(lastVal).format('0,0.00');
 			stock.marketCap = numeral(lastVal * stock.sharesIssued).format('0,0.00');
 		}
 
 	});
+
+
+	holdings.forEach(function(holding) {
+		var matchStock = _.findWhere(stocks, { ticker: holding.ticker })
+		holding.bookValue = matchStock.priceRaw;
+	})
+
 
 }, 3000);
 

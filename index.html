@@ -64,9 +64,9 @@
         </ul>
     </nav>
 
-    <div class="user-info" ng-click="goToProfilePage()">
-        <span class="cool">{{ user.username }}</span>
-        £{{ user.balance }}
+    <div class="user-info">
+        <span class="cool user-username" ng-click="goToProfilePage()">{{ user.username }}</span>
+        <a href="#/holdings" ng-click="goToHoldingsPage()" class="user-balance">£{{ user.balance }}</a>
     </div>
         
 </div>

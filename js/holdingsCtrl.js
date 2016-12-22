@@ -1,66 +1,77 @@
 app.controller('holdingsCtrl', function($scope, $rootScope) {
-
-    console.log("holdings controller");
     $rootScope.currentPage = "Holdings";
+
     socket.emit("get holdings", true);
 
-    socket.on('holdings', function(data) {
-        console.log("socket io holdings update", data);
-
-        $scope.holdings = data;
-        drawDonut($scope.holdings);
-
-        $scope.$apply();
-    });
-
-    var proportions = [
+    var data = [
     	{name: "one", bookValue: 300},
 	    {name: "two", bookValue: 230},
 	    {name: "three", bookValue: 600}
     ];
 
-    drawDonut(proportions);
+	var width = 960,
+	    height = 500,
+	    radius = Math.min(width, height) / 2;
 
-    function drawDonut(data) {
+	var color = d3.scale.category20();
 
-    	$(".holdings-donut").html("");
+	var pie = d3.layout.pie()
+	    .value(function(d) { return d.bookValue; })
+	    .sort(null);
 
-		var width = 960,
-		    height = 400,
-		    radius = Math.min(width, height) / 2;
+	var arc = d3.svg.arc()
+	    .innerRadius(radius - 100)
+	    .outerRadius(radius - 20);
 
-		var color = d3.scale.ordinal()
-		    .range(["#f2c800", "#8c0000", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+	var svg = d3.select(".holdings-donut").append("svg")
+	    	.attr("width", width)
+	    	.attr("height", height)
+	  	.append("g")
+	    	.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-		var arc = d3.svg.arc()
-		    .outerRadius(radius - 10)
-		    .innerRadius(radius - 70);
+	//var middleText = svg.append()
 
-		var pie = d3.layout.pie()
-		    .sort(null)
-		    .value(function(d) { return d.bookValue; });
-
-		var svg = d3.select(".holdings-donut").append("svg")
-		    .attr("width", width)
-		    .attr("height", height)
-		  .append("g")
-		    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+	var path = svg.datum(data).selectAll("path")
+	  	.data(pie)
+	.enter().append("path")
+	  	.attr("fill", function(d, i) { return color(i); })
+	  	.attr("d", arc)
+	  	.on("mouseover", function(d) {
+	  		console.log("mouse over", d.data.name)
+	  	})
+	  	.each(function(d) { this._current = d; }); // store the initial angles
 
 
-		  var g = svg.selectAll(".arc")
-		      .data(pie(data))
-		    .enter().append("g")
-		      .attr("class", "arc");
+	function change(data) {
 
-		  g.append("path")
-		      .attr("d", arc)
-		      .style("fill", function(d) { return color(d.data.name); });
+		console.log("pie change", data);
 
-		  g.append("text")
-		      .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
-		      .attr("dy", ".35em")
-		      .text(function(d) { return d.data.name; });
+		svg.datum(data).selectAll("path").data(pie);
 
-    }
+		pie.value(function(d) { return d.bookValue; }); // change the value function
+		path = path.data(pie); // compute the new angles
+		path.transition().duration(750).attrTween("d", arcTween); // redraw the arcs
+	}
+
+
+	function arcTween(a) {
+	  	var i = d3.interpolate(this._current, a);
+	  	this._current = i(0);
+	  	return function(t) { return arc(i(t)); };
+	}
+
+
+
+
+    socket.on('holdings', function(data) {
+        console.log("socket io holdings update", data);
+
+        $scope.holdings = data;
+
+        change(data);
+
+        $scope.$apply();
+    });
+
 
 });
