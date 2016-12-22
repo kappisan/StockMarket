@@ -95,7 +95,9 @@ app.controller('profileCtrl', function($scope, $http, $rootScope) {
 app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
 
     $scope.transaction = {
-      volume: 0
+      volume: 0,
+      value: 0,
+      paid: 0
     }
 
 
@@ -133,6 +135,8 @@ app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
         console.log("buy stock", stock);
         $scope.selectedStock = stock;
         $scope.showTransactionForm = true;
+        socket.emit('get stock', stock.sedol);
+        setInterval(function() { socket.emit('get stock', stock.sedol); }, 1000);
     }
 
     $scope.sellStock = function(stock) {
@@ -142,7 +146,11 @@ app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
     }
 
     $scope.confirmBuyStock = function(stock) {
-        console.log("confirm buy stock", stock);
+        console.log("confirm buy stock", $scope.stockPrice, $scope.selectedStock, $scope.transaction);
+
+        $scope.transaction.paid = $scope.stockPrice;
+
+        $scope.transactionExecuted = true;
     }
 
     $scope.cancelBuyStock = function() {
