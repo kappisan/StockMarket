@@ -312,6 +312,7 @@ li {
             border-radius: 2px;
             height: 28px;
             width: 100px;
+            font-family: coolvetica;
         }
         .buy-button:hover {
             cursor: pointer;
@@ -367,3 +368,11 @@ li {
             font-family: coolvetica;
             font-size: 18px;
         }
+
+.login-button,
+.cancel-button {
+    width: 121px;
+    height: 32px;
+    font-size: 16px;
+    font-family: coolvetica
+}

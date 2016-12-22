@@ -9,29 +9,20 @@ var app = angular.module('stockApp', ['ngRoute'])
             .when('/profile', { templateUrl: 'templates/profile.html', controller: "profileCtrl" })
             .when('/market', { templateUrl: 'templates/market.html', controller: "marketCtrl" })
             .when('/statements', { templateUrl: 'templates/statements.html', controller: "statementsCtrl" })
+            .when('/login', { templateUrl: 'templates/login.html', controller: "loginCtrl" })
             .otherwise({ redirectTo: '/' });
     }]);
+
+
+app.controller('loginCtrl', function($scope, $rootScope) {
+    $rootScope.currentPage = "Login";
+});
 
 
 app.controller('homeCtrl', function($scope, $rootScope) {
     $rootScope.currentPage = "Home";
 });
 
-
-app.controller('holdingsCtrl', function($scope, $rootScope) {
-
-    console.log("holdings controller");
-    $rootScope.currentPage = "Holdings";
-    socket.emit("get holdings", true);
-
-    socket.on('holdings', function(data) {
-        console.log("socket io holdings update", data);
-
-        $scope.holdings = data;
-        $scope.$apply();
-    });
-
-});
 
 
 app.controller('marketCtrl', function($scope, $rootScope, $http) {

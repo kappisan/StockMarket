@@ -1,3 +1,21 @@
+<style>
+
+	.arc text {
+	  font: 16px sans-serif;
+	  text-anchor: middle;
+	}
+
+	.arc path {
+	  stroke: #000;
+	  rendering: auto;
+	}
+
+	.holdings-donut {
+		margin-top: 40px;
+	}
+
+</style>
+
 <center style="padding-top:90px;">
 
 	<table>
@@ -8,10 +26,19 @@
 			<th>Book Cost</th>
 			<th>Book Value</th>
 			<th>Quantity</th>
-			<th>Sell</th>
+			<th>Transaction</th>
+		</tr>
+		<tr class="sans market-tr">
+			<td class="td-ticker">$$$</td>
+			<td>Cash</td>
+			<td>1</td>
+			<td> - </td>
+			<td>34</td>
+			<td>34</td>
+			<td><button class="buy-button">Get More</button></td>
 		</tr>
 		<tr ng-repeat="holding in holdings" ng-click="goToStock(holding)" class="sans market-tr">
-			<td  class="td-ticker">{{ holding.ticker }}</td>
+			<td class="td-ticker">{{ holding.ticker }}</td>
 			<td>{{ holding.name }}</td>
 			<td>{{ holding.price }}</td>
 			<td>{{ holding.bookCost }}</td>
@@ -19,7 +46,10 @@
 			<td>{{ holding.quantity }}</td>
 			<td ng-click="sellStock(stock)"><button class="buy-button">Sell</button></td>
 		</tr>
-		
 	</table>
+
+
+	<div class="holdings-donut"></div>
+
 
 </center>

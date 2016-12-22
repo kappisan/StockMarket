@@ -50,7 +50,7 @@ var holdings = [
 			ticker: "KA",
 			quantity: 4000,
 			bookCost: 300,
-			bookValue: 33333
+			bookValue: 3333
 		},
 		{
 			name: "Maverick Media",
@@ -158,7 +158,7 @@ var stocks = [
 				sedol: "444444",
 				ticker: "BCR",
 				sharesIssued: 4000,
-				marketCap: 99999999,
+				marketCap: 6000,
 				volume: 10000,
 				valuations: [],
 				type: "stock",
@@ -184,7 +184,7 @@ var stocks = [
 				sedol: "555555",
 				ticker: "ACB",
 				sharesIssued: 4000,
-				marketCap: 99999999,
+				marketCap: 5000,
 				volume: 10000,
 				valuations: [],
 				type: "stock",
@@ -487,6 +487,7 @@ setInterval(function() {
 			});
 
 			stock.price = numeral(lastVal).format('0,0.00');
+			stock.marketCap = numeral(lastVal * stock.sharesIssued).format('0,0.00');
 		}
 
 	});
