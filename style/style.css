@@ -393,3 +393,11 @@ li {
   color: #f2c800;
   cursor: pointer;
 }
+
+.pie-segment  {
+  text-anchor: middle;
+  stroke: #fff;
+  font-family: sans-serif;
+  fill: #fff;
+  font-size: 25px;
+}

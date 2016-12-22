@@ -29,7 +29,16 @@ app.controller('holdingsCtrl', function($scope, $rootScope) {
 	  	.append("g")
 	    	.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-	//var middleText = svg.append()
+	var middleText = svg.append("text")
+						.attr('class', 'pie-segment')
+						.attr("visibility", "hidden")
+						.text("Something")
+
+	var valueText = svg.append("text")
+						.attr('class', 'pie-segment')
+						.attr("visibility", "hidden")
+						.attr("transform", "translate(0, 40)")
+						.text("Something")
 
 	var path = svg.datum(data).selectAll("path")
 	  	.data(pie)
@@ -38,6 +47,12 @@ app.controller('holdingsCtrl', function($scope, $rootScope) {
 	  	.attr("d", arc)
 	  	.on("mouseover", function(d) {
 	  		console.log("mouse over", d.data.name)
+	  		middleText.attr("visibility", "visible").text(d.data.name);
+	  		valueText.attr("visibility", "visible").text(numeral(d.data.bookValue).format('0,0.00'));
+	  	})
+	  	.on("mouseout", function(d) {
+	  		middleText.attr("visibility", "hidden");
+	  		valueText.attr("visibility", "hidden");
 	  	})
 	  	.each(function(d) { this._current = d; }); // store the initial angles
 
