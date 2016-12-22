@@ -1,5 +1,6 @@
 app.controller('holdingsCtrl', function($scope, $rootScope) {
     $rootScope.currentPage = "Holdings";
+    $scope.totalReturn = 0;
 
     socket.emit("get holdings", $rootScope.user.username);
 
@@ -81,9 +82,35 @@ app.controller('holdingsCtrl', function($scope, $rootScope) {
     socket.on('holdings', function(data) {
         console.log("socket io holdings update", data);
 
+        change(data);
+
         $scope.holdings = data;
 
-        change(data);
+        var totalValues = _.map(data, function(holding) {
+        	return holding.bookValue;
+        });
+
+
+        var totalCosts = _.map(data, function(holding) {
+        	return holding.bookCost;
+        });
+
+        var totalValue = 0;
+		var totalCost = 0;
+        var totalReturn = 0;
+
+        totalValues.forEach(function(val) {
+        	totalValue+= val;
+        })
+
+        totalCosts.forEach(function(val) {
+        	totalCost+= val;
+        })
+
+
+        $rootScope.user.balance = totalValue;
+        $scope.totalReturn = totalValue - totalCost;
+        $scope.totalCost = totalCost;
 
         $scope.$apply();
     });

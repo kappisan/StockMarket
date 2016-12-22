@@ -18,7 +18,8 @@
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+
     <script src="./libs/numeral.min.js"></script>
     <script src="./libs/moment.js"></script>
     <script src="./libs/angular-route.min.js"></script>
@@ -36,8 +37,11 @@
 <div ng-if="showTransactionForm" class="grey-out-bg">
     <div class="transactionForm cool">
         <center>
-            <h2>EXECUTE TRANSACTION</h2>
-            <div><h1>{{ selectedStock.name }}</h1></div><br>
+            <h2 ng-if="!transactionExecuted">EXECUTE TRANSACTION</h2>
+            <h2 ng-if="transactionExecuted">Success</h2>
+            <div>
+                <h1>{{ selectedStock.name }}</h1>
+            </div><br>
 
             <div ng-if="!transactionExecuted">
 
@@ -51,9 +55,8 @@
             </div>
 
             <div ng-if="transactionExecuted">
-                <h2>Success</h2>
 
-                <p>Bought {{ transaction.volume }} for ${{ transaction.paid }}</p>
+                <h3 class="sans">Bought {{ transaction.volume }} for ${{ transaction.paid * transaction.volume }}</h3>
 
                 <button ng-click="cancelBuyStock()" class="transaction-button">Ok</button>
             </div>
@@ -96,7 +99,7 @@
 
     <div class="user-info">
         <span class="cool user-username" ng-click="goToProfilePage()">{{ user.username }}</span>
-        <a href="#/holdings" ng-click="goToHoldingsPage()" class="user-balance">£{{ user.balance }}</a>
+        <a href="#/holdings" ng-click="goToHoldingsPage()" class="user-balance">${{ twoDecimalPlaces(user.balance) }}</a>
     </div>
         
 </div>

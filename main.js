@@ -136,7 +136,7 @@ app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
         $scope.selectedStock = stock;
         $scope.showTransactionForm = true;
         socket.emit('get stock', stock.sedol);
-        setInterval(function() { socket.emit('get stock', stock.sedol); }, 1000);
+        setInterval(function() { socket.emit('get stock', stock.sedol); }, 3000);
     }
 
     $scope.sellStock = function(stock) {
@@ -148,7 +148,7 @@ app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
     $scope.confirmBuyStock = function(stock) {
         console.log("confirm buy stock", $scope.stockPrice, $scope.selectedStock, $scope.transaction);
 
-        $scope.transaction.paid = $scope.stockPrice;
+        $scope.transaction.paid = numeral($scope.stockPrice).format('0,0.00');
 
         $scope.transactionExecuted = true;
     }
@@ -157,6 +157,11 @@ app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
         console.log("confirm buy stock");
 
         $scope.showTransactionForm = false;
+        $scope.transactionExecuted = false;
+    }
+
+    $scope.twoDecimalPlaces = function(val) {
+      return numeral(val).format('0,0.00')
     }
 
     socket.emit('get valuation', getUrlVars()["sedol"]);
@@ -166,6 +171,25 @@ app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
         $scope.stocks = data;
         $scope.$apply();
     });
+
+    socket.on('holdings', function(data) {
+        console.log("socket io holdings update", data);
+
+
+        var totalValues = _.map(data, function(holding) {
+          return holding.bookValue;
+        });
+
+        var totalValue = 0;
+        totalValues.forEach(function(val) {
+          totalValue+= val;
+        })
+
+        $rootScope.user.balance = totalValue;
+
+        $scope.$apply();
+    });
+
 
     socket.on('connect', function(data) {
         socket.emit('join', 'Hello World from client');
