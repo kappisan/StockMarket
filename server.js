@@ -31,12 +31,10 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 	userDB.find({}).toArray((err, results) => {
 		if(err) return;
 
-		console.log("db get all users", results);
+		//console.log("db get all users", results);
 		users = results;
 
 	});
-
-
 
 
 
@@ -46,7 +44,7 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 	stocksDB.find({}).toArray((err, results) => {
 		if(err) return;
 
-		console.log("db get all stocks", results);
+		//console.log("db get all stocks", results);
 		stocks = results;
 
 	});
@@ -54,50 +52,37 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 
 
 
+	var securitiesDB = db.collection('securities');
+	var securities;
 
-		app.get('/', function(req, res,next) {  
-			res.sendFile(__dirname + '/index.html');
-		});
+	var holdings = {
+		cash: 0,
+		holdings: []
+	};
 
+	securitiesDB.find({}).toArray((err, results) => {
+		if(err) return;
 
-		/* api */
-		var startDate = moment("01-Jan-14", "DD-MMM-YY");
+		//console.log("db get all stocks", results);
 
-
-		var holdings = 
-		{
-			cash: 200,
-			holdings: 
-			[
-				{
-					name: "kappisan",
-					price: 200,
-					sedol: "123456",
-					ticker: "KA",
-					quantity: 100,
-					bookCost: 300,
-					bookValue: 3333
-				},
-				{
-					name: "Maverick Media",
-					price: 345,
-					sedol: "333333",
-					ticker: "MM",
-					quantity: 250,
-					bookCost: 4000,
-					bookValue: 4200
-				},
-				{
-					name: "Amiris Cannabis",
-					price: 77,
-					sedol: "555555",
-					ticker: "ACB",
-					quantity: 2000,
-					bookCost: 850,
-					bookValue: 849
-				}
-			]
+		holdings = {
+			cash: 1200,
+			holdings: results
 		};
+
+	});
+
+
+
+	app.get('/', function(req, res,next) {  
+		res.sendFile(__dirname + '/index.html');
+	});
+
+
+	/* api */
+	var startDate = moment("01-Jan-14", "DD-MMM-YY");
+
+
 
 
 
@@ -277,6 +262,7 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 
 			});
 
+			if(!holdings.holdings) return;
 
 			holdings.holdings.forEach(function(holding) {
 				var matchStock = _.findWhere(stocks, { ticker: holding.ticker })

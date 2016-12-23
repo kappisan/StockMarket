@@ -52,16 +52,6 @@ app.controller('statementsCtrl', function($scope, $rootScope, $http) {
 
     $rootScope.currentPage = "Statements";
 
-    $http({
-      method: 'POST',
-      url: '/api/transactions'
-    }).then(function successCallback(response) {
-        console.log("got transactions", response);
-
-        $scope.stocks = response.data;
-
-    }, function errorCallback(response) { console.log("error", response); });
-
 });
 
 app.controller('profileCtrl', function($scope, $http, $rootScope) {
