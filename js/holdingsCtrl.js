@@ -82,20 +82,20 @@ app.controller('holdingsCtrl', function($scope, $rootScope) {
     socket.on('holdings', function(data) {
         console.log("socket io holdings update", data);
 
-        change(data);
+        change(data.holdings);
 
-        $scope.holdings = data;
+        $scope.holdings = data.holdings;
 
-        var totalValues = _.map(data, function(holding) {
+        var totalValues = _.map($scope.holdings, function(holding) {
         	return holding.bookValue;
         });
 
 
-        var totalCosts = _.map(data, function(holding) {
+        var totalCosts = _.map($scope.holdings, function(holding) {
         	return holding.bookCost;
         });
 
-        var totalValue = 0;
+        var totalValue = data.cash;
 		var totalCost = 0;
         var totalReturn = 0;
 

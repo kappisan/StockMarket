@@ -487,7 +487,7 @@ io.on('connection', function(client) {
 	console.log('Client connected...');
 
 	client.on('get holdings', function(data) {
-		client.emit("holdings", holdings);
+		client.emit("holdings", {holdings: holdings, cash: 100});
 	});
 
 	client.on('get funds', function(data) {
@@ -518,7 +518,7 @@ io.on('connection', function(client) {
 
 		//client.emit("valuations", valuations);
 
-		client.emit("holdings", holdings);
+		client.emit("holdings", {holdings: holdings, cash: 5000});
 
 		client.emit("stocks", stocks);
 

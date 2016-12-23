@@ -401,3 +401,13 @@ td {
   fill: #fff;
   font-size: 25px;
 }
+
+.insufficient-funds {
+  height: 24px;
+}
+
+.insufficient-funds p {
+  color: #a00;
+  font-size: 18px;
+  font-family: coolvetica;
+}

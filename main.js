@@ -172,23 +172,6 @@ app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
         $scope.$apply();
     });
 
-    socket.on('holdings', function(data) {
-        console.log("socket io holdings update", data);
-
-
-        var totalValues = _.map(data, function(holding) {
-          return holding.bookValue;
-        });
-
-        var totalValue = 0;
-        totalValues.forEach(function(val) {
-          totalValue+= val;
-        })
-
-        $rootScope.user.balance = totalValue;
-
-        $scope.$apply();
-    });
 
 
     socket.on('connect', function(data) {
@@ -200,7 +183,8 @@ app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
     $rootScope.user = {
       name: "Kasper Wilkosz",
       username: "kappisan",
-      balance: numeral(59342).format('0,0.00'),
+      balance: 0,
+      cash: 0,
       holdings: []
     }
 
@@ -211,6 +195,26 @@ app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
       pe: 50.8,
       divYield: 1.2
     }
+
+    socket.on('holdings', function(data) {
+        console.log("socket io holdings update", data);
+
+
+        var totalValues = _.map(data.holdings, function(holding) {
+          return holding.bookValue;
+        });
+
+        var totalValue = 0;
+        totalValues.forEach(function(val) {
+          totalValue+= val;
+        })
+
+        $rootScope.user.balance = totalValue;
+        $rootScope.user.cash = data.cash;
+
+        $scope.$apply();
+    });
+
 
     socket.on('stock', function(data) {
         console.log("socket io stock stock stock update", data);

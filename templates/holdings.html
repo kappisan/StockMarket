@@ -36,10 +36,10 @@
 		<tr class="sans market-tr">
 			<td class="td-ticker">$$$</td>
 			<td>Cash</td>
-			<td>34</td>
+			<td>{{ twoDecimalPlaces(user.cash) }}</td>
 			<td>$1</td>
 			<td> - </td>
-			<td>$34</td>
+			<td>${{ twoDecimalPlaces(user.cash) }}</td>
 			<td>$0</td>
 			<td><button class="buy-button">Get More</button></td>
 		</tr>
@@ -56,8 +56,8 @@
 		<tr class="sans market-tr-total">
 			<td class="td-ticker">$$$</td>
 			<td class="yellow cool">Total</td>
-			<td>34</td>
-			<td>$1</td>
+			<td> - </td>
+			<td> - </td>
 			<td>${{ twoDecimalPlaces(totalCost) }}</td>
 			<td>${{ twoDecimalPlaces(user.balance) }}</td>
 			<td>${{ twoDecimalPlaces(totalReturn)}} </td>
