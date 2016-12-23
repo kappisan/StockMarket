@@ -155,7 +155,6 @@ app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
 
         $scope.transactionExecuted = true;
 
-
         $http({
             method: 'POST',
             url: '/api/buyStock',
@@ -163,6 +162,7 @@ app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
                 transaction: $scope.transaction,
                 sedol: $scope.selectedStock.sedol,
                 ticker: $scope.selectedStock.ticker,
+                name: $scope.selectedStock.name,
                 user: $rootScope.user.username
             }
         }).then(function successCallback(response) {

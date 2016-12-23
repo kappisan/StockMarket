@@ -122,6 +122,34 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 
 			console.log("buy stock", req.body)
 
+			securitiesDB.insert({
+				name: req.body.name,
+				owner: req.body.user,
+				price: req.body.transaction.paid,
+				name: req.body.name,
+				sedol: req.body.sedol,
+				bookCost: req.body.transaction.value,
+				bookValue: req.body.transaction.value,
+				ticker: req.body.ticker,
+				quantity: req.body.transaction.volume
+			})
+
+			// update holdings
+			securitiesDB.find({}).toArray((err, results) => {
+				if(err) return;
+
+				//console.log("db get all stocks", results);
+				holdings = {
+					cash: 1200,
+					holdings: results
+				};
+			});
+
+
+
+
+			// update balance
+
 			res.send("successfully bought");
 			
 		})
