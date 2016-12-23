@@ -95,9 +95,19 @@ app.controller('profileCtrl', function($scope, $http, $rootScope) {
 app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
 
     $scope.transaction = {
-      volume: 0,
-      value: 0,
-      paid: 0
+          volume: 0,
+          value: 0,
+          paid: 0
+    }
+
+    function clearTransactionData() {
+
+        $scope.transaction = {
+              volume: 0,
+              value: 0,
+              paid: 0
+        }
+
     }
 
 
@@ -131,12 +141,13 @@ app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
     $scope.showTransactionForm = false;
     $(".transactionForm").css("visibility", "visible");
 
+    var getStockUpdates;
     $scope.buyStock = function(stock) {
         console.log("buy stock", stock);
         $scope.selectedStock = stock;
         $scope.showTransactionForm = true;
         socket.emit('get stock', stock.sedol);
-        setInterval(function() { socket.emit('get stock', stock.sedol); }, 3000);
+        getStockUpdates = setInterval(function() { socket.emit('get stock', stock.sedol); }, 3000);
     }
 
     $scope.sellStock = function(stock) {
@@ -148,9 +159,31 @@ app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
     $scope.confirmBuyStock = function(stock) {
         console.log("confirm buy stock", $scope.stockPrice, $scope.selectedStock, $scope.transaction);
 
+        clearInterval(getStockUpdates);
+
         $scope.transaction.paid = numeral($scope.stockPrice).format('0,0.00');
 
         $scope.transactionExecuted = true;
+
+
+        $http({
+            method: 'POST',
+            url: '/api/buyStock',
+            data: {
+                transaction: $scope.transaction,
+                sedol: $scope.selectedStock.sedol,
+                ticker: $scope.selectedStock.ticker,
+                user: $rootScope.user.username
+            }
+        }).then(function successCallback(response) {
+        
+            console.log("got user details", response);
+            
+            $scope.userDetails = response.data;
+            $rootScope.currentPage = $scope.userDetails.name;
+
+        }, function errorCallback(response) { console.log("error", response); });
+
     }
 
     $scope.cancelBuyStock = function() {
@@ -158,6 +191,8 @@ app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
 
         $scope.showTransactionForm = false;
         $scope.transactionExecuted = false;
+        clearInterval(getStockUpdates);
+        clearTransactionData();
     }
 
     $scope.twoDecimalPlaces = function(val) {

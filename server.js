@@ -6,11 +6,22 @@ var express = require('express');
 var app = express();  
 var server = require('http').createServer(app);  
 var io = require('socket.io')(server);
+var bodyParser = require('body-parser');
 var moment = require('moment');
 var numeral = require('numeral');
 var _ = require('underscore');
 
 app.use(express.static(__dirname + '/'));  
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+
+
+
+
+
 
 app.get('/', function(req, res,next) {  
 		res.sendFile(__dirname + '/index.html');
@@ -21,7 +32,11 @@ app.get('/', function(req, res,next) {
 var startDate = moment("01-Jan-14", "DD-MMM-YY");
 
 
-var holdings = [
+var holdings = 
+{
+	cash: 200,
+	holdings: 
+	[
 		{
 			name: "kappisan",
 			price: 200,
@@ -48,7 +63,9 @@ var holdings = [
 			quantity: 2000,
 			bookCost: 850,
 			bookValue: 849
-		}];
+		}
+	]
+};
 
 
 
@@ -310,6 +327,14 @@ app.post('/api/transactions', function (req, res) {
 	
 })
 
+app.post('/api/buyStock', function (req, res) {
+
+	console.log("buy stock", req.body)
+
+	res.send("successfully bought");
+	
+})
+
 var funds = [{
 				name: "kappisan fund",
 				price: 3929,
@@ -473,7 +498,7 @@ setInterval(function() {
 	});
 
 
-	holdings.forEach(function(holding) {
+	holdings.holdings.forEach(function(holding) {
 		var matchStock = _.findWhere(stocks, { ticker: holding.ticker })
 		holding.bookValue = matchStock.priceRaw;
 	})
@@ -487,7 +512,7 @@ io.on('connection', function(client) {
 	console.log('Client connected...');
 
 	client.on('get holdings', function(data) {
-		client.emit("holdings", {holdings: holdings, cash: 100});
+		client.emit("holdings", holdings);
 	});
 
 	client.on('get funds', function(data) {
@@ -518,7 +543,7 @@ io.on('connection', function(client) {
 
 		//client.emit("valuations", valuations);
 
-		client.emit("holdings", {holdings: holdings, cash: 5000});
+		client.emit("holdings", holdings);
 
 		client.emit("stocks", stocks);
 
