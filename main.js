@@ -208,11 +208,6 @@ app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
     });
 
 
-
-    socket.on('connect', function(data) {
-        socket.emit('join', 'Hello World from client');
-    });
-
     $scope.stockPrice = "loading...";
 
     $rootScope.user = {

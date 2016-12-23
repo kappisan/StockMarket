@@ -21,10 +21,20 @@ app.use(bodyParser.urlencoded({
 
 
 
+// Retrieve
+var MongoClient = require('mongodb').MongoClient;
+
+// Connect to the db
+MongoClient.connect("mongodb://localhost:27017/exampleDb", function(err, db) {
+  if(!err) {
+    console.log("We are connected");
+  }
+});
+
 
 
 app.get('/', function(req, res,next) {  
-		res.sendFile(__dirname + '/index.html');
+	res.sendFile(__dirname + '/index.html');
 });
 
 
