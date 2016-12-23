@@ -110,27 +110,11 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 		})
 
 
-		var transactions = [{
-				id: "abcdef12345678",
-				date: "11-Sept-2001", 
-				quantity: 200,
-				bookCost: 23333,
-				pricePaid: 100,
-				stock: {
-							name: "Casablanca",
-							price: 123,
-							sedol: "123456",
-							ticker: "CSB",
-							sharesIssued: 4000,
-							marketCap: 200000,
-							currency: "GBP",
-							volume: 10000
-					}
-			}]
+
 		// returns a list of all stocks on the exchange
 		app.post('/api/transactions', function (req, res) {
 
-			res.send(transactions);
+			res.send([]);
 			
 		})
 
@@ -270,6 +254,7 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 				if(!matchStock) return;
 
 				holding.bookValue = matchStock.priceRaw;
+				holding.price = matchStock.price;
 			})
 
 

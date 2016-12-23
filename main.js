@@ -202,18 +202,10 @@ app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
 
     $rootScope.user = {
       name: "Kasper Wilkosz",
-      username: "kappisan",
+      username: "kasper",
       balance: 0,
       cash: 0,
       holdings: []
-    }
-
-    $scope.info = {
-      name: "kappisan",
-      shares: 2000000,
-      volumeAverage: 3000,
-      pe: 50.8,
-      divYield: 1.2
     }
 
     socket.on('holdings', function(data) {
