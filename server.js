@@ -50,8 +50,6 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 	});
 
 
-
-
 	var securitiesDB = db.collection('securities');
 	var securities;
 
@@ -82,32 +80,32 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 	/* api */
 	var startDate = moment("01-Jan-14", "DD-MMM-YY");
 
+	app.get('/api/holdings', function(req, res,next) {  
+		res.send(holdings);
+	});
 
 
+	// returns a list of all stocks on the exchange
+	app.get('/api/stock', function (req, res) {
 
+		console.log('get stock by sedol', req.query);
 
+		var match;
 
-		// returns a list of all stocks on the exchange
-		app.get('/api/stock', function (req, res) {
+		if(req.query.sedol) {
+			match = _.findWhere(stocks, {sedol: req.query.sedol});
+		} else if (req.query.name) {
+			match = _.findWhere(stocks, {name: req.query.name});
+		} else if (req.query.ticker) {
+			match = _.findWhere(stocks, {ticker: req.query.ticker});
+		}
 
-			console.log('get stock by sedol', req.query);
-
-			var match;
-
-			if(req.query.sedol) {
-				match = _.findWhere(stocks, {sedol: req.query.sedol});
-			} else if (req.query.name) {
-				match = _.findWhere(stocks, {name: req.query.name});
-			} else if (req.query.ticker) {
-				match = _.findWhere(stocks, {ticker: req.query.ticker});
-			}
-
-			if(match) {
-				res.send(match);
-			} else {
-				res.send({ name: "no stock found" })
-			}
-		})
+		if(match) {
+			res.send(match);
+		} else {
+			res.send({ name: "no stock found" })
+		}
+	})
 
 
 
@@ -197,11 +195,12 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 			res.send(funds);
 		})
 
+		app.get('/api/stocks', function (req, res) {
+			res.send(stocks);
+		})
 
 		app.get('/api/users', function (req, res) {
-
 			res.send(users);
-
 		})
 
 		app.get('/api/user', function (req, res) {

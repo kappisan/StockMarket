@@ -44,6 +44,9 @@ app.controller('marketCtrl', function($scope, $rootScope, $http) {
 
       }, function errorCallback(response) { console.log("error", response); });
 
+
+
+
 });
 
 app.controller('statementsCtrl', function($scope, $rootScope, $http) {
@@ -197,6 +200,19 @@ app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
         $scope.$apply();
     });
 
+    $http({
+        method: 'GET',
+        url: '/api/stocks'
+    }).then(function successCallback(response) {
+    
+        console.log("got stocks details", response);
+        
+        $scope.stocks = response.data;
+
+    }, function errorCallback(response) { console.log("error", response); });
+
+
+
 
     $scope.stockPrice = "loading...";
 
@@ -234,6 +250,8 @@ app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
         $rootScope.currentPage = data.name;
         $scope.stockPrice = numeral(data.price).format('0.00');
     });
+
+
 
 
 

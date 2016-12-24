@@ -1,6 +1,18 @@
-app.controller('holdingsCtrl', function($scope, $rootScope) {
+app.controller('holdingsCtrl', function($scope, $rootScope, $http) {
     $rootScope.currentPage = "Holdings";
     $scope.totalReturn = 0;
+
+    $http({
+        method: 'GET',
+        url: '/api/holdings?username=' + getUrlVars()["username"]
+    }).then(function successCallback(response) {
+    
+        console.log("got holdings details", response);
+        
+        $scope.holdings = response.data.holdings;
+        change($scope.holdings);
+
+    }, function errorCallback(response) { console.log("error", response); });
 
     socket.emit("get holdings", $rootScope.user.username);
 
