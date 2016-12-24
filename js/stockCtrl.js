@@ -13,6 +13,23 @@ app.controller('stockCtrl', function($scope, $rootScope, $http) {
         $scope.company = data;
     });
 
+    $http({
+        method: 'GET',
+        url: '/api/stock?sedol=' + getUrlVars()["sedol"]
+    }).then(function successCallback(response) {
+    
+        console.log("got stocks details for valuations", response.data.valuations);
+        
+        $scope.valuations = response.data.valuations;
+
+        $(".line-svg").html('');
+
+        drawLineChart($scope.valuations);
+
+
+    }, function errorCallback(response) { console.log("error", response); });
+
+
 
     setInterval(function() {
     	socket.emit('get valuation', getUrlVars()["sedol"]);

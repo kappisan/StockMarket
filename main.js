@@ -252,6 +252,18 @@ app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
     });
 
 
+    $http({
+        method: 'GET',
+        url: '/api/stock?sedol=' + getUrlVars()["sedol"]
+    }).then(function successCallback(response) {
+    
+        $rootScope.currentPage = response.data.name;
+        console.log("got stocks details", response);
+        
+        $scope.stockPrice = numeral(response.data.price).format('0.00');
+
+    }, function errorCallback(response) { console.log("error", response); });
+
 
 
 
