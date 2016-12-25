@@ -62,54 +62,22 @@
             <li><a href="#/" ng-click="goToHomePage()"><p>Home</p></a></li>
             <li><a href="#/holdings" ng-click="goToHoldingsPage()"><p>Holdings</p></a></li>
             <li><a href="#/market" ng-click="goToMarketPage()"><p>Market</p></a></li>
-            <li><a href="#/profile" ng-click="goToProfilePage()"><p>Profile</p></a></li>
+            <li><a href="#/profile?username=kasper" ng-click="goToProfilePage()"><p>Profile</p></a></li>
             <li><a href="#/statements" ng-click="goToStatementsPage()"><p>Statements</p></a></li>
         </ul>
     </nav>
 
-    <div class="user-info">
-        <span class="cool user-username" ng-click="goToProfilePage()">{{ user.username }}</span>
-        <a href="#/holdings" ng-click="goToHoldingsPage()" class="user-balance">${{ twoDecimalPlaces(user.balance) }}</a>
+    <div class="user-info sans">
+        <span class="cool user-username" ng-click="goToProfilePage()">{{ user.username }}</span><br>
+        Cash: ${{ twoDecimalPlaces(user.cash) }}<br>
+        <a href="#/holdings" ng-click="goToHoldingsPage()" class="user-balance">Portfolio: ${{ twoDecimalPlaces(user.balance) }}</a>
     </div>
         
 </div>
 
-<div ng-if="showTransactionForm" class="grey-out-bg">
-    <div class="transactionForm cool">
-        <center>
-            <h2 ng-if="!transactionExecuted">EXECUTE TRANSACTION</h2>
-            <h2 ng-if="transactionExecuted">Success</h2>
-            <div>
-                <h1>{{ selectedStock.name }}</h1>
-            </div>
+<div ng-if="showTransactionForm" ng-include="'./templates/components/transactionForm.html'"></div>
 
-            <div ng-if="!transactionExecuted">
-
-                <div class="insufficient-funds">
-                    <p ng-if="transaction.value > user.cash">Insufficient Funds</[h1]>
-                </div>
-
-                <h2 class="sans">Price: ${{ stockPrice }} &nbsp; &nbsp; Available: ${{ user.cash }}</h2>
-
-                Amount <input type="number" ng-model="transaction.volume" class="transaction-input"><br><br>
-                Value  <input type="number" ng-model="transaction.value" class="transaction-input"><br><br><br><br>
-                <button ng-click="confirmBuyStock()" class="transaction-button">Execute</button>
-                <button ng-click="cancelBuyStock()" class="transaction-button">Cancel</button>
-
-            </div>
-
-            <div ng-if="transactionExecuted">
-
-                <h3 class="sans">Bought {{ transaction.volume }} for ${{ transaction.paid * transaction.volume }}</h3>
-
-                <button ng-click="cancelBuyStock()" class="transaction-button">Ok</button>
-            </div>
-
-        </center>
-    </div>
-</div>
-
-
+<div ng-if="showSellForm" ng-include="'./templates/components/sellForm.html'"></div>
 
 <div id="container" ng-view></div>
 
@@ -126,6 +94,7 @@
 <script src="./main.js"></script>
 <script src="./js/stockCtrl.js"></script>
 <script src="./js/holdingsCtrl.js"></script>
+<script src="./js/statementsCtrl.js"></script>
 
 </body>
 </html>

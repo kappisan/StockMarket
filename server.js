@@ -40,13 +40,11 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 
 	var stocksDB = db.collection('stocks');
 	var stocks;
-
 	stocksDB.find({}).toArray((err, results) => {
 		if(err) return;
 
 		//console.log("db get all stocks", results);
 		stocks = results;
-
 	});
 
 
@@ -60,17 +58,22 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 
 	securitiesDB.find({}).toArray((err, results) => {
 		if(err) return;
-
 		//console.log("db get all stocks", results);
-
 		holdings = {
 			cash: 1200,
 			holdings: results
 		};
-
 	});
 
 
+	var statementsDB = db.collection('statements');
+	var statements;
+	statementsDB.find({}).toArray((err, results) => {
+		if(err) return;
+
+		//console.log("db get all stocks", results);
+		statements = results;
+	});
 
 	app.get('/', function(req, res,next) {  
 		res.sendFile(__dirname + '/index.html');
@@ -109,39 +112,46 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 
 
 
-		// returns a list of all stocks on the exchange
-		app.post('/api/transactions', function (req, res) {
+	// returns a list of all stocks on the exchange
+	app.post('/api/transactions', function (req, res) {
 
-			res.send([]);
-			
+		res.send([]);
+		
+	})
+
+	// returns a list of all stocks on the exchange
+	app.post('/api/statements', function (req, res) {
+
+		res.send(statements);
+	})
+
+
+	app.post('/api/buyStock', function (req, res) {
+
+		console.log("buy stock", req.body)
+
+		securitiesDB.insert({
+			name: req.body.name,
+			owner: req.body.user,
+			price: req.body.transaction.paid,
+			name: req.body.name,
+			sedol: req.body.sedol,
+			bookCost: req.body.transaction.value,
+			bookValue: req.body.transaction.value,
+			ticker: req.body.ticker,
+			quantity: req.body.transaction.volume
 		})
 
-		app.post('/api/buyStock', function (req, res) {
+		// update holdings
+		securitiesDB.find({}).toArray((err, results) => {
+			if(err) return;
 
-			console.log("buy stock", req.body)
-
-			securitiesDB.insert({
-				name: req.body.name,
-				owner: req.body.user,
-				price: req.body.transaction.paid,
-				name: req.body.name,
-				sedol: req.body.sedol,
-				bookCost: req.body.transaction.value,
-				bookValue: req.body.transaction.value,
-				ticker: req.body.ticker,
-				quantity: req.body.transaction.volume
-			})
-
-			// update holdings
-			securitiesDB.find({}).toArray((err, results) => {
-				if(err) return;
-
-				//console.log("db get all stocks", results);
-				holdings = {
-					cash: 1200,
-					holdings: results
-				};
-			});
+			//console.log("db get all stocks", results);
+			holdings = {
+				cash: 1200,
+				holdings: results
+			};
+		});
 
 
 
@@ -150,7 +160,7 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 
 			res.send("successfully bought");
 			
-		})
+	})
 
 		var funds = [{
 						name: "kappisan fund",

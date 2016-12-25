@@ -1,42 +1,45 @@
-var holdings = 	[
-				{
-					name: "kappisan",
-					owner: "kasper",
-					price: 200,
-					sedol: "123456",
-					ticker: "KA",
-					quantity: 100,
-					bookCost: 300,
-					bookValue: 3333
-				},
-				{
-					name: "Maverick Media",
-					owner: "kasper",
-					price: 345,
-					sedol: "333333",
-					ticker: "MM",
-					quantity: 250,
-					bookCost: 4000,
-					bookValue: 4200
-				},
-				{
-					name: "Amiris Cannabis",
-					owner: "kasper",
-					price: 77,
-					sedol: "555555",
-					ticker: "ACB",
-					quantity: 2000,
-					bookCost: 850,
-					bookValue: 849
-				}
-			]
+var statements = [
+    	{
+    		type: "Buy",
+    		amount: 32,
+    		sedol: "333333",
+    		name: "Maverick Media",
+    		price: 4523,
+    		date: "2016-Dec-01",
+    		time: "10:17:12",
+    		user: "kasper",
+    		fee: 0
+    	},
+    	{
+    		type: "Sell",
+    		amount: 300,
+    		sedol: "123456",
+    		name: "kappisan",
+    		price: 4523,
+    		date: "2016-Dec-01",
+    		time: "10:17:17",
+    		user: "kasper",
+    		fee: 0
+    	},
+    	{
+    		type: "Sell",
+    		amount: 300,
+    		sedol: "123456",
+    		name: "Maverick Media",
+    		price: 4523,
+    		date: "2016-Dec-01",
+    		time: "13:12:47",
+    		user: "alex",
+    		fee: 0
+    	}
+    ]
 
 fs = require('fs');
-fs.writeFile('holdings.json', JSON.stringify(holdings), function (err) {
+fs.writeFile('statements.json', JSON.stringify(statements), function (err) {
 
   if (err) return console.log(err);
 
-  console.log('holdings > holdings.txt');
+  console.log('statements > statements.txt');
 });
 
 

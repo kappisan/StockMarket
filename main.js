@@ -30,9 +30,7 @@ app.controller('marketCtrl', function($scope, $rootScope, $http) {
     console.log("market controller");
     socket.emit("get stocks", true);
 
-
     $rootScope.currentPage = "Market";
-
 
     $http({
       method: 'GET',
@@ -45,17 +43,8 @@ app.controller('marketCtrl', function($scope, $rootScope, $http) {
       }, function errorCallback(response) { console.log("error", response); });
 
 
-
-
 });
 
-app.controller('statementsCtrl', function($scope, $rootScope, $http) {
-
-    console.log("statementsCtrl");
-
-    $rootScope.currentPage = "Statements";
-
-});
 
 app.controller('profileCtrl', function($scope, $http, $rootScope) {
 
@@ -143,10 +132,15 @@ app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
         getStockUpdates = setInterval(function() { socket.emit('get stock', stock.sedol); }, 3000);
     }
 
+    $scope.showSellForm = false;
     $scope.sellStock = function(stock) {
         console.log("sell stock", stock);
         $scope.selectedStock = stock;
-        $scope.showTransactionForm = true;
+        $scope.showSellForm = true;
+    }
+
+    $scope.confirmSellStock= function(stock) {
+        console.log("confirm sell stock", stock);
     }
 
     $scope.confirmBuyStock = function(stock) {
@@ -194,12 +188,12 @@ app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
 
     socket.emit('get valuation', getUrlVars()["sedol"]);
 
+    // get stocks information
     socket.on('stocks', function(data) {
         console.log("socket io stocks update", data);
         $scope.stocks = data;
         $scope.$apply();
     });
-
     $http({
         method: 'GET',
         url: '/api/stocks'
@@ -244,14 +238,13 @@ app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
     });
 
 
+    // get stock information
     socket.on('stock', function(data) {
         console.log("socket io stock stock stock update", data);
         if(!data || !data.name) return;
         $rootScope.currentPage = data.name;
         $scope.stockPrice = numeral(data.price).format('0.00');
     });
-
-
     $http({
         method: 'GET',
         url: '/api/stock?sedol=' + getUrlVars()["sedol"]
@@ -266,6 +259,9 @@ app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
 
 
 
+
+
+    // WATCHERS
 
     $scope.$watch("transaction.volume", function(n, o) {
         console.log("transaction change", n);

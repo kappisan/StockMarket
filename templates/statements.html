@@ -38,31 +38,12 @@
 
 <center style="padding-top:90px;">
 
-	<div class="statement-tile">
+	<div class="statement-tile" ng-repeat="statement in statements">
 		<h4 class="sans">
-			<span class="statement-transaction-span">Bought</span> 
-			<span class="transaction-amount">8000</span> 
-			<span class="transaction-stock">kappisan</span> for &nbsp;
-			<span class="transaction-price">$4532</span>
+			<span class="statement-transaction-span">{{ statement.type }}</span> 
+			<span class="transaction-amount">{{ statement.amount }}</span> 
+			<span class="transaction-stock">{{ statement.name }}</span> for &nbsp;
+			<span class="transaction-price">${{ statement.price }}</span>
 		</h4>
 	</div>
-
-	<div class="statement-tile">
-		<h4 class="sans">
-			<span class="statement-transaction-span">Sold</span> 
-			<span class="transaction-amount">8000</span> 
-			<span class="transaction-stock">kappisan</span> for &nbsp;
-			<span class="transaction-price">$4532</span>
-		</h4>
-	</div>
-
-	<div class="statement-tile">
-		<h4 class="sans">
-			<span class="statement-transaction-span">Bought</span> 
-			<span class="transaction-amount">8000</span> 
-			<span class="transaction-stock">kappisan</span> for &nbsp;
-			<span class="transaction-price">$4532</span>
-		</h4>
-	</div>
-
 </center>
