@@ -10,14 +10,18 @@
             <div ng-if="!transactionExecuted">
 
                 <div class="insufficient-funds">
-                    <p ng-if="transaction.value > user.cash">Insufficient Shares</[h1]>
+                    <p ng-if="transaction.volume > selectedStock.quantity">Insufficient Shares</[h1]>
                 </div>
 
-                <h2 class="sans">Price: ${{ stockPrice }} <br> Available: ${{ user.cash }}</h2>
+                <h2 class="sans">Price: ${{ stockPrice }} <br> Available: {{ selectedStock.quantity }}</h2>
 
-                Amount <input type="number" ng-model="transaction.volume" class="transaction-input"><br><br><br><br>
+                Amount <input type="number" ng-model="transaction.volume" class="transaction-input"><br>
+
+               <h2 class="sans">Cash: ${{ stockPrice * transaction.volume }}</h2>
+
+                <br>
                 <button ng-click="confirmSellStock()" class="transaction-button">Sell</button>
-                <button ng-click="cancelBuyStock()" class="transaction-button">Cancel</button>
+                <button ng-click="cancelSellStock()" class="transaction-button">Cancel</button><br>
 
             </div>
 

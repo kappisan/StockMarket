@@ -132,17 +132,6 @@ app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
         getStockUpdates = setInterval(function() { socket.emit('get stock', stock.sedol); }, 3000);
     }
 
-    $scope.showSellForm = false;
-    $scope.sellStock = function(stock) {
-        console.log("sell stock", stock);
-        $scope.selectedStock = stock;
-        $scope.showSellForm = true;
-    }
-
-    $scope.confirmSellStock= function(stock) {
-        console.log("confirm sell stock", stock);
-    }
-
     $scope.confirmBuyStock = function(stock) {
         console.log("confirm buy stock", $scope.stockPrice, $scope.selectedStock, $scope.transaction);
 
@@ -181,6 +170,31 @@ app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
         clearInterval(getStockUpdates);
         clearTransactionData();
     }
+
+
+    $scope.showSellForm = false;
+    $scope.sellStock = function(stock) {
+        console.log("sell stock", stock);
+        $scope.selectedStock = stock;
+        $scope.showSellForm = true;
+    }
+
+    $scope.confirmSellStock= function(stock) {
+        console.log("confirm sell stock", stock);
+    }
+
+    $scope.cancelSellStock = function() {
+        console.log("confirm buy stock");
+
+        $scope.showSellForm = false;
+        $scope.transactionExecuted = false;
+        clearInterval(getStockUpdates);
+        clearTransactionData();
+    }
+
+
+
+
 
     $scope.twoDecimalPlaces = function(val) {
       return numeral(val).format('0,0.00')
