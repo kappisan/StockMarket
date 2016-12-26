@@ -22,51 +22,59 @@
 
 <center style="padding-top:90px;">
 
-	<table>
-		<tr>
-			<th>Ticker</th>
-			<th>Name</th>
-			<th>Quantity</th>
-			<th>Price</th>
-			<th>Book Cost</th>
-			<th>Book Value</th>
-			<th>Return</th>
-			<th>Transaction</th>
-		</tr>
-		<tr class="sans market-tr">
-			<td class="td-ticker">$$$</td>
-			<td>Cash</td>
-			<td>{{ twoDecimalPlaces(user.cash) }}</td>
-			<td>$1</td>
-			<td> - </td>
-			<td>${{ twoDecimalPlaces(user.cash) }}</td>
-			<td>$0</td>
-			<td><button class="buy-button">Get More</button></td>
-		</tr>
-		<tr ng-repeat="holding in holdings" ng-click="goToStock(holding)" class="sans market-tr">
-			<td class="td-ticker">{{ holding.ticker }}</td>
-			<td>{{ holding.name }}</td>
-			<td>{{ holding.quantity }}</td>
-			<td>${{ twoDecimalPlaces(holding.price) }}</td>
-			<td>${{ twoDecimalPlaces(holding.bookCost) }}</td>
-			<td>${{ twoDecimalPlaces((holding.bookValue * holding.quantity)) }}</td>
-			<td>${{ twoDecimalPlaces((holding.bookValue * holding.quantity) - holding.bookCost) }}</td>
-			<td ng-click="sellStock(stock)"><button class="buy-button">Sell</button></td>
-		</tr>
-		<tr class="sans market-tr-total">
-			<td class="td-ticker">$$$</td>
-			<td class="yellow cool">Total</td>
-			<td> - </td>
-			<td> - </td>
-			<td>${{ twoDecimalPlaces(totalCost) }}</td>
-			<td>${{ twoDecimalPlaces(user.balance) }}</td>
-			<td>${{ twoDecimalPlaces(totalReturn)}} </td>
-			
-	</table>
+	<div ng-show="loggedIn">
+		<table>
+			<tr>
+				<th>Ticker</th>
+				<th>Name</th>
+				<th>Quantity</th>
+				<th>Price</th>
+				<th>Book Cost</th>
+				<th>Book Value</th>
+				<th>Return</th>
+				<th>Transaction</th>
+			</tr>
+			<tr class="sans market-tr">
+				<td class="td-ticker">$$$</td>
+				<td>Cash</td>
+				<td>{{ twoDecimalPlaces(user.cash) }}</td>
+				<td>$1</td>
+				<td> - </td>
+				<td>${{ twoDecimalPlaces(user.cash) }}</td>
+				<td>$0</td>
+				<td><button class="buy-button">Get More</button></td>
+			</tr>
+			<tr ng-repeat="holding in holdings" ng-click="goToStock(holding)" class="sans market-tr">
+				<td class="td-ticker">{{ holding.ticker }}</td>
+				<td>{{ holding.name }}</td>
+				<td>{{ holding.quantity }}</td>
+				<td>${{ twoDecimalPlaces(holding.price) }}</td>
+				<td>${{ twoDecimalPlaces(holding.bookCost) }}</td>
+				<td>${{ twoDecimalPlaces((holding.bookValue * holding.quantity)) }}</td>
+				<td>${{ twoDecimalPlaces((holding.bookValue * holding.quantity) - holding.bookCost) }}</td>
+				<td ng-click="sellStock(stock)"><button class="buy-button">Sell</button></td>
+			</tr>
+			<tr class="sans market-tr-total">
+				<td class="td-ticker">$$$</td>
+				<td class="yellow cool">Total</td>
+				<td> - </td>
+				<td> - </td>
+				<td>${{ twoDecimalPlaces(totalCost) }}</td>
+				<td>${{ twoDecimalPlaces(user.balance) }}</td>
+				<td>${{ twoDecimalPlaces(totalReturn)}} </td>
+			</tr>
+		</table>
 
+		<div class="holdings-donut"></div>
+	</div>
+	<div ng-show="!loggedIn">
 
+		<center>
+			<h1 class="cool">You Must Log In To View Holdings</h1>
 
-	<div class="holdings-donut"></div>
+			<a href="#/login"><p class="sans">go to login...</p></a>	
+		</center>
 
+	</div>
 
 </center>

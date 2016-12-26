@@ -7,7 +7,10 @@ app.controller('statementsCtrl', function($scope, $rootScope, $http) {
 
     $http({
         method: 'POST',
-        url: '/api/statements?username=' + getUrlVars()["username"]
+        url: '/api/statements?username=' + getUrlVars()["username"],
+        data: {
+        	username: $rootScope.user.username
+        }
     }).then(function successCallback(response) {
     
         console.log("got statements details", response);

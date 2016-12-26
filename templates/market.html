@@ -8,14 +8,14 @@
 			<th>Name</th>
 			<th>Price</th>
 			<th>Market Cap</th>
-			<th>Buy</th>
+			<th ng-if="loggedIn">Buy</th>
 		</tr>
 		<tr ng-repeat="stock in stocks" class="sans market-tr">
 			<td ng-click="goToStock(stock)" class="td-ticker">{{ stock.ticker }}</td>
 			<td ng-click="goToStock(stock)">{{ stock.name }}</td>
 			<td ng-click="goToStock(stock)">£{{ stock.price }}</td>
 			<td ng-click="goToStock(stock)">{{ stock.marketCap }}</td>
-			<td ng-click="buyStock(stock)"><button class="buy-button">Invest</button></td>
+			<td ng-click="buyStock(stock)" ng-if="loggedIn"><button class="buy-button">Invest</button></td>
 		</tr>
 		
 	</table>
@@ -37,7 +37,7 @@
 			<td ng-click="goToStock(fund)">{{ fund.name }}</td>
 			<td ng-click="goToStock(fund)">{{ fund.price }}</td>
 			<td ng-click="goToStock(fund)">{{ fund.marketCap }}</td>
-			<td ng-click="buyStock(fund)"><button class="buy-button">Invest</button></td>
+			<td ng-click="buyStock(fund)" ng-if="loggedIn"><button class="buy-button">Invest</button></td>
 		</tr>
 		
 	</table>

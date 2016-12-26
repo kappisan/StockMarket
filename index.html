@@ -57,15 +57,20 @@
         <nav>
             <ul>
                 <li><a href="#/" ng-click="goToHomePage()"><p>Home</p></a></li>
-                <li><a href="#/holdings" ng-click="goToHoldingsPage()"><p>Holdings</p></a></li>
+                <li ng-if="loggedIn"><a href="#/holdings" ng-click="goToHoldingsPage()"><p>Holdings</p></a></li>
                 <li><a href="#/market" ng-click="goToMarketPage()"><p>Market</p></a></li>
-                <li><a href="#/profile?username=kasper" ng-click="goToProfilePage()"><p>Profile</p></a></li>
-                <li><a href="#/statements" ng-click="goToStatementsPage()"><p>Statements</p></a></li>
-                <li><a href="#/login" ng-click="logout()"><p>Logout</p></a></li>
+                <li ng-if="loggedIn"><a href="#/profile?username=kasper" ng-click="goToProfilePage()"><p>Profile</p></a></li>
+                <li ng-if="loggedIn"><a href="#/statements" ng-click="goToStatementsPage()"><p>Statements</p></a></li>
+                <li>
+                    <a href="#/login" ng-click="logout()">
+                        <p ng-if="loggedIn">Log Out</p>
+                        <p ng-if="!loggedIn">Log In</p>
+                    </a>
+                </li>
             </ul>
         </nav>
 
-        <div class="user-info sans">
+        <div class="user-info sans" ng-if="loggedIn">
             <span class="cool user-username" ng-click="goToProfilePage()">{{ user.username }}</span><br>
             Cash: ${{ twoDecimalPlaces(user.cash) }}<br>
             <a href="#/holdings" ng-click="goToHoldingsPage()" class="user-balance">Portfolio: ${{ twoDecimalPlaces(user.balance) }}</a>

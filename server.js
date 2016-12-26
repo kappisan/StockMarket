@@ -98,11 +98,8 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 				holdings: results
 			};
 
-
 			res.send(holdings);
-
 		});
-
 	});
 
 /*
@@ -144,7 +141,18 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 
 	// returns a list of all stocks on the exchange
 	app.post('/api/statements', function (req, res) {
-		res.send(statements);
+		console.log("get statements by user", req.body.username);
+
+		statementsDB.find({user: req.body.username}).toArray((err, results) => {
+			if(err) return;
+
+			//console.log("db get all stocks", results);
+			//statements = results;
+
+			res.send(results);
+		});
+
+
 	})
 
 	app.post('/api/login', function (req, res) {

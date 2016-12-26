@@ -3,7 +3,7 @@ app.controller('loginCtrl', function($scope, $rootScope, $http) {
 
     $rootScope.user = {
       name: "",
-      username: "loading...",
+      username: "",
       balance: 0,
       cash: 0,
       holdings: []
@@ -11,10 +11,11 @@ app.controller('loginCtrl', function($scope, $rootScope, $http) {
 
 
     var cookieUsername = getCookie("login_username");
-
+    $rootScope.loggedIn = false;
     if(cookieUsername) {
     	console.log("getCookie", cookieUsername);
     	$rootScope.user.username = cookieUsername;
+    	$rootScope.loggedIn = true;
     }
 
 
@@ -26,6 +27,7 @@ app.controller('loginCtrl', function($scope, $rootScope, $http) {
     $scope.logout = function() {
     	console.log("logout!!!!!");
     	delete_cookie("login_username");
+    	$rootScope.loggedIn = false;
 
 	    $rootScope.user = {
 	      name: "",
@@ -53,7 +55,10 @@ app.controller('loginCtrl', function($scope, $rootScope, $http) {
 
 			setLoginCookie(response.data);
 
-			window.location = '#/holdings'; 
+			$rootScope.loggedIn = true;
+			$rootScope.currentPage = "Login";
+			window.location = '#/holdings';
+			//setTimeout(function() { window.location = '#/holdings'; }, 4000);
 
 	      }, function errorCallback(response) { console.log("error", response); });
 
