@@ -130,8 +130,10 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 
 	app.post('/api/login', function (req, res) {
 
-		var userObject = res.body;
+		var userObject = req.body;
 		userObject.uuid = "123456789";
+
+		console.log("/api/login", userObject);
 
 		res.send(userObject);
 	})
@@ -145,7 +147,7 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 			name: req.body.name,
 			owner: req.body.user,
 			price: req.body.transaction.paid,
-			name: req.body.name,
+			name: req.body.name,	
 			sedol: req.body.sedol,
 			bookCost: req.body.transaction.value,
 			bookValue: req.body.transaction.value,
