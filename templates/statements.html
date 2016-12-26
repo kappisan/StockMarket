@@ -38,12 +38,16 @@
 
 <center style="padding-top:90px;">
 
-	<div class="statement-tile" ng-repeat="statement in statements">
-		<h4 class="sans">
-			<span class="statement-transaction-span">{{ statement.type }}</span> 
-			<span class="transaction-amount">{{ statement.amount }}</span> 
-			<span class="transaction-stock">{{ statement.name }}</span> for &nbsp;
-			<span class="transaction-price">${{ statement.price }}</span>
-		</h4>
+	<div ng-show="loggedIn">
+		<div class="statement-tile" ng-repeat="statement in statements">
+			<h4 class="sans">
+				<span class="statement-transaction-span">{{ statement.type }}</span> 
+				<span class="transaction-amount">{{ statement.amount }}</span> 
+				<span class="transaction-stock">{{ statement.name }}</span> for &nbsp;
+				<span class="transaction-price">${{ statement.price }}</span>
+			</h4>
+		</div>
 	</div>
+	<div ng-show="!loggedIn" ng-include="'./templates/components/notAllowed.html'"></div>
+
 </center>

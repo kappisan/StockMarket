@@ -14,4 +14,8 @@
 <button class="login-button" ng-click="loginWithPass()">Login</button>
 <button class="cancel-button">Cancel</button>
 
+<div ng-if="loginError" style="color: #a00;">
+	<h1 class="cool">Error: {{ loginErrorMessage }}</h1>
+</div>
+
 </center>

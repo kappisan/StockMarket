@@ -1,6 +1,9 @@
 app.controller('loginCtrl', function($scope, $rootScope, $http) {
     $rootScope.currentPage = "Login";
 
+    $rootScope.loginError = false;
+    $rootScope.loginErrorMessage = "";
+
     $rootScope.user = {
       name: "",
       username: "",
@@ -51,17 +54,28 @@ app.controller('loginCtrl', function($scope, $rootScope, $http) {
 
 	        if(!response.data) return;
 
+	        if(response.data.status == false) {
+
+	    	    $rootScope.loginError = true;
+				$rootScope.loginErrorMessage = "No Such User";
+
+	        	return console.log("no such user");	
+	        }
+
 	        $rootScope.user.username = response.data.username;
 
 			setLoginCookie(response.data);
 
 			$rootScope.loggedIn = true;
 			$rootScope.currentPage = "Login";
+
+			// hide error message
+		    $rootScope.loginError = false;
+		    $rootScope.loginErrorMessage = "";
+
 			window.location = '#/holdings';
-			//setTimeout(function() { window.location = '#/holdings'; }, 4000);
 
 	      }, function errorCallback(response) { console.log("error", response); });
-
     }
 
 });

@@ -67,14 +67,6 @@
 
 		<div class="holdings-donut"></div>
 	</div>
-	<div ng-show="!loggedIn">
-
-		<center>
-			<h1 class="cool">You Must Log In To View Holdings</h1>
-
-			<a href="#/login"><p class="sans">go to login...</p></a>	
-		</center>
-
-	</div>
+	<div ng-show="!loggedIn" ng-include="'./templates/components/notAllowed.html'"></div>
 
 </center>

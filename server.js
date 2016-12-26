@@ -71,13 +71,6 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 
 
 	var statementsDB = db.collection('statements');
-	var statements;
-	statementsDB.find({}).toArray((err, results) => {
-		if(err) return;
-
-		//console.log("db get all stocks", results);
-		statements = results;
-	});
 
 	app.get('/', function(req, res,next) {  
 		res.sendFile(__dirname + '/index.html');
@@ -90,15 +83,19 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 	app.post('/api/holdings', function(req, res, next) {  
 		console.log("get holdings for", req.body)
 
-		securitiesDB.find({owner: req.body.username}).toArray((err, results) => {
-			if(err) return;
-			//console.log("db get all stocks", results);
-			holdings = {
-				cash: 2200,
-				holdings: results
-			};
+		userDB.find({username: req.body.username}).toArray((usersErr, userResults) => {
+			if(usersErr) return;
 
-			res.send(holdings);
+			securitiesDB.find({owner: req.body.username}).toArray((err, holdingsResults) => {
+				if(err) return;
+
+				holdings = {
+					cash: userResults[0].cash,
+					holdings: holdingsResults
+				};
+
+				res.send(holdings);
+			});
 		});
 	});
 
@@ -158,11 +155,23 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 	app.post('/api/login', function (req, res) {
 
 		var userObject = req.body;
-		userObject.uuid = "123456789";
 
 		console.log("/api/login", userObject);
 
-		res.send(userObject);
+		var userMatch = _.findWhere(users, { username: req.body.username })
+
+		if(!userMatch) {
+
+			res.send({status: false});
+
+		} else {
+
+			userObject.uuid = "123456789";
+			userObject.status = true;
+
+			res.send(userObject);
+
+		}
 	})
 
 
@@ -374,7 +383,7 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 
 				//client.emit("valuations", valuations);
 
-				client.emit("holdings", holdings);
+				//client.emit("holdings", holdings);
 
 				client.emit("stocks", stocks);
 

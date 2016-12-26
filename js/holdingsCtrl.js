@@ -14,6 +14,7 @@ app.controller('holdingsCtrl', function($scope, $rootScope, $http) {
         console.log("got holdings details", response);
         
         $scope.holdings = response.data.holdings;
+        $rootScope.user.cash = response.data.cash;
         change($scope.holdings);
 
     }, function errorCallback(response) { console.log("error", response); });
