@@ -31,55 +31,55 @@
     <title>Stock Simulator</title>
 
 </head>
-<body ng-app="stockApp" ng-controller="mainCtrl">
+<body ng-app="stockApp" ng-controller="loginCtrl">
 
+<div ng-controller="mainCtrl">
 
+    <div class="wrapper">
 
+        <center>
 
+          <h1 class="page-heading">{{ currentPage }}</h1>
+        </center>
 
+        <input type="checkbox" id="navigation" />
+        <label for="navigation">
 
-<div class="wrapper">
+        <!-- Hamburger -->
+        <div id="nav-icon3">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
 
-    <center>
+        </label>
+        <nav>
+            <ul>
+                <li><a href="#/" ng-click="goToHomePage()"><p>Home</p></a></li>
+                <li><a href="#/holdings" ng-click="goToHoldingsPage()"><p>Holdings</p></a></li>
+                <li><a href="#/market" ng-click="goToMarketPage()"><p>Market</p></a></li>
+                <li><a href="#/profile?username=kasper" ng-click="goToProfilePage()"><p>Profile</p></a></li>
+                <li><a href="#/statements" ng-click="goToStatementsPage()"><p>Statements</p></a></li>
+                <li><a href="#/login" ng-click="logout()"><p>Logout</p></a></li>
+            </ul>
+        </nav>
 
-      <h1 class="page-heading">{{ currentPage }}</h1>
-    </center>
-
-    <input type="checkbox" id="navigation" />
-    <label for="navigation">
-
-    <!-- Hamburger -->
-    <div id="nav-icon3">
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
+        <div class="user-info sans">
+            <span class="cool user-username" ng-click="goToProfilePage()">{{ user.username }}</span><br>
+            Cash: ${{ twoDecimalPlaces(user.cash) }}<br>
+            <a href="#/holdings" ng-click="goToHoldingsPage()" class="user-balance">Portfolio: ${{ twoDecimalPlaces(user.balance) }}</a>
+        </div>
+            
     </div>
 
-    </label>
-    <nav>
-        <ul>
-            <li><a href="#/" ng-click="goToHomePage()"><p>Home</p></a></li>
-            <li><a href="#/holdings" ng-click="goToHoldingsPage()"><p>Holdings</p></a></li>
-            <li><a href="#/market" ng-click="goToMarketPage()"><p>Market</p></a></li>
-            <li><a href="#/profile?username=kasper" ng-click="goToProfilePage()"><p>Profile</p></a></li>
-            <li><a href="#/statements" ng-click="goToStatementsPage()"><p>Statements</p></a></li>
-        </ul>
-    </nav>
+    <div ng-if="showTransactionForm" ng-include="'./templates/components/transactionForm.html'"></div>
 
-    <div class="user-info sans">
-        <span class="cool user-username" ng-click="goToProfilePage()">{{ user.username }}</span><br>
-        Cash: ${{ twoDecimalPlaces(user.cash) }}<br>
-        <a href="#/holdings" ng-click="goToHoldingsPage()" class="user-balance">Portfolio: ${{ twoDecimalPlaces(user.balance) }}</a>
-    </div>
-        
+    <div ng-if="showSellForm" ng-include="'./templates/components/sellForm.html'"></div>
+
+    <div id="container" ng-view></div>
+
 </div>
-
-<div ng-if="showTransactionForm" ng-include="'./templates/components/transactionForm.html'"></div>
-
-<div ng-if="showSellForm" ng-include="'./templates/components/sellForm.html'"></div>
-
-<div id="container" ng-view></div>
 
 <script>
 

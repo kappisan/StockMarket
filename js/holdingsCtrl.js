@@ -3,8 +3,12 @@ app.controller('holdingsCtrl', function($scope, $rootScope, $http) {
     $scope.totalReturn = 0;
 
     $http({
-        method: 'GET',
-        url: '/api/holdings?username=' + getUrlVars()["username"]
+        method: 'POST',
+        url: '/api/holdings?username=' + getUrlVars()["username"],
+        data: {
+        	username: $rootScope.user.username,
+        	uuid: $rootScope.user.uuid
+        }
     }).then(function successCallback(response) {
     
         console.log("got holdings details", response);

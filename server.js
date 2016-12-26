@@ -87,10 +87,29 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 	/* api */
 	var startDate = moment("01-Jan-14", "DD-MMM-YY");
 
-	app.get('/api/holdings', function(req, res,next) {  
-		res.send(holdings);
+	app.post('/api/holdings', function(req, res, next) {  
+		console.log("get holdings for", req.body)
+
+		securitiesDB.find({owner: req.body.username}).toArray((err, results) => {
+			if(err) return;
+			//console.log("db get all stocks", results);
+			holdings = {
+				cash: 2200,
+				holdings: results
+			};
+
+
+			res.send(holdings);
+
+		});
+
 	});
 
+/*
+	app.get('/api/holdings', function(req, res, next) {  
+		res.send(holdings);
+	});
+*/
 
 	// returns a list of all stocks on the exchange
 	app.get('/api/stock', function (req, res) {

@@ -9,7 +9,7 @@ var app = angular.module('stockApp', ['ngRoute'])
             .when('/profile', { templateUrl: 'templates/profile.html', controller: "profileCtrl" })
             .when('/market', { templateUrl: 'templates/market.html', controller: "marketCtrl" })
             .when('/statements', { templateUrl: 'templates/statements.html', controller: "statementsCtrl" })
-            .when('/login', { templateUrl: 'templates/login.html', controller: "loginCtrl" })
+            .when('/login', { templateUrl: 'templates/login.html' }) /* controller is globally scoped in html */
             .otherwise({ redirectTo: '/' });
     }]);
 
@@ -176,13 +176,6 @@ app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
 
     $scope.stockPrice = "loading...";
 
-    $rootScope.user = {
-      name: "Kasper Wilkosz",
-      username: "kasper",
-      balance: 0,
-      cash: 0,
-      holdings: []
-    }
 
     socket.on('holdings', function(data) {
         console.log("socket io holdings update", data);
