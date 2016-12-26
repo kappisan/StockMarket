@@ -285,6 +285,16 @@ line-svg {
 }
 
 .transactionForm {
+    height: 400px;
+}
+
+.sellForm {
+    height: 420px;
+}
+
+
+.transactionForm,
+.sellForm {
     position: fixed;
     margin: auto;
     left: 0;
@@ -294,10 +304,12 @@ line-svg {
     bottom: 0;
     background-color: #1b1b1b;
     width: 600px;
-    height: 400px;
 }
 
-.transactionForm h1 {
+
+
+.transactionForm h1,
+.sellForm h1 {
     color: #f2c800;
 }
 

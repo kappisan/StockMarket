@@ -37,7 +37,6 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 	});
 
 
-
 	var stocksDB = db.collection('stocks');
 	var stocks;
 	stocksDB.find({}).toArray((err, results) => {
@@ -48,6 +47,7 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 	});
 
 
+
 	var securitiesDB = db.collection('securities');
 	var securities;
 
@@ -56,14 +56,18 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 		holdings: []
 	};
 
-	securitiesDB.find({}).toArray((err, results) => {
-		if(err) return;
-		//console.log("db get all stocks", results);
-		holdings = {
-			cash: 1200,
-			holdings: results
-		};
-	});
+	function getSecurities(user) {
+		securitiesDB.find({owner: user}).toArray((err, results) => {
+			if(err) return;
+			//console.log("db get all stocks", results);
+			holdings = {
+				cash: 1200,
+				holdings: results
+			};
+		});
+	}
+
+	getSecurities("alex");
 
 
 	var statementsDB = db.collection('statements');
@@ -121,8 +125,15 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 
 	// returns a list of all stocks on the exchange
 	app.post('/api/statements', function (req, res) {
-
 		res.send(statements);
+	})
+
+	app.post('/api/login', function (req, res) {
+
+		var userObject = res.body;
+		userObject.uuid = "123456789";
+
+		res.send(userObject);
 	})
 
 

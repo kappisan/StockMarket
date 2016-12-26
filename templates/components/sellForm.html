@@ -1,5 +1,5 @@
 <div class="grey-out-bg">
-    <div class="transactionForm cool">
+    <div class="sellForm cool">
         <center>
             <h2 ng-if="!transactionExecuted">SELL SHARES</h2>
             <h2 ng-if="transactionExecuted">Success</h2>
@@ -20,7 +20,7 @@
                <h2 class="sans">Cash: ${{ stockPrice * transaction.volume }}</h2>
 
                 <br>
-                <button ng-click="confirmSellStock()" class="transaction-button">Sell</button>
+                <button ng-click="confirmSellStock(selectedStock, transaction)" class="transaction-button">Sell</button>
                 <button ng-click="cancelSellStock()" class="transaction-button">Cancel</button><br>
 
             </div>
@@ -29,7 +29,7 @@
 
                 <h3 class="sans">Sold {{ transaction.volume }} for ${{ transaction.sold * transaction.volume }}</h3>
 
-                <button ng-click="cancelBuyStock()" class="transaction-button">Ok</button>
+                <button ng-click="cancelSellStock()" class="transaction-button">Ok</button>
             </div>
 
         </center>

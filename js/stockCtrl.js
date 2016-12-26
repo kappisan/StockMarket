@@ -20,6 +20,7 @@ app.controller('stockCtrl', function($scope, $rootScope, $http) {
     
         console.log("got stocks details for valuations", response.data.valuations);
         
+        $scope.company = response.data;
         $scope.valuations = response.data.valuations;
 
         $(".line-svg").html('');

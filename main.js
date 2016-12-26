@@ -16,6 +16,14 @@ var app = angular.module('stockApp', ['ngRoute'])
 
 app.controller('loginCtrl', function($scope, $rootScope) {
     $rootScope.currentPage = "Login";
+
+
+    $scope.loginWithPass = function() {
+        console.log("loginWithPass");
+    }
+
+
+
 });
 
 
@@ -179,8 +187,10 @@ app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
         $scope.showSellForm = true;
     }
 
-    $scope.confirmSellStock= function(stock) {
-        console.log("confirm sell stock", stock);
+    $scope.confirmSellStock= function(stock, transaction) {
+        $scope.transaction.sold = $scope.transaction.value;
+        console.log("confirm sell stock", stock, transaction);
+        $scope.transactionExecuted = true;
     }
 
     $scope.cancelSellStock = function() {
