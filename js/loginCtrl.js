@@ -12,13 +12,7 @@ app.controller('loginCtrl', function($scope, $rootScope, $http) {
       holdings: []
     }
 
-
-    var cookieUsername = getCookie("login_username");
-    $rootScope.loggedIn = false;
-    if(cookieUsername) {
-    	console.log("getCookie", cookieUsername);
-    	$rootScope.user.username = cookieUsername;
-    	$rootScope.loggedIn = true;
+    function getHoldings() {
     	// get holdings
 	    $http({
 	        method: 'POST',
@@ -46,6 +40,17 @@ app.controller('loginCtrl', function($scope, $rootScope, $http) {
 
 	    }, function errorCallback(response) { console.log("error", response); });
 
+    }
+
+
+    var cookieUsername = getCookie("login_username");
+    $rootScope.loggedIn = false;
+    if(cookieUsername) {
+    	console.log("getCookie", cookieUsername);
+    	$rootScope.user.username = cookieUsername;
+    	$rootScope.loggedIn = true;
+
+    	getHoldings();
     }
 
 
@@ -100,7 +105,9 @@ app.controller('loginCtrl', function($scope, $rootScope, $http) {
 		    $rootScope.loginError = false;
 		    $rootScope.loginErrorMessage = "";
 
-			window.location = '#/holdings';
+		    getHoldings();
+
+			setTimeout(function() { window.location = '#/holdings' }, 200);
 
 	      }, function errorCallback(response) { console.log("error", response); });
     }

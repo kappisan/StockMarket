@@ -283,6 +283,7 @@ line-svg {
 .user-info {
     float: right;
     margin-right: 10px;
+    width: 170px;
     color: #fff;
     position: fixed;
     top: 14px;
@@ -427,4 +428,8 @@ td {
   color: #a00;
   font-size: 18px;
   font-family: coolvetica;
+}
+
+.user-balance-amount {
+  float: right;
 }

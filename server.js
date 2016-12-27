@@ -89,6 +89,18 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 			securitiesDB.find({owner: req.body.username}).toArray((err, holdingsResults) => {
 				if(err) return;
 
+				if(!holdingsResults) return;
+
+				holdingsResults.forEach(function(holding) {
+					var matchStock = _.findWhere(stocks, { ticker: holding.ticker })
+
+					if(!matchStock) return;
+
+					holding.bookValue = matchStock.priceRaw;
+					holding.price = matchStock.price;
+				})
+
+
 				holdings = {
 					cash: userResults[0].cash,
 					holdings: holdingsResults
@@ -202,12 +214,32 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 			};
 		});
 
+		// update balance
 
+		res.send("successfully bought");
+			
+	})
 
+	app.post('/api/sellStock', function (req, res) {
 
-			// update balance
+		console.log("sell stock", req.body);
 
-			res.send("successfully bought");
+		// first check how much stock we have
+		securitiesDB.find({owner: req.body.user, ticker: req.body.ticker}).toArray((err, results) => {
+			if(err) return;
+
+			console.log("db match holding", results);
+
+			if(results[0].quantity > req.body.transaction.volume) {
+				// update
+			} else {
+				// delete
+				securitiesDB.remove({owner: req.body.user, ticker: req.body.ticker});
+			}
+
+		});
+
+		res.send("successfully sold");
 			
 	})
 
@@ -331,7 +363,7 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 				}
 
 			});
-
+/*
 			if(!holdings.holdings) return;
 
 			holdings.holdings.forEach(function(holding) {
@@ -342,8 +374,7 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 				holding.bookValue = matchStock.priceRaw;
 				holding.price = matchStock.price;
 			})
-
-
+*/
 		}, 3000);
 
 

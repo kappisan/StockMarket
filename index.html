@@ -72,8 +72,8 @@
 
         <div class="user-info sans" ng-if="loggedIn">
             <span class="cool user-username" ng-click="goToProfilePage()">{{ user.username }}</span><br>
-            Cash: ${{ twoDecimalPlaces(user.cash) }}<br>
-            <a href="#/holdings" ng-click="goToHoldingsPage()" class="user-balance">Portfolio: ${{ twoDecimalPlaces(user.balance) }}</a>
+            Cash: <span class="user-balance-amount">${{ twoDecimalPlaces(user.cash) }}</span><br>
+            <a href="#/holdings" ng-click="goToHoldingsPage()" class="user-balance">Portfolio: <span class="user-balance-amount">${{ twoDecimalPlaces(user.balance) }}</span></a>
         </div>
             
     </div>

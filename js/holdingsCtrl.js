@@ -24,6 +24,7 @@ app.controller('holdingsCtrl', function($scope, $rootScope, $http) {
 	        change(data.holdings);
 
 	        $scope.holdings = data.holdings;
+	        change($scope.holdings);
 
 	        var totalValues = _.map($scope.holdings, function(holding) {
 	        	return holding.bookValue;
@@ -45,13 +46,21 @@ app.controller('holdingsCtrl', function($scope, $rootScope, $http) {
 	        	totalCost+= val;
 	        })
 
-
 	        $rootScope.user.balance = totalValue;
 	        $scope.totalReturn = totalValue - totalCost;
 	        $scope.totalCost = totalCost;
 
 	    }, function errorCallback(response) { console.log("error", response); });
 	}, 3000);
+
+
+
+
+
+
+
+
+    /* donut chart */
 
     var data = [
     	{name: "one", bookValue: 300},

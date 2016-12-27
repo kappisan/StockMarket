@@ -132,6 +132,27 @@ app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
     $scope.confirmSellStock= function(stock, transaction) {
         $scope.transaction.sold = $scope.transaction.value;
         console.log("confirm sell stock", stock, transaction);
+
+        $http({
+            method: 'POST',
+            url: '/api/sellStock',
+            data: {
+                transaction: $scope.transaction,
+                sedol: $scope.selectedStock.sedol,
+                ticker: $scope.selectedStock.ticker,
+                name: $scope.selectedStock.name,
+                user: $rootScope.user.username
+            }
+        }).then(function successCallback(response) {
+        
+            console.log("got user details", response);
+            
+            // $scope.userDetails = response.data;
+            // $rootScope.currentPage = $scope.userDetails.name;
+
+        }, function errorCallback(response) { console.log("error", response); });
+
+
         $scope.transactionExecuted = true;
     }
 
