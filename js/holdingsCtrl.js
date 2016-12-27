@@ -2,24 +2,56 @@ app.controller('holdingsCtrl', function($scope, $rootScope, $http) {
     $rootScope.currentPage = "Holdings";
     $scope.totalReturn = 0;
 
-    $http({
-        method: 'POST',
-        url: '/api/holdings?username=' + getUrlVars()["username"],
-        data: {
-        	username: $rootScope.user.username,
-        	uuid: $rootScope.user.uuid
-        }
-    }).then(function successCallback(response) {
-    
-        console.log("got holdings details", response);
-        
-        $scope.holdings = response.data.holdings;
-        $rootScope.user.cash = response.data.cash;
-        change($scope.holdings);
+    setInterval(function() {
+	    $http({
+	        method: 'POST',
+	        url: '/api/holdings',
+	        data: {
+	        	username: $rootScope.user.username,
+	        	uuid: $rootScope.user.uuid
+	        }
+	    }).then(function successCallback(response) {
+	    
+	    	var data = response.data;
 
-    }, function errorCallback(response) { console.log("error", response); });
+	        console.log("got holdings details", response);
+	        /*
+	        $scope.holdings = response.data.holdings;
+	        $rootScope.user.cash = response.data.cash;
+	        change($scope.holdings);
+	        */
 
-    socket.emit("get holdings", $rootScope.user.username);
+	        change(data.holdings);
+
+	        $scope.holdings = data.holdings;
+
+	        var totalValues = _.map($scope.holdings, function(holding) {
+	        	return holding.bookValue;
+	        });
+
+	        var totalCosts = _.map($scope.holdings, function(holding) {
+	        	return holding.bookCost;
+	        });
+
+	        var totalValue = data.cash;
+			var totalCost = 0;
+	        var totalReturn = 0;
+
+	        totalValues.forEach(function(val) {
+	        	totalValue+= val;
+	        })
+
+	        totalCosts.forEach(function(val) {
+	        	totalCost+= val;
+	        })
+
+
+	        $rootScope.user.balance = totalValue;
+	        $scope.totalReturn = totalValue - totalCost;
+	        $scope.totalCost = totalCost;
+
+	    }, function errorCallback(response) { console.log("error", response); });
+	}, 3000);
 
     var data = [
     	{name: "one", bookValue: 300},
@@ -92,45 +124,5 @@ app.controller('holdingsCtrl', function($scope, $rootScope, $http) {
 	  	this._current = i(0);
 	  	return function(t) { return arc(i(t)); };
 	}
-
-
-
-
-    socket.on('holdings', function(data) {
-        console.log("socket io holdings update", data);
-
-        change(data.holdings);
-
-        $scope.holdings = data.holdings;
-
-        var totalValues = _.map($scope.holdings, function(holding) {
-        	return holding.bookValue;
-        });
-
-
-        var totalCosts = _.map($scope.holdings, function(holding) {
-        	return holding.bookCost;
-        });
-
-        var totalValue = data.cash;
-		var totalCost = 0;
-        var totalReturn = 0;
-
-        totalValues.forEach(function(val) {
-        	totalValue+= val;
-        })
-
-        totalCosts.forEach(function(val) {
-        	totalCost+= val;
-        })
-
-
-        $rootScope.user.balance = totalValue;
-        $scope.totalReturn = totalValue - totalCost;
-        $scope.totalCost = totalCost;
-
-        $scope.$apply();
-    });
-
 
 });

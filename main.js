@@ -73,19 +73,19 @@ app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
     $scope.showTransactionForm = false;
     $(".transactionForm").css("visibility", "visible");
 
-    var getStockUpdates;
+    //var getStockUpdates;
     $scope.buyStock = function(stock) {
         console.log("buy stock", stock);
         $scope.selectedStock = stock;
         $scope.showTransactionForm = true;
-        socket.emit('get stock', stock.sedol);
-        getStockUpdates = setInterval(function() { socket.emit('get stock', stock.sedol); }, 3000);
+        //socket.emit('get stock', stock.sedol);
+        //getStockUpdates = setInterval(function() { socket.emit('get stock', stock.sedol); }, 3000);
     }
 
     $scope.confirmBuyStock = function(stock) {
         console.log("confirm buy stock", $scope.stockPrice, $scope.selectedStock, $scope.transaction);
 
-        clearInterval(getStockUpdates);
+        //clearInterval(getStockUpdates);
 
         $scope.transaction.paid = numeral($scope.stockPrice).format('0,0.00');
 
@@ -146,37 +146,30 @@ app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
 
 
 
-
-
     $scope.twoDecimalPlaces = function(val) {
       return numeral(val).format('0,0.00')
     }
 
-    socket.emit('get valuation', getUrlVars()["sedol"]);
 
-    // get stocks information
-    socket.on('stocks', function(data) {
-        console.log("socket io stocks update", data);
-        $scope.stocks = data;
-        $scope.$apply();
-    });
-    $http({
-        method: 'GET',
-        url: '/api/stocks'
-    }).then(function successCallback(response) {
-    
-        console.log("got stocks details", response);
+    var getStockUpdates = setInterval(function() {
+        $http({
+            method: 'GET',
+            url: '/api/stocks'
+        }).then(function successCallback(response) {
         
-        $scope.stocks = response.data;
+            console.log("got stocks details", response);
+            
+            $rootScope.stocks = response.data;
+            //setTimeout($scope.$apply(), 50);
 
-    }, function errorCallback(response) { console.log("error", response); });
-
+        }, function errorCallback(response) { console.log("error", response); });
+    }, 3000);
 
 
 
     $scope.stockPrice = "loading...";
 
-
+/*
     socket.on('holdings', function(data) {
         console.log("socket io holdings update", data);
 
@@ -195,15 +188,17 @@ app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
 
         $scope.$apply();
     });
-
+*/
 
     // get stock information
+    /*
     socket.on('stock', function(data) {
         console.log("socket io stock stock stock update", data);
         if(!data || !data.name) return;
         $rootScope.currentPage = data.name;
         $scope.stockPrice = numeral(data.price).format('0.00');
     });
+    */
     $http({
         method: 'GET',
         url: '/api/stock?sedol=' + getUrlVars()["sedol"]

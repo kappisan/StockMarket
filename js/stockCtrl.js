@@ -3,15 +3,7 @@ app.controller('stockCtrl', function($scope, $rootScope, $http) {
 
     console.log("angular loaded", $scope.company);
 
-    socket.emit('get valuation', getUrlVars()["sedol"]);
-	socket.emit('get stock', getUrlVars()["sedol"]);
-
     $scope.company = {};
-
-    socket.on('stock', function(data) {
-        if(!data || !data.name) return;
-        $scope.company = data;
-    });
 
     $http({
         method: 'GET',
@@ -27,26 +19,8 @@ app.controller('stockCtrl', function($scope, $rootScope, $http) {
 
         drawLineChart($scope.valuations);
 
-
     }, function errorCallback(response) { console.log("error", response); });
 
-
-
-    setInterval(function() {
-    	socket.emit('get valuation', getUrlVars()["sedol"]);
-    	socket.emit('get stock', getUrlVars()["sedol"]);
-    }, 3000)
-
-    socket.on('valuations', function(data) {
-
-        console.log("socket io valuations update", data);
-
-        $scope.valuations = data;
-
-        $(".line-svg").html('');
-
-        drawLineChart($scope.valuations);
-    });
 
 
     function drawLineChart(data) {

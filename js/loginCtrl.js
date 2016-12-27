@@ -19,6 +19,33 @@ app.controller('loginCtrl', function($scope, $rootScope, $http) {
     	console.log("getCookie", cookieUsername);
     	$rootScope.user.username = cookieUsername;
     	$rootScope.loggedIn = true;
+    	// get holdings
+	    $http({
+	        method: 'POST',
+	        url: '/api/holdings',
+	        data: {
+	        	username: $rootScope.user.username,
+	        	uuid: $rootScope.user.uuid
+	        }
+	    }).then(function successCallback(response) {
+	    
+	        var totalValues = _.map(response.data.holdings, function(holding) {
+	          return holding.bookValue;
+	        });
+
+	        var totalValue = 0;
+	        totalValues.forEach(function(val) {
+	          totalValue+= val;
+	        })
+
+	        //totalValue += response.data.cash;
+
+	        $scope.holdings = response.data.holdings;
+	        $rootScope.user.cash = response.data.cash;
+	        $rootScope.user.balance = totalValue;
+
+	    }, function errorCallback(response) { console.log("error", response); });
+
     }
 
 

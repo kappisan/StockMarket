@@ -84,7 +84,7 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 		console.log("get holdings for", req.body)
 
 		userDB.find({username: req.body.username}).toArray((usersErr, userResults) => {
-			if(usersErr) return;
+			if(usersErr || !userResults[0]) return;
 
 			securitiesDB.find({owner: req.body.username}).toArray((err, holdingsResults) => {
 				if(err) return;
@@ -345,53 +345,6 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 
 
 		}, 3000);
-
-		/* socket.io */
-
-		io.on('connection', function(client) {  
-			console.log('Client connected...');
-
-			client.on('get holdings', function(data) {
-				client.emit("holdings", holdings);
-			});
-
-			client.on('get funds', function(data) {
-				client.emit("funds", funds);
-			});
-
-			client.on('get stocks', function(data) {
-				client.emit("stocks", stocks);
-			});
-
-			client.on('get stock', function(sedol) {
-				console.log("get stock by sedol");
-				var sedolStock = _.findWhere(stocks, { sedol: sedol }) 
-				client.emit("stock", sedolStock);
-			});
-
-
-			client.on('get valuation', function(sedol) {
-				console.log("get valuations by sedol");
-				var sedolValuations = _.findWhere(stocks, { sedol: sedol }) 
-
-				if(!sedolValuations) return;
-
-				client.emit("valuations", sedolValuations.valuations);
-			});
-
-			setInterval(function() {
-
-				//client.emit("valuations", valuations);
-
-				//client.emit("holdings", holdings);
-
-				client.emit("stocks", stocks);
-
-			}, 3000);
-
-		});
-
-
 
 
 		// /* start server */

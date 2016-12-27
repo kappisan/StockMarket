@@ -1,7 +1,6 @@
 app.controller('marketCtrl', function($scope, $rootScope, $http) {
 
     console.log("market controller");
-    socket.emit("get stocks", true);
 
     $rootScope.currentPage = "Market";
 
