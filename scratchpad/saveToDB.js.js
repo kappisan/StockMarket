@@ -1,45 +1,54 @@
-var statements = [
+var connections = [
     	{
-    		type: "Buy",
-    		amount: 32,
-    		sedol: "333333",
-    		name: "Maverick Media",
-    		price: 4523,
+    		user1: "kasper",
+    		user2: "alex",
     		date: "2016-Dec-01",
-    		time: "10:17:12",
-    		user: "kasper",
-    		fee: 0
+    		time: "10:17:12"
     	},
     	{
-    		type: "Sell",
-    		amount: 300,
-    		sedol: "123456",
-    		name: "kappisan",
-    		price: 4523,
+    		user1: "kasper",
+    		user2: "gordon",
     		date: "2016-Dec-01",
-    		time: "10:17:17",
-    		user: "kasper",
-    		fee: 0
+    		time: "10:17:12"
     	},
     	{
-    		type: "Sell",
-    		amount: 300,
-    		sedol: "123456",
-    		name: "Maverick Media",
-    		price: 4523,
+    		user1: "kasper",
+    		user2: "belfort",
     		date: "2016-Dec-01",
-    		time: "13:12:47",
-    		user: "alex",
-    		fee: 0
+    		time: "10:17:12"
+    	},
+    	{
+    		user1: "kasper",
+    		user2: "budfox",
+    		date: "2016-Dec-01",
+    		time: "10:17:12"
+    	},
+    	{
+    		user1: "alex",
+    		user2: "budfox",
+    		date: "2016-Dec-01",
+    		time: "10:17:12"
+    	},
+    	{
+    		user1: "alex",
+    		user2: "gordon",
+    		date: "2016-Dec-01",
+    		time: "10:17:12"
+    	},
+    	{
+    		user1: "gordon",
+    		user2: "budfox",
+    		date: "2016-Dec-01",
+    		time: "10:17:12"
     	}
     ]
 
 fs = require('fs');
-fs.writeFile('statements.json', JSON.stringify(statements), function (err) {
+fs.writeFile('connections.json', JSON.stringify(connections), function (err) {
 
   if (err) return console.log(err);
 
-  console.log('statements > statements.txt');
+  console.log('connections > connections.txt');
 });
 
 

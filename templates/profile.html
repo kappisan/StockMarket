@@ -107,29 +107,25 @@
 
 	<div ng-show="loggedIn">
 		<img ng-src="{{userDetails.image}}" class="profile-image">
-
-		<div class="user-bio sans">
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-		</div>
+		<div class="user-bio sans"><p>{{ userDetails.bio }}</p></div>
 
 		<h1 class="cool">Acheivements</h1>
 
-			<div class="acheivement">
-				<img src="./img/skyscraper-icon-building.png" class="acheivement-icon">
-				<div class="acheivement-text">CEO</div>
-			</div>
+		<div class="acheivement">
+			<img src="./img/skyscraper-icon-building.png" class="acheivement-icon">
+			<div class="acheivement-text">CEO</div>
+		</div>
 
 
-			<div class="acheivement">
-				<img src="./img/skyscraper-icon-bank.png" class="acheivement-icon">
-				<div class="acheivement-text">CFO</div>
-			</div>
+		<div class="acheivement">
+			<img src="./img/skyscraper-icon-bank.png" class="acheivement-icon">
+			<div class="acheivement-text">CFO</div>
+		</div>
 
-			<div class="acheivement">
-				<img src="./img/moneybag.png" class="acheivement-icon">
-				<div class="acheivement-text">Money Bag</div>
-			</div>
-
+		<div class="acheivement">
+			<img src="./img/moneybag.png" class="acheivement-icon">
+			<div class="acheivement-text">Money Bag</div>
+		</div>
 
 
 
@@ -150,7 +146,6 @@
 				<img class="company-photo" ng-src="./img/busicon.png">
 				<h4 class="sans company-name"><span class="yellow">ACB</span> - Amiris Canabis - Executive - $5400 - 24%</h4>
 			</div>
-
 		</div>
 
 
@@ -158,6 +153,11 @@
 
 		<div class="connections">
 
+			<div class="connection" ng-repeat="friend in userDetails.connections" ng-click="goToProfilePage(friend.username, friend.name)">
+				<img ng-src="{{ friend.image }}" class="connection-icon">
+				<div class="connection-text">{{ friend.name }}</div>
+			</div>
+<!--
 			<div class="connection">
 				<img src="./img/gordon.jpg" class="connection-icon">
 				<div class="connection-text">Gordon Gekko</div>
@@ -173,7 +173,7 @@
 				<img src="./img/me.jpg" class="connection-icon">
 				<div class="connection-text">Kasper Wilkosz</div>
 			</div>
-
+-->
 		</div>
 
 	</div>

@@ -25,6 +25,7 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 	if(err) return;
 	console.log("We are connected");
 
+	var connectionsDB = db.collection('connections');
 	var userDB = db.collection('users');
 	var users;
 
@@ -214,8 +215,6 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 			};
 		});
 
-		// update balance
-
 		res.send("successfully bought");
 			
 	})
@@ -245,48 +244,6 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 			
 	})
 
-		var funds = [{
-						name: "kappisan fund",
-						price: 3929,
-						sedol: "123456",
-						ticker: "KAF",
-						sharesIssued: 5000000,
-						marketCap: 22700000,
-						volume: 10000,
-						type: "fund"
-					},{
-						name: "Maverick Media finance",
-						price: 2546,
-						sedol: "333333",
-						ticker: "MMF",
-						sharesIssued: 4000,
-						marketCap: 31000000,
-						volume: 10000,
-						type: "fund"
-					},{
-						name: "Kaspers Piggy Bank",
-						price: 210,
-						sedol: "222222",
-						ticker: "KPB",
-						sharesIssued: 4000,
-						marketCap: 230000,
-						volume: 10000,
-						type: "fund"
-					},{
-						name: "Get Rich or Die Tying",
-						price: 22,
-						sedol: "444444",
-						ticker: "GRDT",
-						sharesIssued: 4000,
-						marketCap: 99999999,
-						volume: 10000,
-						type: "fund"
-					}];
-
-		// returns a list of all stocks on the exchange
-		app.get('/api/funds', function (req, res) {
-			res.send(funds);
-		})
 
 		app.get('/api/stocks', function (req, res) {
 			res.send(stocks);
@@ -298,12 +255,39 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 
 		app.get('/api/user', function (req, res) {
 
-			console.log("get user", req.query.username);
+			userDB.find({username: req.query.username}).toArray((err, results) => {
+				if(err) return;
 
-			var user = _.findWhere(users, { username: req.query.username })
 
-			res.send(user);
+				connectionsDB.find({$or: [ {user1: req.query.username}, {user2: req.query.username}  ] }).toArray((err, connections) => {
+				
+					user = results[0];
 
+					var connectionUsernames = [];
+
+					connections.forEach( function(d) {
+						connectionUsernames.push(d.user1);
+						connectionUsernames.push(d.user2);
+					});
+
+					connectionUsernames = _.without(_.uniq(connectionUsernames), req.query.username);
+
+					userDB.find({username: {$in: connectionUsernames }}).toArray((err, friends) => {
+
+						user.connections = friends;
+
+						res.send(user);
+					});
+				
+				});
+				
+			});
+
+			
+
+
+
+			
 		})
 
 
@@ -365,20 +349,8 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 				}
 
 			});
-/*
-			if(!holdings.holdings) return;
 
-			holdings.holdings.forEach(function(holding) {
-				var matchStock = _.findWhere(stocks, { ticker: holding.ticker })
-
-				if(!matchStock) return;
-
-				holding.bookValue = matchStock.priceRaw;
-				holding.price = matchStock.price;
-			})
-*/
 		}, 3000);
-
 
 		// /* start server */
 
