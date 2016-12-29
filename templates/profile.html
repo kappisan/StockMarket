@@ -10,6 +10,30 @@
 	text-align: justify;
 }
 
+.company-profile {
+	width: 600px;
+	height: 100px;
+}
+
+.company-profile:hover {
+	background-color: black;
+	cursor: pointer;
+}
+
+.company-photo {
+	width: 50px;
+    display: inline-block;
+    position: relative;
+    top: 18px;
+}
+
+.company-name {
+	width: 400px;
+    display: inline-block;
+    text-align: left;
+    margin-left: 20px;
+}
+
 </style>
 
 <center style="padding-top:90px;">
@@ -20,6 +44,23 @@
 		<div class="user-bio sans">
 			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 		</div>
+
+		<h1 class="cool">Companies</h1>
+
+		<div>
+			<div class="company-profile" >
+				<img class="company-photo" ng-src="./img/logo_square.png">
+				<h4 class="sans company-name"><span class="yellow">KA</span> - Kappisan - $20000000 - 51%</h4>
+			</div>
+
+			<div class="company-profile" >
+				<img class="company-photo" ng-src="./img/logo_square.png">
+				<h4 class="sans company-name"><span class="yellow">BBB</span> - Big Belly Burger - $20000000 - 51%</h4>
+			</div>
+
+		</div>
+
+
 	</div>
 	<div ng-show="!loggedIn" ng-include="'./templates/components/notAllowed.html'"></div>
 

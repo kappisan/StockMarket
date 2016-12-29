@@ -26,11 +26,7 @@ app.controller('homeCtrl', function($scope, $rootScope) {
 
 app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
 
-    $scope.transaction = {
-          volume: 0,
-          value: 0,
-          paid: 0
-    }
+    $scope.transaction;
 
     function clearTransactionData() {
 
@@ -39,9 +35,9 @@ app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
               value: 0,
               paid: 0
         }
-
     }
 
+    clearTransactionData();
 
     $scope.selectedStock = {name: ""}
     var kaching=new Sound("sound/kaching.mp3",100,true);
@@ -74,19 +70,15 @@ app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
     $scope.showTransactionForm = false;
     $(".transactionForm").css("visibility", "visible");
 
-    //var getStockUpdates;
+
     $scope.buyStock = function(stock) {
         console.log("buy stock", stock);
         $scope.selectedStock = stock;
         $scope.showTransactionForm = true;
-        //socket.emit('get stock', stock.sedol);
-        //getStockUpdates = setInterval(function() { socket.emit('get stock', stock.sedol); }, 3000);
     }
 
     $scope.confirmBuyStock = function(stock) {
         console.log("confirm buy stock", $scope.stockPrice, $scope.selectedStock, $scope.transaction);
-
-        //clearInterval(getStockUpdates);
 
         $scope.transaction.paid = numeral($scope.stockPrice).format('0,0.00');
 
@@ -195,36 +187,7 @@ app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
 
     $scope.stockPrice = "loading...";
 
-/*
-    socket.on('holdings', function(data) {
-        console.log("socket io holdings update", data);
 
-
-        var totalValues = _.map(data.holdings, function(holding) {
-          return holding.bookValue;
-        });
-
-        var totalValue = 0;
-        totalValues.forEach(function(val) {
-          totalValue+= val;
-        })
-
-        $rootScope.user.balance = totalValue;
-        $rootScope.user.cash = data.cash;
-
-        $scope.$apply();
-    });
-*/
-
-    // get stock information
-    /*
-    socket.on('stock', function(data) {
-        console.log("socket io stock stock stock update", data);
-        if(!data || !data.name) return;
-        $rootScope.currentPage = data.name;
-        $scope.stockPrice = numeral(data.price).format('0.00');
-    });
-    */
     $http({
         method: 'GET',
         url: '/api/stock?sedol=' + getUrlVars()["sedol"]
