@@ -9,6 +9,7 @@ var app = angular.module('stockApp', ['ngRoute'])
             .when('/profile', { templateUrl: 'templates/profile.html', controller: "profileCtrl" })
             .when('/market', { templateUrl: 'templates/market.html', controller: "marketCtrl" })
             .when('/statements', { templateUrl: 'templates/statements.html', controller: "statementsCtrl" })
+            .when('/getmorecash', { templateUrl: 'templates/getMoreCash.html', controller: "moreCashCtrl" })
             .when('/login', { templateUrl: 'templates/login.html' }) /* controller is globally scoped in html */
             .otherwise({ redirectTo: '/' });
     }]);
@@ -20,7 +21,9 @@ app.controller('homeCtrl', function($scope, $rootScope) {
     $rootScope.currentPage = "Home";
 });
 
-
+app.controller('moreCashCtrl', function($scope, $rootScope) {
+    $rootScope.currentPage = "Get More Cash";
+});
 
 
 
@@ -65,6 +68,11 @@ app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
 
     $scope.goToHoldingsPage = function() {
       $rootScope.currentPage = "Holdings";
+    }
+
+    $scope.goToGetMoreCash = function() {
+      $rootScope.currentPage = "Get More Cash";
+      $location.url('getmorecash');
     }
 
     $scope.showTransactionForm = false;

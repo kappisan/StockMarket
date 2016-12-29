@@ -1,0 +1,79 @@
+<style>
+
+.coin-icon-frame {
+	background-color: #fff;
+	width: 220px;
+	height: 220px;
+	border-radius: 3px;
+	border-style: solid;
+	border-width: 5px;
+	border-color: rgba(0,0,0,0);
+}
+
+.coin-icon-frame:hover {
+	border-color: #f2c800;
+	cursor: pointer;
+}
+
+.coin-offer {
+	display: inline-block;
+	margin: 10px;
+}
+
+
+.coins-icon {
+	width: 220px;
+	border-radius: 3px;
+
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+</style>
+
+<center style="padding-top:150px;">
+
+	<div ng-show="loggedIn">
+
+		<div class="coin-offer">
+			<div class="coin-icon-frame"><img src="./img/coins.jpg" class="coins-icon"></div>
+			<h3 class="sans">$1,000</h3>
+		</div>
+
+		<div class="coin-offer">
+			<div class="coin-icon-frame"><img src="./img/usagoldcoins.jpg" class="coins-icon"></div>
+			<h3 class="sans">$10,000</h3>
+		</div>
+
+
+		<div class="coin-offer">
+			<div class="coin-icon-frame"><img src="./img/gold-stack.jpg" class="coins-icon"></div>
+			<h3 class="sans">$100,000</h3>
+		</div>
+
+		<br>
+
+
+		<div class="coin-offer">
+			<div class="coin-icon-frame"><img src="./img/cash-wad.png" class="coins-icon"></div>
+			<h3 class="sans">$500,000</h3>
+		</div>
+
+		<div class="coin-offer">
+			<div class="coin-icon-frame"><img src="./img/cash-stack.jpg" class="coins-icon"></div>
+			<h3 class="sans">$1,000,000</h3>
+		</div>
+
+
+		<div class="coin-offer">
+			<div class="coin-icon-frame"><img src="./img/cash-notes-pile.jpg" class="coins-icon"></div>
+			<h3 class="sans">$10,000,000</h3>
+		</div>
+
+
+	</div>
+	<div ng-show="!loggedIn" ng-include="'./templates/components/notAllowed.html'"></div>
+
+</center>

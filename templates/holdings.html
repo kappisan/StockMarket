@@ -42,7 +42,7 @@
 				<td> - </td>
 				<td>${{ twoDecimalPlaces(user.cash) }}</td>
 				<td>$0</td>
-				<td><button class="buy-button">Get More</button></td>
+				<td><button class="buy-button" ng-click="goToGetMoreCash()">Get More</button></td>
 			</tr>
 			<tr ng-repeat="holding in holdings" ng-click="goToStock(holding)" class="sans market-tr">
 				<td class="td-ticker">{{ holding.ticker }}</td>
