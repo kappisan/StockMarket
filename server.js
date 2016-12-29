@@ -232,6 +232,8 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 
 			if(results[0].quantity > req.body.transaction.volume) {
 				// update
+				var newAmount = results[0].quantity - req.body.transaction.volume;
+				securitiesDB.update({owner: req.body.user, ticker: req.body.ticker}, {quantity: newAmount});
 			} else {
 				// delete
 				securitiesDB.remove({owner: req.body.user, ticker: req.body.ticker});

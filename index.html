@@ -59,7 +59,7 @@
                 <li><a href="#/" ng-click="goToHomePage()"><p>Home</p></a></li>
                 <li ng-if="loggedIn"><a href="#/holdings" ng-click="goToHoldingsPage()"><p>Holdings</p></a></li>
                 <li><a href="#/market" ng-click="goToMarketPage()"><p>Market</p></a></li>
-                <li ng-if="loggedIn"><a href="#/profile?username=kasper" ng-click="goToProfilePage()"><p>Profile</p></a></li>
+                <li ng-if="loggedIn"><a ng-href="#/profile?username={{user.username}}" ng-click="goToProfilePage()"><p>Profile</p></a></li>
                 <li ng-if="loggedIn"><a href="#/statements" ng-click="goToStatementsPage()"><p>Statements</p></a></li>
                 <li>
                     <a href="#/login" ng-click="logout()">
@@ -72,7 +72,9 @@
 
         <div class="user-info sans" ng-if="loggedIn">
             <span class="cool user-username" ng-click="goToProfilePage()">{{ user.username }}</span><br>
+
             Cash: <span class="user-balance-amount">${{ twoDecimalPlaces(user.cash) }}</span><br>
+            
             <a href="#/holdings" ng-click="goToHoldingsPage()" class="user-balance">Portfolio: <span class="user-balance-amount">${{ twoDecimalPlaces(user.balance) }}</span></a>
         </div>
             

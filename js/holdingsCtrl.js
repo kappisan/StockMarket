@@ -65,7 +65,12 @@ app.controller('holdingsCtrl', function($scope, $rootScope, $http) {
     var data = [
     	{name: "one", bookValue: 300},
 	    {name: "two", bookValue: 230},
-	    {name: "three", bookValue: 600}
+	    {name: "three", bookValue: 600},
+	    {name: "four", bookValue: 600},
+	    {name: "ficre", bookValue: 600},
+	    {name: "six", bookValue: 600},
+	    {name: "seven", bookValue: 600},
+	    {name: "seven", bookValue: 600}
     ];
 
 	var width = 960,
