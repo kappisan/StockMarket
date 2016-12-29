@@ -2,7 +2,8 @@ app.controller('holdingsCtrl', function($scope, $rootScope, $http) {
     $rootScope.currentPage = "Holdings";
     $scope.totalReturn = 0;
 
-    setInterval(function() {
+    function getHoldings() {
+
 	    $http({
 	        method: 'POST',
 	        url: '/api/holdings',
@@ -15,11 +16,8 @@ app.controller('holdingsCtrl', function($scope, $rootScope, $http) {
 	    	var data = response.data;
 
 	        console.log("got holdings details", response);
-	        /*
-	        $scope.holdings = response.data.holdings;
-	        $rootScope.user.cash = response.data.cash;
-	        change($scope.holdings);
-	        */
+
+	        data.holdings.unshift({name: "cash", bookValue: $rootScope.user.cash})
 
 	        change(data.holdings);
 
@@ -51,7 +49,10 @@ app.controller('holdingsCtrl', function($scope, $rootScope, $http) {
 	        $scope.totalCost = totalCost;
 
 	    }, function errorCallback(response) { console.log("error", response); });
-	}, 3000);
+
+    }
+
+    setInterval(getHoldings(), 3000);
 
 
 
@@ -65,12 +66,25 @@ app.controller('holdingsCtrl', function($scope, $rootScope, $http) {
     var data = [
     	{name: "one", bookValue: 300},
 	    {name: "two", bookValue: 230},
-	    {name: "three", bookValue: 600},
-	    {name: "four", bookValue: 600},
-	    {name: "ficre", bookValue: 600},
-	    {name: "six", bookValue: 600},
-	    {name: "seven", bookValue: 600},
-	    {name: "seven", bookValue: 600}
+	    {name: "two", bookValue: 230},
+	    {name: "two", bookValue: 230},
+	    {name: "two", bookValue: 230},
+	    {name: "two", bookValue: 230},
+	    {name: "two", bookValue: 230},
+	    {name: "two", bookValue: 230},
+	    {name: "two", bookValue: 230},
+	    {name: "two", bookValue: 230},
+	    {name: "two", bookValue: 230},
+	    {name: "two", bookValue: 230},
+	    {name: "two", bookValue: 230},
+	    {name: "two", bookValue: 230},
+	    {name: "two", bookValue: 230},
+	    {name: "two", bookValue: 230},
+	    {name: "two", bookValue: 230},
+	    {name: "two", bookValue: 230},
+	    {name: "two", bookValue: 230},
+	    {name: "two", bookValue: 230},
+	    {name: "two", bookValue: 230}
     ];
 
 	var width = 960,
@@ -125,7 +139,8 @@ app.controller('holdingsCtrl', function($scope, $rootScope, $http) {
 
 		console.log("pie change", data);
 
-		svg.datum(data).selectAll("path").data(pie);
+		svg.datum(data).selectAll("path").data(pie).enter();
+		svg.datum(data).selectAll("path").data(pie).exit().remove();
 
 		pie.value(function(d) { return d.bookValue; }); // change the value function
 		path = path.data(pie); // compute the new angles
