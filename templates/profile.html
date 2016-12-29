@@ -25,6 +25,7 @@
     display: inline-block;
     position: relative;
     top: 18px;
+    border-radius: 3px;
 }
 
 .company-name {
@@ -32,6 +33,72 @@
     display: inline-block;
     text-align: left;
     margin-left: 20px;
+}
+
+.acheivement {
+	display: inline-block;
+	width: 150px;
+	height: 150px;
+	border-radius: 3px;
+	padding: 2px;
+}
+
+.acheivement:hover {
+	background-color: #f2c800;
+}
+
+.acheivement div {
+	color: #f2c800;
+}
+
+.acheivement:hover div {
+	color: #000;
+}
+
+.acheivement-icon {
+	width: 120px;
+}
+
+.acheivement-text {
+	font-family: coolvetica;
+}
+
+
+
+
+
+
+
+
+
+
+.connection {
+	display: inline-block;
+	width: 150px;
+	height: 150px;
+	border-radius: 3px;
+	padding: 2px;
+}
+
+.connection:hover {
+	background-color: #f2c800;
+	cursor: pointer;
+}
+
+.connection div {
+	color: #f2c800;
+}
+
+.connection:hover div {
+	color: #000;
+}
+
+.connection-icon {
+	width: 120px;
+}
+
+.connection-text {
+	font-family: coolvetica;
 }
 
 </style>
@@ -45,21 +112,69 @@
 			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 		</div>
 
+		<h1 class="cool">Acheivements</h1>
+
+			<div class="acheivement">
+				<img src="./img/skyscraper-icon-building.png" class="acheivement-icon">
+				<div class="acheivement-text">CEO</div>
+			</div>
+
+
+			<div class="acheivement">
+				<img src="./img/skyscraper-icon-bank.png" class="acheivement-icon">
+				<div class="acheivement-text">CFO</div>
+			</div>
+
+			<div class="acheivement">
+				<img src="./img/moneybag.png" class="acheivement-icon">
+				<div class="acheivement-text">Money Bag</div>
+			</div>
+
+
+
+
 		<h1 class="cool">Companies</h1>
 
 		<div>
 			<div class="company-profile" >
 				<img class="company-photo" ng-src="./img/logo_square.png">
-				<h4 class="sans company-name"><span class="yellow">KA</span> - Kappisan - $20000000 - 51%</h4>
+				<h4 class="sans company-name"><span class="yellow">KA</span> - Kappisan - CEO - $20000000 - 51%</h4>
 			</div>
 
 			<div class="company-profile" >
-				<img class="company-photo" ng-src="./img/logo_square.png">
-				<h4 class="sans company-name"><span class="yellow">BBB</span> - Big Belly Burger - $20000000 - 51%</h4>
+				<img class="company-photo" ng-src="./img/busicon.png">
+				<h4 class="sans company-name"><span class="yellow">BBB</span> - Big Belly Burger - Executive - $22000 - 31%</h4>
+			</div>
+
+			<div class="company-profile" >
+				<img class="company-photo" ng-src="./img/busicon.png">
+				<h4 class="sans company-name"><span class="yellow">ACB</span> - Amiris Canabis - Executive - $5400 - 24%</h4>
 			</div>
 
 		</div>
 
+
+		<h1 class="cool">Connections</h1>
+
+		<div class="connections">
+
+			<div class="connection">
+				<img src="./img/gordon.jpg" class="connection-icon">
+				<div class="connection-text">Gordon Gekko</div>
+			</div>
+
+
+			<div class="connection">
+				<img src="./img/alex.jpg" class="connection-icon">
+				<div class="connection-text">Alex Richardson</div>
+			</div>
+
+			<div class="connection">
+				<img src="./img/me.jpg" class="connection-icon">
+				<div class="connection-text">Kasper Wilkosz</div>
+			</div>
+
+		</div>
 
 	</div>
 	<div ng-show="!loggedIn" ng-include="'./templates/components/notAllowed.html'"></div>
