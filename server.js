@@ -52,25 +52,6 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 	var securitiesDB = db.collection('securities');
 	var securities;
 
-	var holdings = {
-		cash: 0,
-		holdings: []
-	};
-
-	function getSecurities(user) {
-		securitiesDB.find({owner: user}).toArray((err, results) => {
-			if(err) return;
-			//console.log("db get all stocks", results);
-			holdings = {
-				cash: 1200,
-				holdings: results
-			};
-		});
-	}
-
-	getSecurities("alex");
-
-
 	var statementsDB = db.collection('statements');
 
 	app.get('/', function(req, res,next) {  
@@ -112,11 +93,6 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 		});
 	});
 
-/*
-	app.get('/api/holdings', function(req, res, next) {  
-		res.send(holdings);
-	});
-*/
 
 	// returns a list of all stocks on the exchange
 	app.get('/api/stock', function (req, res) {
@@ -156,9 +132,6 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 		statementsDB.find({user: req.body.username}).toArray((err, results) => {
 			if(err) return;
 
-			//console.log("db get all stocks", results);
-			//statements = results;
-
 			res.send(results);
 		});
 
@@ -183,7 +156,6 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 			userObject.status = true;
 
 			res.send(userObject);
-
 		}
 	})
 
@@ -258,9 +230,12 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 			userDB.find({username: req.query.username}).toArray((err, results) => {
 				if(err) return;
 
-
 				connectionsDB.find({$or: [ {user1: req.query.username}, {user2: req.query.username}  ] }).toArray((err, connections) => {
 				
+					if(results.length < 1) {
+						return res.send({username: "not found", bio: ""})
+					} 
+
 					user = results[0];
 
 					var connectionUsernames = [];
@@ -274,20 +249,13 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 
 					userDB.find({username: {$in: connectionUsernames }}).toArray((err, friends) => {
 
-						user.connections = friends;
+						if(!friends) friends = [];
 
+						user.connections = friends;
 						res.send(user);
 					});
-				
 				});
-				
 			});
-
-			
-
-
-
-			
 		})
 
 

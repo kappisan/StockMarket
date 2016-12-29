@@ -78,9 +78,9 @@ app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
     }
 
     $scope.confirmBuyStock = function(stock) {
-        console.log("confirm buy stock", $scope.stockPrice, $scope.selectedStock, $scope.transaction);
+        console.log("confirm buy stock", $rootScope.stockPrice, $scope.selectedStock, $scope.transaction);
 
-        $scope.transaction.paid = numeral($scope.stockPrice).format('0,0.00');
+        $scope.transaction.paid = numeral($rootScope.stockPrice).format('0,0.00');
 
         $scope.transactionExecuted = true;
 
@@ -144,9 +144,6 @@ app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
             
             kaching.start();
 
-            // $scope.userDetails = response.data;
-            // $rootScope.currentPage = $scope.userDetails.name;
-
         }, function errorCallback(response) { console.log("error", response); });
 
 
@@ -168,8 +165,7 @@ app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
       return numeral(val).format('0,0.00')
     }
 
-
-    var getStockUpdates = setInterval(function() {
+    function getAllStockInfo() {
         $http({
             method: 'GET',
             url: '/api/stocks'
@@ -178,14 +174,16 @@ app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
             console.log("got stocks details", response);
             
             $rootScope.stocks = response.data;
-            //setTimeout($scope.$apply(), 50);
 
         }, function errorCallback(response) { console.log("error", response); });
-    }, 3000);
+    }
+
+    getAllStockInfo();
+    var getStockUpdates = setInterval(getAllStockInfo(), 3000);
 
 
 
-    $scope.stockPrice = "loading...";
+    $rootScope.stockPrice = "loading...";
 
 
     $http({
@@ -196,7 +194,7 @@ app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
         $rootScope.currentPage = response.data.name;
         console.log("got stocks details", response);
         
-        $scope.stockPrice = numeral(response.data.price).format('0.00');
+        $rootScope.stockPrice = numeral(response.data.price).format('0.00');
 
     }, function errorCallback(response) { console.log("error", response); });
 
@@ -208,12 +206,12 @@ app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
 
     $scope.$watch("transaction.volume", function(n, o) {
         console.log("transaction change", n);
-        $scope.transaction.value = n * (+$scope.stockPrice);
+        $scope.transaction.value = n * (+$rootScope.stockPrice);
     });
 
-    $scope.$watch("stockPrice", function(n, o) {
+    $rootScope.$watch("stockPrice", function(n, o) {
         console.log("transaction change", n);
-        $scope.transaction.value = $scope.transaction.volume * (+$scope.stockPrice);
+        $scope.transaction.value = $scope.transaction.volume * (+$rootScope.stockPrice);
     });
 
 });

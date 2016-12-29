@@ -1,7 +1,4 @@
 app.controller('stockCtrl', function($scope, $rootScope, $http) {
-    
-
-    console.log("angular loaded", $scope.company);
 
     $scope.company = {};
 
@@ -14,6 +11,7 @@ app.controller('stockCtrl', function($scope, $rootScope, $http) {
         
         $scope.company = response.data;
         $scope.valuations = response.data.valuations;
+        $rootScope.stockPrice = numeral(response.data.price).format('0.00');
 
         $(".line-svg").html('');
 
