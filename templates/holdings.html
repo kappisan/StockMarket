@@ -44,7 +44,11 @@
 				<td>$0</td>
 				<td><button class="buy-button" ng-click="goToGetMoreCash()">Get More</button></td>
 			</tr>
-			<tr ng-repeat="holding in holdings" ng-click="goToStock(holding)" class="sans market-tr">
+			<tr ng-repeat="holding in holdings" 
+				ng-click="goToStock(holding)" 
+				class="sans market-tr" 
+				ng-mouseover="mouseOverSegment(holding, $index+1)"
+				ng-mouseleave="mouseOutSegment()">
 				<td class="td-ticker">{{ holding.ticker }}</td>
 				<td>{{ holding.name }}</td>
 				<td>{{ holding.quantity }}</td>

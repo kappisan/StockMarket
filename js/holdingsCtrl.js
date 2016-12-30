@@ -17,12 +17,12 @@ app.controller('holdingsCtrl', function($scope, $rootScope, $http) {
 
 	        console.log("got holdings details", response);
 
+
+	        $scope.holdings = _.clone(data.holdings);
+
 	        data.holdings.unshift({name: "cash", bookValue: $rootScope.user.cash})
 
 	        change(data.holdings);
-
-	        $scope.holdings = data.holdings;
-	        change($scope.holdings);
 
 	        var totalValues = _.map($scope.holdings, function(holding) {
 	        	return holding.bookValue;
@@ -118,19 +118,33 @@ app.controller('holdingsCtrl', function($scope, $rootScope, $http) {
 						.attr("transform", "translate(0, 40)")
 						.text("Something")
 
+	$scope.mouseOverSegment = function mouseOverSegment(d, i) {
+		d3.selectAll(".donut-segment").attr("opacity", "0.2")
+		d3.selectAll(".donut-segment-"+i).attr("opacity", "1").attr("stroke", "#f2c800").attr("stroke-width", "8px");
+  		console.log("mouse over", d.name)
+  		middleText.attr("visibility", "visible").text(d.name);
+  		valueText.attr("visibility", "visible").text(numeral(d.bookValue).format('0,0.00'));
+	}
+
+	$scope.mouseOutSegment = function mouseOutSegment() {
+		d3.selectAll(".donut-segment").attr("opacity", "1").attr("stroke-width", "0");			
+  		middleText.attr("visibility", "hidden");
+  		valueText.attr("visibility", "hidden");
+	}
+
 	var path = svg.datum(data).selectAll("path")
 	  	.data(pie)
 	.enter().append("path")
 	  	.attr("fill", function(d, i) { return color(i); })
 	  	.attr("d", arc)
-	  	.on("mouseover", function(d) {
-	  		console.log("mouse over", d.data.name)
-	  		middleText.attr("visibility", "visible").text(d.data.name);
-	  		valueText.attr("visibility", "visible").text(numeral(d.data.bookValue).format('0,0.00'));
+	  	.attr("class", function(d,i) {
+	  		return "donut-segment donut-segment-" + i;
+	  	})
+	  	.on("mouseover", function(d, i) {
+	  		$scope.mouseOverSegment(d.data, i);
 	  	})
 	  	.on("mouseout", function(d) {
-	  		middleText.attr("visibility", "hidden");
-	  		valueText.attr("visibility", "hidden");
+	  		$scope.mouseOutSegment();
 	  	})
 	  	.each(function(d) { this._current = d; }); // store the initial angles
 
