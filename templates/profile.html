@@ -101,13 +101,30 @@
 	font-family: coolvetica;
 }
 
+.add-friend {
+	color: #f2c800;
+}
+
+.add-friend:hover {
+	cursor: pointer;
+}
+
 </style>
 
 <center style="padding-top:90px;">
 
 	<div ng-show="loggedIn">
 		<img ng-src="{{userDetails.image}}" class="profile-image">
+
+		<div ng-if="userDetails.isFriend">
+			<p class="sans">You are friends with {{ userDetails.name }}</p>
+		</div>
+		<div ng-if="!userDetails.isFriend">
+			<p class="sans">Click <span class="add-friend" style="" ng-click="sendFriendRequest(userDetails)">here</span> to add {{ userDetails.name }} to your friends list</p>
+		</div>
+
 		<div class="user-bio sans"><p>{{ userDetails.bio }}</p></div>
+
 
 		<h1 class="cool">Acheivements</h1>
 
@@ -157,23 +174,7 @@
 				<img ng-src="{{ friend.image }}" class="connection-icon">
 				<div class="connection-text">{{ friend.name }}</div>
 			</div>
-<!--
-			<div class="connection">
-				<img src="./img/gordon.jpg" class="connection-icon">
-				<div class="connection-text">Gordon Gekko</div>
-			</div>
 
-
-			<div class="connection">
-				<img src="./img/alex.jpg" class="connection-icon">
-				<div class="connection-text">Alex Richardson</div>
-			</div>
-
-			<div class="connection">
-				<img src="./img/me.jpg" class="connection-icon">
-				<div class="connection-text">Kasper Wilkosz</div>
-			</div>
--->
 		</div>
 
 	</div>

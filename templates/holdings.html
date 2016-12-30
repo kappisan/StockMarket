@@ -34,7 +34,9 @@
 				<th>Return</th>
 				<th>Transaction</th>
 			</tr>
-			<tr class="sans market-tr">
+			<tr class="sans market-tr"
+				ng-mouseover="mouseOverSegment({name: 'cash', bookValue: user.cash}, 0)"
+				ng-mouseleave="mouseOutSegment()">
 				<td class="td-ticker">$$$</td>
 				<td>Cash</td>
 				<td>{{ twoDecimalPlaces(user.cash) }}</td>

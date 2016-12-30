@@ -252,7 +252,9 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 			res.send(users);
 		})
 
-		app.get('/api/user', function (req, res) {
+		app.post('/api/user', function (req, res) {
+
+			console.log("/api/user req", req.body)
 
 			userDB.find({username: req.query.username}).toArray((err, results) => {
 				if(err) return;
@@ -263,23 +265,29 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 						return res.send({username: "not found", bio: ""})
 					} 
 
-					user = results[0];
+					connectionsDB.find({$or: [ {user1: req.query.username, user2: req.body.me}, {user1: req.body.me, user2: req.query.username}  ] }).toArray((err, friend) => {
 
-					var connectionUsernames = [];
+						var isFriend = (friend.length != 0);
 
-					connections.forEach( function(d) {
-						connectionUsernames.push(d.user1);
-						connectionUsernames.push(d.user2);
-					});
+						user = results[0];
 
-					connectionUsernames = _.without(_.uniq(connectionUsernames), req.query.username);
+						var connectionUsernames = [];
 
-					userDB.find({username: {$in: connectionUsernames }}).toArray((err, friends) => {
+						connections.forEach( function(d) {
+							connectionUsernames.push(d.user1);
+							connectionUsernames.push(d.user2);
+						});
 
-						if(!friends) friends = [];
+						connectionUsernames = _.without(_.uniq(connectionUsernames), req.query.username);
 
-						user.connections = friends;
-						res.send(user);
+						userDB.find({username: {$in: connectionUsernames }}).toArray((err, friends) => {
+
+							if(!friends) friends = [];
+
+							user.connections = friends;
+							user.isFriend = isFriend;
+							res.send(user);
+						});
 					});
 				});
 			});
