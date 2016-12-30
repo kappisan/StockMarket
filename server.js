@@ -224,8 +224,20 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 				// delete
 				securitiesDB.remove({owner: req.body.user, ticker: req.body.ticker});
 			}
-
 		});
+
+		var now = moment();
+		statementsDB.insert({
+			type: "Sell",
+			amount: req.body.transaction.volume,
+			sedol: req.body.sedol,
+			name: req.body.name,
+			price: req.body.transaction.paid,
+			date: now.format("YYYY-MMM-DD"),	
+			time: now.format("hh:mm:ss"),
+			user: req.body.user,
+			fee: 0
+		})
 
 		res.send("successfully sold");
 			
