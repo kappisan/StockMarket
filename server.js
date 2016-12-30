@@ -175,6 +175,21 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 			ticker: req.body.ticker,
 			quantity: req.body.transaction.volume
 		})
+		
+
+		var now = moment();
+		statementsDB.insert({
+			type: "Buy",
+			amount: req.body.transaction.volume,
+			sedol: req.body.sedol,
+			name: req.body.name,
+			price: req.body.transaction.paid,
+			date: now.format("YYYY-MMM-DD"),	
+			time: now.format("hh:mm:ss"),
+			user: req.body.user,
+			fee: 0
+		})
+
 
 		// update holdings
 		securitiesDB.find({}).toArray((err, results) => {
