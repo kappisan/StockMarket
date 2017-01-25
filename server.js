@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({
 
 MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db) {
 
-	if(err) return;
+	if(err) return console.log("err", err);
 	console.log("We are connected");
 
 	var connectionsDB = db.collection('connections');
@@ -30,7 +30,7 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 	var users;
 
 	userDB.find({}).toArray((err, results) => {
-		if(err) return;
+		if(err) return console.log("error", err);
 
 		//console.log("db get all users", results);
 		users = results;
@@ -41,7 +41,7 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 	var stocksDB = db.collection('stocks');
 	var stocks;
 	stocksDB.find({}).toArray((err, results) => {
-		if(err) return;
+		if(err) return console.log("error", err);
 
 		//console.log("db get all stocks", results);
 		stocks = results;
@@ -69,7 +69,7 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 			if(usersErr || !userResults[0]) return;
 
 			securitiesDB.find({owner: req.body.username}).toArray((err, holdingsResults) => {
-				if(err) return;
+				if(err) return console.log("error", err);
 
 				if(!holdingsResults) return;
 
@@ -130,7 +130,7 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 		console.log("get statements by user", req.body.username);
 
 		statementsDB.find({user: req.body.username}).toArray((err, results) => {
-			if(err) return;
+			if(err) return console.log("error", err);
 
 			res.send(results);
 		});
@@ -193,7 +193,7 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 
 		// update holdings
 		securitiesDB.find({}).toArray((err, results) => {
-			if(err) return;
+			if(err) return console.log("error", err);
 
 			//console.log("db get all stocks", results);
 			holdings = {
@@ -212,7 +212,7 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 
 		// first check how much stock we have
 		securitiesDB.find({owner: req.body.user, ticker: req.body.ticker}).toArray((err, results) => {
-			if(err) return;
+			if(err) return console.log("error", err);
 
 			console.log("db match holding", results);
 
@@ -257,7 +257,7 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 			console.log("/api/user req", req.body)
 
 			userDB.find({username: req.query.username}).toArray((err, results) => {
-				if(err) return;
+				if(err) return console.log("error", err);
 
 				connectionsDB.find({$or: [ {user1: req.query.username}, {user2: req.query.username}  ] }).toArray((err, connections) => {
 				
@@ -326,6 +326,8 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 		}
 
 		setInterval(function() {
+
+			if(!stocks) return console.log("no stocks");
 
 			// go over each stock and calculate the new price
 			stocks.forEach(function(stock) {
