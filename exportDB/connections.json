@@ -1,0 +1,56 @@
+{ 
+    "_id" : ObjectId("58657a66b10156178cff5201"), 
+    "user1" : "kasper", 
+    "user2" : "alex", 
+    "date" : "2016-Dec-01", 
+    "time" : "10:17:12"
+}
+{ 
+    "_id" : ObjectId("58657a66b10156178cff5202"), 
+    "user1" : "kasper", 
+    "user2" : "gordon", 
+    "date" : "2016-Dec-01", 
+    "time" : "10:17:12"
+}
+{ 
+    "_id" : ObjectId("58657a66b10156178cff5203"), 
+    "user1" : "kasper", 
+    "user2" : "belfort", 
+    "date" : "2016-Dec-01", 
+    "time" : "10:17:12"
+}
+{ 
+    "_id" : ObjectId("58657a66b10156178cff5204"), 
+    "user1" : "kasper", 
+    "user2" : "budfox", 
+    "date" : "2016-Dec-01", 
+    "time" : "10:17:12"
+}
+{ 
+    "_id" : ObjectId("58657a66b10156178cff5205"), 
+    "user1" : "alex", 
+    "user2" : "budfox", 
+    "date" : "2016-Dec-01", 
+    "time" : "10:17:12"
+}
+{ 
+    "_id" : ObjectId("58657a66b10156178cff5206"), 
+    "user1" : "alex", 
+    "user2" : "gordon", 
+    "date" : "2016-Dec-01", 
+    "time" : "10:17:12"
+}
+{ 
+    "_id" : ObjectId("58657a66b10156178cff5207"), 
+    "user1" : "gordon", 
+    "user2" : "budfox", 
+    "date" : "2016-Dec-01", 
+    "time" : "10:17:12"
+}
+{ 
+    "_id" : ObjectId("58680503b1015613b040ad6a"), 
+    "user1" : "joe", 
+    "user2" : "budfox", 
+    "date" : "2016-Dec-01", 
+    "time" : "10:17:12"
+}

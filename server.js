@@ -78,7 +78,7 @@ MongoClient.connect("mongodb://localhost:27017/stocksimulator", function(err, db
 
 					if(!matchStock) return;
 
-					holding.bookValue = matchStock.priceRaw;
+					holding.bookValue = matchStock.price * holding.quantity;
 					holding.price = matchStock.price;
 				})
 

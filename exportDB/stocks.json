@@ -1,0 +1,248 @@
+{ 
+    "_id" : ObjectId("585d94781b6eb92274dba410"), 
+    "name" : "kappisan", 
+    "price" : NumberInt(3929), 
+    "sedol" : "123456", 
+    "ticker" : "KA", 
+    "sharesIssued" : NumberInt(5000000), 
+    "marketCap" : NumberInt(22700000), 
+    "volume" : NumberInt(10000), 
+    "valuations" : [
+
+    ], 
+    "type" : "stock", 
+    "president" : {
+        "username" : "kasper", 
+        "name" : "Kasper Wilkosz", 
+        "id" : NumberInt(1), 
+        "netWorth" : NumberInt(500000), 
+        "image" : "./img/me.jpg"
+    }, 
+    "vicePresident" : {
+        "username" : "alex", 
+        "name" : "Alex Richardson", 
+        "id" : NumberInt(2), 
+        "netWorth" : NumberInt(200000), 
+        "image" : "./img/alex.jpg"
+    }, 
+    "directors" : [
+
+    ]
+}
+{ 
+    "_id" : ObjectId("585d94781b6eb92274dba411"), 
+    "name" : "Maverick Media", 
+    "price" : NumberInt(2546), 
+    "sedol" : "333333", 
+    "ticker" : "MM", 
+    "sharesIssued" : NumberInt(4000), 
+    "marketCap" : NumberInt(31000000), 
+    "volume" : NumberInt(10000), 
+    "valuations" : [
+
+    ], 
+    "type" : "stock", 
+    "president" : {
+        "username" : "alex", 
+        "name" : "Alex Richardson", 
+        "id" : NumberInt(2), 
+        "netWorth" : NumberInt(200000), 
+        "image" : "./img/alex.jpg"
+    }, 
+    "vicePresident" : {
+        "username" : "kasper", 
+        "name" : "Kasper Wilkosz", 
+        "id" : NumberInt(1), 
+        "netWorth" : NumberInt(500000), 
+        "image" : "./img/me.jpg"
+    }, 
+    "directors" : [
+
+    ]
+}
+{ 
+    "_id" : ObjectId("585d94781b6eb92274dba412"), 
+    "name" : "Big Belly Burger", 
+    "price" : NumberInt(210), 
+    "sedol" : "222222", 
+    "ticker" : "BBB", 
+    "sharesIssued" : NumberInt(4000), 
+    "marketCap" : NumberInt(230000), 
+    "volume" : NumberInt(10000), 
+    "valuations" : [
+
+    ], 
+    "type" : "stock", 
+    "president" : {
+        "username" : "gordon", 
+        "name" : "Gordon Gekko", 
+        "id" : NumberInt(3), 
+        "netWorth" : NumberInt(850000), 
+        "image" : "./img/gordon.jpg"
+    }, 
+    "vicePresident" : {
+        "username" : "budfox", 
+        "name" : "Bud Fox", 
+        "id" : NumberInt(4), 
+        "netWorth" : NumberInt(850000), 
+        "image" : "./img/budfox.jpg"
+    }, 
+    "directors" : [
+
+    ]
+}
+{ 
+    "_id" : ObjectId("585d94781b6eb92274dba413"), 
+    "name" : "BC Rich", 
+    "price" : NumberInt(22), 
+    "sedol" : "444444", 
+    "ticker" : "BCR", 
+    "sharesIssued" : NumberInt(4000), 
+    "marketCap" : NumberInt(6000), 
+    "volume" : NumberInt(10000), 
+    "valuations" : [
+
+    ], 
+    "type" : "stock", 
+    "president" : {
+        "username" : "gordon", 
+        "name" : "Gordon Gekko", 
+        "id" : NumberInt(3), 
+        "netWorth" : NumberInt(850000), 
+        "image" : "./img/gordon.jpg"
+    }, 
+    "vicePresident" : {
+        "username" : "belfort", 
+        "name" : "Jordan Belfort", 
+        "id" : NumberInt(5), 
+        "netWorth" : NumberInt(1850000), 
+        "image" : "./img/belfort.jpg"
+    }, 
+    "directors" : [
+
+    ]
+}
+{ 
+    "_id" : ObjectId("585d94781b6eb92274dba414"), 
+    "name" : "Amiris Cannabis", 
+    "price" : NumberInt(520), 
+    "sedol" : "555555", 
+    "ticker" : "ACB", 
+    "sharesIssued" : NumberInt(4000), 
+    "marketCap" : NumberInt(5000), 
+    "volume" : NumberInt(10000), 
+    "valuations" : [
+
+    ], 
+    "type" : "stock", 
+    "president" : {
+        "username" : "kasper", 
+        "name" : "Kasper Wilkosz", 
+        "id" : NumberInt(1), 
+        "netWorth" : NumberInt(500000), 
+        "image" : "./img/me.jpg"
+    }, 
+    "vicePresident" : {
+        "username" : "alex", 
+        "name" : "Alex Richardson", 
+        "id" : NumberInt(2), 
+        "netWorth" : NumberInt(200000), 
+        "image" : "./img/alex.jpg"
+    }, 
+    "directors" : [
+
+    ]
+}
+{ 
+    "_id" : ObjectId("585d94781b6eb92274dba415"), 
+    "name" : "Orange Soda", 
+    "price" : NumberInt(167), 
+    "sedol" : "66666", 
+    "ticker" : "OGS", 
+    "sharesIssued" : NumberInt(80000), 
+    "marketCap" : NumberInt(400000), 
+    "volume" : NumberInt(10000), 
+    "valuations" : [
+
+    ], 
+    "type" : "stock", 
+    "president" : {
+        "username" : "gordon", 
+        "name" : "Gordon Gekko", 
+        "id" : NumberInt(3), 
+        "netWorth" : NumberInt(850000), 
+        "image" : "./img/gordon.jpg"
+    }, 
+    "vicePresident" : {
+        "username" : "alex", 
+        "name" : "Alex Richardson", 
+        "id" : NumberInt(2), 
+        "netWorth" : NumberInt(200000), 
+        "image" : "./img/alex.jpg"
+    }, 
+    "directors" : [
+
+    ]
+}
+{ 
+    "_id" : ObjectId("585d94781b6eb92274dba416"), 
+    "name" : "Casablanca", 
+    "price" : NumberInt(123), 
+    "sedol" : "777777", 
+    "ticker" : "CSB", 
+    "sharesIssued" : NumberInt(80000), 
+    "marketCap" : NumberInt(300000), 
+    "volume" : NumberInt(10000), 
+    "valuations" : [
+
+    ], 
+    "type" : "stock", 
+    "president" : {
+        "username" : "belfort", 
+        "name" : "Jordan Belfort", 
+        "id" : NumberInt(5), 
+        "netWorth" : NumberInt(1850000), 
+        "image" : "./img/belfort.jpg"
+    }, 
+    "vicePresident" : {
+        "username" : "gordon", 
+        "name" : "Gordon Gekko", 
+        "id" : NumberInt(3), 
+        "netWorth" : NumberInt(850000), 
+        "image" : "./img/gordon.jpg"
+    }, 
+    "directors" : [
+
+    ]
+}
+{ 
+    "_id" : ObjectId("585d94781b6eb92274dba417"), 
+    "name" : "Relax & Revive", 
+    "price" : NumberInt(123), 
+    "sedol" : "888888", 
+    "ticker" : "RRV", 
+    "sharesIssued" : NumberInt(4000), 
+    "marketCap" : NumberInt(200000), 
+    "volume" : NumberInt(10000), 
+    "valuations" : [
+
+    ], 
+    "type" : "stock", 
+    "president" : {
+        "username" : "gordon", 
+        "name" : "Gordon Gekko", 
+        "id" : NumberInt(3), 
+        "netWorth" : NumberInt(850000), 
+        "image" : "./img/gordon.jpg"
+    }, 
+    "vicePresident" : {
+        "username" : "alex", 
+        "name" : "Alex Richardson", 
+        "id" : NumberInt(2), 
+        "netWorth" : NumberInt(200000), 
+        "image" : "./img/alex.jpg"
+    }, 
+    "directors" : [
+
+    ]
+}

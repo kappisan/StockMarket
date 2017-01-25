@@ -1,0 +1,96 @@
+{ 
+    "_id" : ObjectId("585d9f471b6eb92274dba41d"), 
+    "name" : "kappisan", 
+    "owner" : "kasper", 
+    "price" : NumberInt(200), 
+    "sedol" : "123456", 
+    "ticker" : "KA", 
+    "quantity" : NumberInt(100), 
+    "bookCost" : NumberInt(300), 
+    "bookValue" : NumberInt(3333)
+}
+{ 
+    "_id" : ObjectId("585d9f471b6eb92274dba41f"), 
+    "quantity" : NumberInt(1997)
+}
+{ 
+    "_id" : ObjectId("5862c13d8eb2201b3c280284"), 
+    "quantity" : NumberInt(9999987)
+}
+{ 
+    "_id" : ObjectId("58651b50454c6600bcca24a7"), 
+    "name" : "Orange Soda", 
+    "owner" : "alex", 
+    "price" : "0.00", 
+    "sedol" : "66666", 
+    "bookCost" : NumberInt(666), 
+    "bookValue" : NumberInt(666), 
+    "ticker" : "OGS", 
+    "quantity" : NumberInt(10)
+}
+{ 
+    "_id" : ObjectId("58651bcc454c6600bcca24a8"), 
+    "name" : "Casablanca", 
+    "owner" : "alex", 
+    "price" : "17.69", 
+    "sedol" : "777777", 
+    "bookCost" : NumberInt(159210), 
+    "bookValue" : NumberInt(159210), 
+    "ticker" : "CSB", 
+    "quantity" : NumberInt(9000)
+}
+{ 
+    "_id" : ObjectId("58654bcb301c7f1b8052492e"), 
+    "name" : "Orange Soda", 
+    "owner" : "kasper", 
+    "price" : "0.00", 
+    "sedol" : "66666", 
+    "bookCost" : NumberInt(0), 
+    "bookValue" : NumberInt(0), 
+    "ticker" : "OGS", 
+    "quantity" : NumberInt(4)
+}
+{ 
+    "_id" : ObjectId("58654bd9301c7f1b8052492f"), 
+    "name" : "Maverick Media", 
+    "owner" : "kasper", 
+    "price" : "0.00", 
+    "sedol" : "333333", 
+    "bookCost" : NumberInt(0), 
+    "bookValue" : NumberInt(0), 
+    "ticker" : "MM", 
+    "quantity" : NumberInt(5)
+}
+{ 
+    "_id" : ObjectId("5866cfbe4d959b0f90b1f9fd"), 
+    "name" : "BC Rich", 
+    "owner" : "kasper", 
+    "price" : "0.00", 
+    "sedol" : "444444", 
+    "bookCost" : NumberInt(0), 
+    "bookValue" : NumberInt(0), 
+    "ticker" : "BCR", 
+    "quantity" : NumberInt(3)
+}
+{ 
+    "_id" : ObjectId("5866d4087bf1d41640ba8760"), 
+    "name" : "BC Rich", 
+    "owner" : "gordon", 
+    "price" : "522.24", 
+    "sedol" : "444444", 
+    "bookCost" : 2088.96, 
+    "bookValue" : 2088.96, 
+    "ticker" : "BCR", 
+    "quantity" : NumberInt(4)
+}
+{ 
+    "_id" : ObjectId("5868043890d4060fe06987a5"), 
+    "name" : "Amiris Cannabis", 
+    "owner" : "joe", 
+    "price" : "3,941.48", 
+    "sedol" : "555555", 
+    "bookCost" : NumberInt(7882960), 
+    "bookValue" : NumberInt(7882960), 
+    "ticker" : "ACB", 
+    "quantity" : NumberInt(2000)
+}

@@ -1,0 +1,78 @@
+{ 
+    "_id" : ObjectId("585d93bc1b6eb92274dba40a"), 
+    "username" : "kasper", 
+    "name" : "Kasper Wilkosz", 
+    "id" : NumberInt(1), 
+    "netWorth" : NumberInt(500000), 
+    "image" : "./img/me.jpg", 
+    "holdings" : [
+
+    ], 
+    "cash" : NumberInt(8000), 
+    "bio" : "I am an IT professional with a particular interest in the stock market and real time web systems"
+}
+{ 
+    "_id" : ObjectId("585d93bc1b6eb92274dba40b"), 
+    "username" : "alex", 
+    "name" : "Alex Richardson", 
+    "id" : NumberInt(2), 
+    "netWorth" : NumberInt(200000), 
+    "image" : "./img/alex.jpg", 
+    "holdings" : [
+
+    ], 
+    "cash" : NumberInt(2000), 
+    "bio" : "blah blah blah"
+}
+{ 
+    "_id" : ObjectId("585d93bc1b6eb92274dba40c"), 
+    "username" : "gordon", 
+    "name" : "Gordon Gekko", 
+    "id" : NumberInt(3), 
+    "netWorth" : NumberInt(850000), 
+    "image" : "./img/gordon.jpg", 
+    "holdings" : [
+
+    ], 
+    "cash" : "69", 
+    "bio" : "blah blah blah"
+}
+{ 
+    "_id" : ObjectId("585d93bc1b6eb92274dba40d"), 
+    "username" : "budfox", 
+    "name" : "Bud Fox", 
+    "id" : NumberInt(4), 
+    "netWorth" : NumberInt(850000), 
+    "image" : "./img/budfox.jpg", 
+    "holdings" : [
+
+    ], 
+    "cash" : "100", 
+    "bio" : "blah blah blah"
+}
+{ 
+    "_id" : ObjectId("585d93bc1b6eb92274dba40e"), 
+    "username" : "belfort", 
+    "name" : "Jordan Belfort", 
+    "id" : NumberInt(5), 
+    "netWorth" : NumberInt(1850000), 
+    "image" : "./img/belfort.jpg", 
+    "holdings" : [
+
+    ], 
+    "cash" : "12000", 
+    "bio" : "blah blah blah"
+}
+{ 
+    "_id" : ObjectId("5862d249b101562270f68471"), 
+    "username" : "joe", 
+    "name" : "Joe Wakefield", 
+    "id" : NumberInt(5), 
+    "netWorth" : NumberInt(1850000), 
+    "image" : "./img/joe.jpg", 
+    "holdings" : [
+
+    ], 
+    "cash" : "50000000", 
+    "bio" : "blah blah blah"
+}

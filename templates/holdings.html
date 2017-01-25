@@ -56,8 +56,8 @@
 				<td>{{ holding.quantity }}</td>
 				<td>${{ twoDecimalPlaces(holding.price) }}</td>
 				<td>${{ twoDecimalPlaces(holding.bookCost) }}</td>
-				<td>${{ twoDecimalPlaces((holding.bookValue * holding.quantity)) }}</td>
-				<td>${{ twoDecimalPlaces((holding.bookValue * holding.quantity) - holding.bookCost) }}</td>
+				<td>${{ twoDecimalPlaces(holding.bookValue) }}</td>
+				<td>${{ twoDecimalPlaces(holding.bookValue - holding.bookCost) }}</td>
 				<td ng-click="sellStock(holding)"><button class="buy-button">Sell</button></td>
 			</tr>
 			<tr class="sans market-tr-total">

@@ -1,0 +1,120 @@
+{ 
+    "_id" : ObjectId("585ef918b101561d84569d43"), 
+    "type" : "Buy", 
+    "amount" : NumberInt(32), 
+    "sedol" : "333333", 
+    "name" : "Maverick Media", 
+    "price" : NumberInt(4523), 
+    "date" : "2016-Dec-01", 
+    "time" : "10:17:12", 
+    "user" : "kasper", 
+    "fee" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("585ef918b101561d84569d44"), 
+    "type" : "Sell", 
+    "amount" : NumberInt(300), 
+    "sedol" : "123456", 
+    "name" : "kappisan", 
+    "price" : NumberInt(4523), 
+    "date" : "2016-Dec-01", 
+    "time" : "10:17:17", 
+    "user" : "kasper", 
+    "fee" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("585ef918b101561d84569d45"), 
+    "type" : "Sell", 
+    "amount" : NumberInt(300), 
+    "sedol" : "123456", 
+    "name" : "Maverick Media", 
+    "price" : NumberInt(4523), 
+    "date" : "2016-Dec-01", 
+    "time" : "13:12:47", 
+    "user" : "alex", 
+    "fee" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("5866cfbe4d959b0f90b1f9fe"), 
+    "type" : "Buy", 
+    "amount" : NumberInt(3), 
+    "sedol" : "444444", 
+    "name" : "BC Rich", 
+    "price" : "0.00", 
+    "date" : "2016-Dec-30", 
+    "time" : "09:21:02", 
+    "user" : "kasper", 
+    "fee" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("5866d01d4d959b0f90b1fa00"), 
+    "type" : "Buy", 
+    "amount" : NumberInt(666), 
+    "sedol" : "555555", 
+    "name" : "Amiris Cannabis", 
+    "price" : "0.00", 
+    "date" : "2016-Dec-30", 
+    "time" : "09:22:37", 
+    "user" : "kasper", 
+    "fee" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("5866d3cf7bf1d41640ba875f"), 
+    "type" : "Sell", 
+    "amount" : NumberInt(666), 
+    "sedol" : "555555", 
+    "name" : "Amiris Cannabis", 
+    "price" : NumberInt(0), 
+    "date" : "2016-Dec-30", 
+    "time" : "09:38:23", 
+    "user" : "kasper", 
+    "fee" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("5866d4087bf1d41640ba8761"), 
+    "type" : "Buy", 
+    "amount" : NumberInt(4), 
+    "sedol" : "444444", 
+    "name" : "BC Rich", 
+    "price" : "522.24", 
+    "date" : "2016-Dec-30", 
+    "time" : "09:39:20", 
+    "user" : "gordon", 
+    "fee" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("586801e890d4060fe06987a3"), 
+    "type" : "Buy", 
+    "amount" : NumberInt(55), 
+    "sedol" : "555555", 
+    "name" : "Amiris Cannabis", 
+    "price" : "0.00", 
+    "date" : "2016-Dec-31", 
+    "time" : "07:07:20", 
+    "user" : "gordon", 
+    "fee" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("5868020990d4060fe06987a4"), 
+    "type" : "Sell", 
+    "amount" : NumberInt(55), 
+    "sedol" : "555555", 
+    "name" : "Amiris Cannabis", 
+    "price" : NumberInt(0), 
+    "date" : "2016-Dec-31", 
+    "time" : "07:07:53", 
+    "user" : "gordon", 
+    "fee" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("5868043890d4060fe06987a6"), 
+    "type" : "Buy", 
+    "amount" : NumberInt(2000), 
+    "sedol" : "555555", 
+    "name" : "Amiris Cannabis", 
+    "price" : "3,941.48", 
+    "date" : "2016-Dec-31", 
+    "time" : "07:17:12", 
+    "user" : "joe", 
+    "fee" : NumberInt(0)
+}
