@@ -10,12 +10,14 @@ var app = angular.module('stockApp', ['ngRoute'])
             .when('/market', { templateUrl: 'templates/market.html', controller: "marketCtrl" })
             .when('/statements', { templateUrl: 'templates/statements.html', controller: "statementsCtrl" })
             .when('/getmorecash', { templateUrl: 'templates/getMoreCash.html', controller: "moreCashCtrl" })
+            .when('/shockcoin', { templateUrl: 'templates/shockCoin.html', controller: "shockCoinCtrl" })
             .when('/login', { templateUrl: 'templates/login.html' }) /* controller is globally scoped in html */
             .otherwise({ redirectTo: '/' });
     }]);
 
-
-
+app.controller('shockCoinCtrl', function($scope, $rootScope) {
+    $rootScope.currentPage = "Shock Coin";
+});
 
 app.controller('homeCtrl', function($scope, $rootScope) {
     $rootScope.currentPage = "Home";
@@ -24,8 +26,6 @@ app.controller('homeCtrl', function($scope, $rootScope) {
 app.controller('moreCashCtrl', function($scope, $rootScope) {
     $rootScope.currentPage = "Get More Cash";
 });
-
-
 
 app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
 
@@ -43,7 +43,7 @@ app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
     clearTransactionData();
 
     $scope.selectedStock = {name: ""}
-    var kaching=new Sound("sound/kaching.mp3",100,true);
+    var kaching = new Sound("sound/kaching.mp3",100,true);
 
     $scope.goToStock = function(stock) {
       console.log("goToStock", stock.sedol);
@@ -73,6 +73,11 @@ app.controller('mainCtrl', function($scope, $rootScope, $location, $http) {
     $scope.goToGetMoreCash = function() {
       $rootScope.currentPage = "Get More Cash";
       $location.url('getmorecash');
+    }
+
+    $scope.goToShockCoinPage = function() {
+      $rootScope.currentPage = "Shock Coin";
+      $location.url('#/shockcoin');
     }
 
     $scope.showTransactionForm = false;
