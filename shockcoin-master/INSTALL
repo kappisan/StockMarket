@@ -1,0 +1,9 @@
+Building Shockcoin
+
+See doc/readme-qt.rst for instructions on building Shockcoin-Qt,
+the intended-for-end-users, nice-graphical-interface, reference
+implementation of Shockcoin.
+
+See doc/build-*.txt for instructions on building shockcoind,
+the intended-for-services, no-graphical-interface, reference
+implementation of Shockcoin.
